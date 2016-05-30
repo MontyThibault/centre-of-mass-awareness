@@ -1,0 +1,9 @@
+binaries/*
+controlShots/*
+screenShots/*
+*/Debug
+*/Release
+*.pyc
+simbicon.ncb
+simbicon.suo
+*.vcproj.*.user
