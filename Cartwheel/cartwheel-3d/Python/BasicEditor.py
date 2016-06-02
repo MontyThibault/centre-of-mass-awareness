@@ -47,7 +47,7 @@ if not movieSetup:
     controllerTreeToolSet._toolSet.setOpen(False)
 
 
-UI.ToolSets.CoMSliders(toolPanel)
+app.COMPanel = UI.ToolSets.CoMSliders(toolPanel)
 
 glCanvas = app.getGLCanvas()
 glCanvas.addGLUITool( UI.GLUITools.CurveEditorCollection )

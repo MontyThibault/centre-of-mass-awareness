@@ -122,6 +122,8 @@ class SNMApp(wx.App):
         self._showMesh = True
         self._showMinBDGSphere = False
         self._showCenterOfMass = True
+        
+        self._COMErrorScale = 0.03
             
     #
     # Private methods
@@ -167,6 +169,8 @@ class SNMApp(wx.App):
             
             self.updateCOMError()
             
+            self.COMPanel.update()
+            
             self._characters[0].drawRealCOM(flags)
             self._characters[0].drawPercievedCOM(flags)
 
@@ -205,14 +209,14 @@ class SNMApp(wx.App):
         sins = [0.3, 1, 2, 3, 0.5, 1.3, 1.8, 3.4, 0.4, 0.8, 1.5, 3.04]
         t = time.time()
         
-        # Map each sin weight to the frequency
+        # Map each sin weight to the reciprocal of the frequency
         sins = map(lambda x: (x, 1/x), sins)
         
         x = self.discreteSinusoids(sins[:4], t)
         y = self.discreteSinusoids(sins[4:8], t + 1021.34353)
         z = self.discreteSinusoids(sins[8:], t + 543.4346)
         
-        (x, y, z) = map(lambda x: x * 0.03, (x, y, z))
+        (x, y, z) = map(lambda x: x * self._COMErrorScale, (x, y, z))
         
         self.setCOMX(x)
         self.setCOMY(y)
