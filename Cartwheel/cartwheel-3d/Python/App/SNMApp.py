@@ -125,26 +125,6 @@ class SNMApp(wx.App):
     #
     # Private methods
     
-    def setOption(self, option):
-        """ Generates a function for setting an attribute of this class instance. """
-        
-        def callable_(value):
-
-            if value != getattr(self, option):
-                setattr(self, option, value)
-                self._optionsObservable.notifyObservers()
-            
-        return callable_
-    
-    
-    def getOption(self, option):
-        """ Generates a function for getting an attribute of this class instance. """
-        
-        def callable_():
-            return getattr(self, option)
-        
-        return callable_
-    
         
     def draw(self):
         """Draw the content of the world"""
@@ -368,6 +348,26 @@ class SNMApp(wx.App):
     def getKinematicMotion(self):
         """Does the application animate only kinematic motion?"""
         return self._kinematicMotion
+    
+    def setOption(self, option):
+        """ Generates a function for setting an attribute of this class instance. """
+        
+        def callable_(value):
+
+            if value != getattr(self, option):
+                setattr(self, option, value)
+                self._optionsObservable.notifyObservers()
+            
+        return callable_
+    
+    
+    def getOption(self, option):
+        """ Generates a function for getting an attribute of this class instance. """
+        
+        def callable_():
+            return getattr(self, option)
+        
+        return callable_
     
     def captureScreenShots(self, capture):
         """Indicates whether the application should capture a screenshot at every frame."""
