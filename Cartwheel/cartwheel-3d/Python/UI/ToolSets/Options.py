@@ -32,7 +32,8 @@ class Options(ToolsetBase):
              ('Show friction particles', '_showFrictionParticles'),
              ('Show joints', '_showJoints'),
              ('Show mesh', '_showMesh'),
-             ('Show min BDG Sphere', '_showMinBDGSphere')]
+             ('Show min BDG Sphere', '_showMinBDGSphere'),
+             ('Show center of mass', '_showCenterOfMass')]
         
         for (print_name, attribute_name) in options:
             self.addOption(print_name, app.getOption(attribute_name), app.setOption(attribute_name))

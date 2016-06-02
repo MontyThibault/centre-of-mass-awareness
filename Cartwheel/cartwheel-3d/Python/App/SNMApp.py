@@ -121,6 +121,7 @@ class SNMApp(wx.App):
         self._showJoints = False
         self._showMesh = True
         self._showMinBDGSphere = False
+        self._showCenterOfMass = True
             
     #
     # Private methods
@@ -149,15 +150,25 @@ class SNMApp(wx.App):
             flags = flags | Physics.SHOW_MESH
         if self._showMinBDGSphere:
             flags = flags | Physics.SHOW_MIN_BDG_SPHERE
+        if self._showCenterOfMass:
+            flags = flags | Physics.SHOW_CENTER_OF_MASS
         
         glEnable(GL_LIGHTING)
         world.drawRBs(flags)
+        
         glDisable(GL_LIGHTING);
     
         if self._drawShadows:
             self._glCanvas.beginShadows()
             world.drawRBs(Physics.SHOW_MESH)
             self._glCanvas.endShadows()    
+            
+        if len(self._characters) > 0:
+            
+            self.updateCOMError()
+            
+            self._characters[0].drawRealCOM(flags)
+            self._characters[0].drawPercievedCOM(flags)
 
     def postDraw(self):
         """Perform some operation once the entire OpenGL window has been drawn"""
@@ -189,6 +200,32 @@ class SNMApp(wx.App):
         while currPhi > initialPhi :
             self.simulationStep()
             currPhi = controller.getPhase()
+        
+    def updateCOMError(self):
+        sins = [0.3, 1, 2, 3, 0.5, 1.3, 1.8, 3.4, 0.4, 0.8, 1.5, 3.04]
+        t = time.time()
+        
+        # Map each sin weight to the frequency
+        sins = map(lambda x: (x, 1/x), sins)
+        
+        x = self.discreteSinusoids(sins[:4], t)
+        y = self.discreteSinusoids(sins[4:8], t + 1021.34353)
+        z = self.discreteSinusoids(sins[8:], t + 543.4346)
+        
+        (x, y, z) = map(lambda x: x * 0.03, (x, y, z))
+        
+        self.setCOMX(x)
+        self.setCOMY(y)
+        self.setCOMZ(z)
+        
+    def discreteSinusoids(self, sins, t):
+        accumulator = 0
+        for sin, weight in sins:
+            # Here, sin is interpreted as `t-times` per second
+            # And t is the number of seconds
+            accumulator += math.sin((t * sin) * (2 * math.pi)) * weight
+            
+        return accumulator
         
     def simulationStep(self):
         """Performs a single simulation step"""

@@ -280,6 +280,43 @@ Vector3d Character::getCOMVelocity(){
 	return COMVel;
 }
 
+void Character::drawRealCOM(int flags) {
+	if(!(flags & SHOW_CENTER_OF_MASS))
+		return;
+
+	Vector3d COM = this->getCOM();
+	Vector3d COM_unaltered = COM - this->COM_offset;
+
+	glPushMatrix();
+
+	glDisable(GL_DEPTH_TEST);
+	glColor3ub(255, 0, 0);
+
+	GLUtils::drawSphere(COM_unaltered, 0.04, 11);
+
+	glEnable(GL_DEPTH_TEST);
+	
+	glPopMatrix();
+}
+
+void Character::drawPercievedCOM(int flags) {
+	if(!(flags & SHOW_CENTER_OF_MASS)) 
+		return;
+
+	Vector3d COM = this->getCOM() - (this->COM_offset * 2);
+
+	glPushMatrix();
+
+	glDisable(GL_DEPTH_TEST);
+	glColor3ub(128, 0, 0);
+
+	GLUtils::drawSphere(COM, 0.025, 11);
+
+	glEnable(GL_DEPTH_TEST);
+	
+	glPopMatrix();
+}
+
 /**
 	this method is used to rotate the character about the vertical axis, so that it's default heading has the value that is given as a parameter
 */

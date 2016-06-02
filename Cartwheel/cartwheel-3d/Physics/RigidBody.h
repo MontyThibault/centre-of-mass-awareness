@@ -47,6 +47,8 @@ class ArticulatedFigure;
 #define SHOW_ABSTRACT_VIEW		0x0100
 #define SHOW_ABSTRACT_VIEW_SKELETON 0x0200
 
+#define SHOW_CENTER_OF_MASS		0x0400
+
 /*=========================================================================================================================================================================*
  | This is the implementation of a Rigid Body class. It holds all the attributes that characterize the rigid body (state information, collision detection primitives, etc).|
  | This class is used as the basis for an Articulated Rigid Body. Together with the PhysicalWorld class, this class is used to implement the dynamics of rigid bodies.     |

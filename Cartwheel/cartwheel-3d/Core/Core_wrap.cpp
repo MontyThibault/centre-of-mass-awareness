@@ -6615,6 +6615,66 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_Character_drawRealCOM(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Character *arg1 = (Character *) 0 ;
+  int arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:Character_drawRealCOM",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Character, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Character_drawRealCOM" "', argument " "1"" of type '" "Character *""'"); 
+  }
+  arg1 = reinterpret_cast< Character * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Character_drawRealCOM" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  (arg1)->drawRealCOM(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Character_drawPercievedCOM(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Character *arg1 = (Character *) 0 ;
+  int arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:Character_drawPercievedCOM",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Character, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Character_drawPercievedCOM" "', argument " "1"" of type '" "Character *""'"); 
+  }
+  arg1 = reinterpret_cast< Character * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Character_drawPercievedCOM" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  (arg1)->drawPercievedCOM(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *Character_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *obj;
   if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
@@ -22199,6 +22259,8 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Character_getReverseStanceState", _wrap_Character_getReverseStanceState, METH_VARARGS, NULL},
 	 { (char *)"Character_getCOM", _wrap_Character_getCOM, METH_VARARGS, NULL},
 	 { (char *)"Character_getCOMVelocity", _wrap_Character_getCOMVelocity, METH_VARARGS, NULL},
+	 { (char *)"Character_drawRealCOM", _wrap_Character_drawRealCOM, METH_VARARGS, NULL},
+	 { (char *)"Character_drawPercievedCOM", _wrap_Character_drawPercievedCOM, METH_VARARGS, NULL},
 	 { (char *)"Character_swigregister", Character_swigregister, METH_VARARGS, NULL},
 	 { (char *)"computeHeading", _wrap_computeHeading, METH_VARARGS, NULL},
 	 { (char *)"RelevantJoint_jIndex_set", _wrap_RelevantJoint_jIndex_set, METH_VARARGS, NULL},

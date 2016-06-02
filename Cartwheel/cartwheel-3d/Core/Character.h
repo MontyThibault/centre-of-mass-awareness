@@ -5,6 +5,9 @@
 #include <Utils/Utils.h>
 #include "SimGlobals.h"
 
+#include <GLUtils/GLMesh.h>
+#include <GLUtils/GLUtils.h>
+
 class ReducedCharacterStateArray : public DynamicArray<double> {
 };
 
@@ -159,6 +162,16 @@ public:
 		This method is used to compute the velocity of the center of mass of the articulated figure.
 	*/
 	Vector3d getCOMVelocity();
+
+	/**
+		This method draws coordinate axes at the true center of mass of the articulated figure.
+	*/
+	void drawRealCOM(int flags);
+
+	/**
+		This method draws coordinate aces at the percieved center of mass of the articulated figure.
+	*/
+	void drawPercievedCOM(int flags);
 
 };
 
