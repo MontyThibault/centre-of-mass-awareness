@@ -1,0 +1,32 @@
+%http://tex.stackexchange.com/questions/95455/problem-compiling-document#95455
+%File mb-bibtex.tex, then \jobname = mb-bibtex
+\RequirePackage{filecontents}        % loading package filecontents
+% writing file \jobname.bib, for example mb-bibtex.bib.
+\begin{filecontents*}{\jobname.bib}
+@Book{companion,
+  author    = {Goossens, Michel and Mittelbach, Frank and Samarin, Alexander},
+  title     = {The LaTeX Companion},
+  edition   = {1},
+  publisher = {Addison-Wesley},
+  location  = {Reading, Mass.},
+  year      = {1994},
+}
+@Book{adams,
+  title     = {The Restaurant at the End of the Universe},
+  author    = {Douglas Adams},
+  series    = {The Hitchhiker's Guide to the Galaxy},
+  publisher = {Pan Macmillan},
+  year      = {1980},
+}
+\end{filecontents*}
+
+
+\documentclass{article}
+
+\begin{document}
+Test of bibliography: 
+The \LaTeX{} companion~\cite{companion}, the funny book of Adams~\cite{adams}.
+
+\bibliographystyle{plain}  
+\bibliography{\jobname}       % uses \jobname.bib, according to \jobname.tex
+\end{document}

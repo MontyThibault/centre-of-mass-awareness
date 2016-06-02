@@ -110,20 +110,68 @@ class SNMApp(wx.App):
         
         self._curveList = ObservableList()
         self._snapshotTree = SnapshotBranch()
+        
+        
+        self._showAbstractView = False
+        self._showAbstractViewSkeleton = False
+        self._showBodyFrame = False
+        self._showCDPrimitives = False
+        self._showColors = False
+        self._showFrictionParticles = False
+        self._showJoints = False
+        self._showMesh = True
+        self._showMinBDGSphere = False
             
     #
     # Private methods
+    
+    def setOption(self, option):
+        """ Generates a function for setting an attribute of this class instance. """
+        
+        def callable_(value):
+
+            if value != getattr(self, option):
+                setattr(self, option, value)
+                self._optionsObservable.notifyObservers()
+            
+        return callable_
+    
+    
+    def getOption(self, option):
+        """ Generates a function for getting an attribute of this class instance. """
+        
+        def callable_():
+            return getattr(self, option)
+        
+        return callable_
+    
         
     def draw(self):
         """Draw the content of the world"""
         world = Physics.world()
-                    
+        
+        flags = 0
+        if self._showAbstractView: 
+            flags = flags | Physics.SHOW_ABSTRACT_VIEW
+        if self._showAbstractViewSkeleton:
+            flags = flags | Physics.SHOW_ABSTRACT_VIEW_SKELETON
+        if self._showBodyFrame:
+            flags = flags | Physics.SHOW_BODY_FRAME
+        if self._showCDPrimitives:
+            flags = flags | Physics.SHOW_CD_PRIMITIVES
+        if self._showColors:
+            flags = flags | Physics.SHOW_COLOURS
+        if self._showFrictionParticles:
+            flags = flags | Physics.SHOW_FRICTION_PARTICLES
+        if self._showJoints:
+            flags = flags | Physics.SHOW_JOINTS
+        if self._showMesh:
+            flags = flags | Physics.SHOW_MESH
+        if self._showMinBDGSphere:
+            flags = flags | Physics.SHOW_MIN_BDG_SPHERE
+        
         glEnable(GL_LIGHTING)
-        if self._drawCollisionVolumes:
-            world.drawRBs(Physics.SHOW_MESH|Physics.SHOW_CD_PRIMITIVES)
-        else:
-            world.drawRBs(Physics.SHOW_MESH|Physics.SHOW_COLOURS)            
-#        world.drawRBs(Physics.SHOW_MESH|Physics.SHOW_CD_PRIMITIVES)
+        world.drawRBs(flags)
         glDisable(GL_LIGHTING);
     
         if self._drawShadows:

@@ -1,20 +1,5 @@
 \documentclass[]{article}
 
-\begin{filecontents*}{\jobname.bib}
-@ARTICLE{2010-TOG-gbwc,
-	author = {Stelian Coros and Philippe Beaudoin and Michiel van de Panne},
-	title = {Generalized Biped Walking Control},
-	journal = {ACM Transctions on Graphics},
-	year = {2010},
-	volume = {29},
-	number = {4},
-	pages = {Article 130}
-}
-\end{filecontents*}
-\usepackage[backend=biber]{tocbibind}
-\addbibresource{\jobname.bib}
-
-%opening
 \title{Uncertainty in Centre of Mass and Transformation Frames Applied to Physically-Based Character Animation Systems}
 \author{Monty Thibault, Paul Kry}
 
@@ -23,26 +8,21 @@
 \maketitle
 
 \begin{abstract}
-We explore a robust, novel approach to plausable simulation in physically-based character animation systems. \cite{2010-TOG-gbwc}
+We present a 
 \end{abstract}
 
-\section{Introduction}
-
 \section{Related Work}
-\subsection{}
+\subsection{Physically-Based Animation Systems}
 
-Some work has been done 
+Traditional character animation systems used in film \& games rely artist-driven keyframing techniques. While proven to be effective, keyframing is known to be time-consuming and highly dependent on the skill of the artist.
 
-\section{References}
+\subsection{Human Sensory Awareness}
 
-\printbibliography
+Significant study has been done in the field of neuroscience on the brain's representation of the human body. This topic has been coined various names self-attribution \cite{2010-TOG-gbwc}, the brain-body model \cite{}, and ... . However, there has not been a call to quantify this work into representations that can recreate convincing human motor error; integration into physically-based character animation systems may be a unique use-case in this instance.
 
+Locomotion in the field or robotics
 
-http://www.lirmm.fr/~fraisse/wp-content/uploads/2012/08/JABB-PAPER-2011.pdf (see sources)
-
-
-http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=5306089&tag=1
-http://www.sciencedirect.com/science/article/pii/S096663621400681X
-http://www.mdpi.com/1424-8220/14/9/16955
+\bibliographystyle{plain}
+\bibliography{paper}
 
 \end{document}
