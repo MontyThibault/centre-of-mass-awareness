@@ -206,7 +206,7 @@ class SNMApp(wx.App):
             currPhi = controller.getPhase()
         
     def updateCOMError(self):
-        sins = [0.3, 1, 2, 3, 0.5, 1.3, 1.8, 3.4, 0.4, 0.8, 1.5, 3.04]
+        sins = [0.3, 1, 2, 3, 0.5, 1.3, 1.8, 3.4, 0.4, 0.811, 1.5, 3.04]
         t = time.time()
         
         # Map each sin weight to the reciprocal of the frequency

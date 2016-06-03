@@ -1,7 +1,7 @@
 from ctypes import *
 import Calibration as C
 import os
-import unittest
+import sys
 
 class Singleton(object):
 	"""Ensures only one instance of subtypes exist at a time."""
@@ -12,17 +12,21 @@ class Singleton(object):
 			class_._instance = object.__new__(class_, *args, **kwargs)
 		return class_._instance
 
-print(os.path.dirname(os.path.realpath(__file__)) + 
-		"/../LabProUSB_SDK/redist/LabProUSB_lib/win64/LabProUSB.dll")
+
 
 class LabProUSB(Singleton):
 	""" Load the library only once & prints error message given the common 
 	interface is `0 = success`. See `LabProUSB_interface.h for function 
 	descriptions. """
 
+	# Load dependency
+	cdll.LoadLibrary(os.path.dirname(os.path.realpath(__file__)) + 
+		"/../LabProUSB_SDK/redist/LabProUSB_lib/win64/wdapi921.dll")
+
 	_raw = cdll.LoadLibrary(
 		os.path.dirname(os.path.realpath(__file__)) + 
 		"/../LabProUSB_SDK/redist/LabProUSB_lib/win64/LabProUSB.dll")
+
 
 	# Oddballs
 	def Close(self):
@@ -39,6 +43,7 @@ class LabProUSB(Singleton):
 
 		print("Sending program string: %s" % string)
 
+	# Normal methods
 	class ErrorWrapper(object):
 		def __init__(self, f):
 			self.f = f

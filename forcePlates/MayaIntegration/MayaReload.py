@@ -2,7 +2,7 @@
 
 import sys
 
-sys.path.append('C:/Users/Monty/Desktop/forcePlates/MayaIntegration')
+sys.path.append('C:/Users/Monty/Desktop/COMAwareness/forcePlates/MayaIntegration')
 
 import MayaScript
 reload(MayaScript)
