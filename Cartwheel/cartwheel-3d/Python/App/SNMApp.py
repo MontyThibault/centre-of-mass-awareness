@@ -166,9 +166,6 @@ class SNMApp(wx.App):
             self._glCanvas.endShadows()    
             
         if len(self._characters) > 0:
-            
-            self.updateCOMError()
-            
             self.COMPanel.update()
             
             self._characters[0].drawRealCOM(flags)
@@ -549,32 +546,42 @@ class SNMApp(wx.App):
         self._snapshotTree = SnapshotBranch()    
         
     def setCOMX(self, val):
-        if len(self._characters) > 0:
-            self._characters[0].COMController.COMOffset.x = val
+        pass
+    
+        # if len(self._characters) > 0:
+        #    self._characters[0].COMController.COMOffset.x = val
     
     def getCOMX(self):
         if len(self._characters) > 0:
-            return self._characters[0].COMController.COMOffset.x
+            
+            controller = self._characters[0].COMController
+            return controller.getPerceivedCOM().x - controller.getRealCOM().x
         else:
             return 0
         
     def setCOMY(self, val):
-        if len(self._characters) > 0:
-            self._characters[0].COMController.COMOffset.y = val
+        pass 
+        
+        # if len(self._characters) > 0:
+        #    self._characters[0].COMController.COMOffset.y = val
     
     def getCOMY(self):
         if len(self._characters) > 0:
-            return self._characters[0].COMController.COMOffset.y
+            controller = self._characters[0].COMController
+            return controller.getPerceivedCOM().y - controller.getRealCOM().y
         else:
             return 0
         
     def setCOMZ(self, val):
-        if len(self._characters) > 0:
-            self._characters[0].COMController.COMOffset.z = val
+        pass
+    
+        # if len(self._characters) > 0:
+        #    self._characters[0].COMController.COMOffset.z = val
     
     def getCOMZ(self):
         if len(self._characters) > 0:
-            return self._characters[0].COMController.COMOffset.z
+            controller = self._characters[0].COMController
+            return controller.getPerceivedCOM().z - controller.getRealCOM().z
         else:
             return 0
         

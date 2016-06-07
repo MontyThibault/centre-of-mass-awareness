@@ -7643,58 +7643,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_CentreOfMass_COMOffset_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  CentreOfMass *arg1 = (CentreOfMass *) 0 ;
-  Vector3d *arg2 = (Vector3d *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:CentreOfMass_COMOffset_set",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_CentreOfMass, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CentreOfMass_COMOffset_set" "', argument " "1"" of type '" "CentreOfMass *""'"); 
-  }
-  arg1 = reinterpret_cast< CentreOfMass * >(argp1);
-  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_Vector3d, 0 |  0 );
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "CentreOfMass_COMOffset_set" "', argument " "2"" of type '" "Vector3d *""'"); 
-  }
-  arg2 = reinterpret_cast< Vector3d * >(argp2);
-  if (arg1) (arg1)->COMOffset = *arg2;
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_CentreOfMass_COMOffset_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  CentreOfMass *arg1 = (CentreOfMass *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  Vector3d *result = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:CentreOfMass_COMOffset_get",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_CentreOfMass, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CentreOfMass_COMOffset_get" "', argument " "1"" of type '" "CentreOfMass *""'"); 
-  }
-  arg1 = reinterpret_cast< CentreOfMass * >(argp1);
-  result = (Vector3d *)& ((arg1)->COMOffset);
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Vector3d, 0 |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *CentreOfMass_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *obj;
   if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
@@ -22531,8 +22479,6 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"CentreOfMass_getRealCOM", _wrap_CentreOfMass_getRealCOM, METH_VARARGS, NULL},
 	 { (char *)"CentreOfMass_getRealCOMVelocity", _wrap_CentreOfMass_getRealCOMVelocity, METH_VARARGS, NULL},
 	 { (char *)"CentreOfMass_getPerceivedCOM", _wrap_CentreOfMass_getPerceivedCOM, METH_VARARGS, NULL},
-	 { (char *)"CentreOfMass_COMOffset_set", _wrap_CentreOfMass_COMOffset_set, METH_VARARGS, NULL},
-	 { (char *)"CentreOfMass_COMOffset_get", _wrap_CentreOfMass_COMOffset_get, METH_VARARGS, NULL},
 	 { (char *)"CentreOfMass_swigregister", CentreOfMass_swigregister, METH_VARARGS, NULL},
 	 { (char *)"delete_BalanceFeedback", _wrap_delete_BalanceFeedback, METH_VARARGS, NULL},
 	 { (char *)"BalanceFeedback_getFeedbackContribution", _wrap_BalanceFeedback_getFeedbackContribution, METH_VARARGS, NULL},

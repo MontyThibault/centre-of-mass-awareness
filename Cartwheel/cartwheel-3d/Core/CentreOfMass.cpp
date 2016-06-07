@@ -5,7 +5,6 @@ CentreOfMass::CentreOfMass() {
 
 CentreOfMass::CentreOfMass(ArticulatedFigure *af) {
 	this->af = af;
-	this->COMOffset = Vector3d();
 }
 
 CentreOfMass::~CentreOfMass(void) {
@@ -32,8 +31,7 @@ Vector3d CentreOfMass::getRealCOM(void) {
 }
 
 Vector3d CentreOfMass::getPerceivedCOM(void) {
-	return this->getRealCOM() + this->COMOffset;
-
+	return this->getRealCOM();
 }
 
 Vector3d CentreOfMass::getRealCOMVelocity(void) {

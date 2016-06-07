@@ -15,8 +15,6 @@ public:
 
 	Vector3d getPerceivedCOM(void);
 
-	Vector3d COMOffset;
-
 private:
 	ArticulatedFigure *af;
 
