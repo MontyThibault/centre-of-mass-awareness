@@ -2,17 +2,18 @@
 #include <Utils/Utils.h>
 #include <stdio.h>
 
+
 /**
 	the constructor
 */
 Character::Character() : ArticulatedFigure() {
-	this->COM_offset = Vector3d();
+	this->COMController = CentreOfMass((ArticulatedFigure*) this);
 }
 
 /**
 	the destructor
 */
-Character::~Character(void){
+Character::~Character(void) {
 	//nothing to do. We'll let whoever created the world deal with freeing it up
 }
 
@@ -246,64 +247,39 @@ void Character::getReverseStanceState(ReducedCharacterStateArray* state){
 	This method is used to compute the center of mass of the articulated figure.
 */
 Vector3d Character::getCOM(){
-	Vector3d COM = Vector3d(root->getCMPosition()) * root->getMass();
-	double curMass = root->getMass();
-	double totalMass = curMass;
-	for (uint i=0; i <joints.size(); i++){
-		curMass = joints[i]->child->getMass();
-		totalMass += curMass;
-		COM.addScaledVector(joints[i]->child->getCMPosition() , curMass);
-	}
-
-	COM /= totalMass;
-
-	Vector3d COM_altered = COM + this->COM_offset;
-
-	return COM_altered;
+	return this->COMController.getRealCOM();
 }
 
 /**
 	This method is used to compute the velocity of the center of mass of the articulated figure.
 */
 Vector3d Character::getCOMVelocity(){
-	Vector3d COMVel = Vector3d(root->getCMVelocity()) * root->getMass();
-	double curMass = root->getMass();
-	double totalMass = curMass;
-	for (uint i=0; i <joints.size(); i++){
-		curMass = joints[i]->child->getMass();
-		totalMass += curMass;
-		COMVel.addScaledVector(joints[i]->child->getCMVelocity() , curMass);
-	}
-
-	COMVel /= totalMass;
-
-	return COMVel;
+	return this->COMController.getRealCOMVelocity();
 }
 
 void Character::drawRealCOM(int flags) {
 	if(!(flags & SHOW_CENTER_OF_MASS))
 		return;
 
-	Vector3d COM = this->getCOM();
-	Vector3d COM_unaltered = COM - this->COM_offset;
+	Vector3d COM = this->COMController.getRealCOM();
 
 	glPushMatrix();
 
 	glDisable(GL_DEPTH_TEST);
 	glColor3ub(255, 0, 0);
 
-	GLUtils::drawSphere(COM_unaltered, 0.04, 11);
+	GLUtils::drawSphere(COM, 0.04, 11);
 
 	glEnable(GL_DEPTH_TEST);
 	
 	glPopMatrix();
 }
 
-void Character::drawPercievedCOM(int flags) {
+void Character::drawPerceivedCOM(int flags) {
 	if(!(flags & SHOW_CENTER_OF_MASS)) 
 		return;
 
-	Vector3d COM = this->getCOM() - (this->COM_offset * 2);
+	Vector3d COM = this->COMController.getPerceivedCOM();
 
 	glPushMatrix();
 

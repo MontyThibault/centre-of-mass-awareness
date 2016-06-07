@@ -172,7 +172,7 @@ class SNMApp(wx.App):
             self.COMPanel.update()
             
             self._characters[0].drawRealCOM(flags)
-            self._characters[0].drawPercievedCOM(flags)
+            self._characters[0].drawPerceivedCOM(flags)
 
     def postDraw(self):
         """Perform some operation once the entire OpenGL window has been drawn"""
@@ -550,31 +550,31 @@ class SNMApp(wx.App):
         
     def setCOMX(self, val):
         if len(self._characters) > 0:
-            self._characters[0].COM_offset.x = val
+            self._characters[0].COMController.COMOffset.x = val
     
     def getCOMX(self):
         if len(self._characters) > 0:
-            return self._characters[0].COM_offset.x
+            return self._characters[0].COMController.COMOffset.x
         else:
             return 0
         
     def setCOMY(self, val):
         if len(self._characters) > 0:
-            self._characters[0].COM_offset.y = val
+            self._characters[0].COMController.COMOffset.y = val
     
     def getCOMY(self):
         if len(self._characters) > 0:
-            return self._characters[0].COM_offset.y
+            return self._characters[0].COMController.COMOffset.y
         else:
             return 0
         
     def setCOMZ(self, val):
         if len(self._characters) > 0:
-            self._characters[0].COM_offset.z = val
+            self._characters[0].COMController.COMOffset.z = val
     
     def getCOMZ(self):
         if len(self._characters) > 0:
-            return self._characters[0].COM_offset.z
+            return self._characters[0].COMController.COMOffset.z
         else:
             return 0
         

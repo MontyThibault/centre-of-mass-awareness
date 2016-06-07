@@ -59,6 +59,7 @@ friend class VirtualModelController;
 friend class BehaviourController;
 friend class TestApp;
 friend class TestApp2;
+friend class CentreOfMass;
 protected:
 	//this is the parent link
 	ArticulatedRigidBody* parent;

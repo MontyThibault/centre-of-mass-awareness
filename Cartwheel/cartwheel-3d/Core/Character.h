@@ -4,6 +4,7 @@
 #include <Physics/ArticulatedFigure.h>
 #include <Utils/Utils.h>
 #include "SimGlobals.h"
+#include "CentreOfMass.h"
 
 #include <GLUtils/GLMesh.h>
 #include <GLUtils/GLUtils.h>
@@ -49,7 +50,7 @@ public:
 	*/
 	Character();
 
-	Vector3d COM_offset;
+	CentreOfMass COMController;
 
 	/**
 		the destructor
@@ -171,7 +172,7 @@ public:
 	/**
 		This method draws coordinate aces at the percieved center of mass of the articulated figure.
 	*/
-	void drawPercievedCOM(int flags);
+	void drawPerceivedCOM(int flags);
 
 };
 
