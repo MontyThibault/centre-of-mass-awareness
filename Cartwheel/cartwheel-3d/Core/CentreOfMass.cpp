@@ -30,10 +30,6 @@ Vector3d CentreOfMass::getRealCOM(void) {
 
 }
 
-Vector3d CentreOfMass::getPerceivedCOM(void) {
-	return this->getRealCOM();
-}
-
 Vector3d CentreOfMass::getRealCOMVelocity(void) {
 	
 	ArticulatedRigidBody *root = this->af->root;
@@ -51,4 +47,37 @@ Vector3d CentreOfMass::getRealCOMVelocity(void) {
 	COMVel /= totalMass;
 
 	return COMVel;
+}
+
+Vector3d CentreOfMass::getPerceivedCOM(void) {
+
+	// if(this->currentCOM.length() == 0.0)
+	//	this->currentCOM = this->getRealCOM();
+
+	this->currentCOM -= this->gGrad(this->currentCOM) * 0.001;
+
+	return this->currentCOM;
+
+}
+
+double CentreOfMass::g(Vector3d p) {
+	Vector3d real = this->getRealCOM();
+
+	return (real - p).length();
+}
+
+Vector3d CentreOfMass::gGrad(Vector3d p) {
+	// We implement a simple gradient approximation using very small differences.
+	double epsilon = pow(10.0, -10.0);
+
+	Vector3d v;
+	double gp = this->g(p);
+
+	v.x = this->g(p + Vector3d(epsilon, 0, 0)) - gp;
+	v.y = this->g(p + Vector3d(0, epsilon, 0)) - gp;
+	v.z = this->g(p + Vector3d(0, 0, epsilon)) - gp;
+
+	v /= epsilon;
+
+	return v;
 }

@@ -247,7 +247,12 @@ void Character::getReverseStanceState(ReducedCharacterStateArray* state){
 	This method is used to compute the center of mass of the articulated figure.
 */
 Vector3d Character::getCOM(){
-	return this->COMController.getRealCOM();
+
+	// We must reverse the error in the perceived vs. the real centre of mass,
+	// otherwise the character corrects in the wrong direction.
+	Vector3d real = this->COMController.getRealCOM();
+	Vector3d diff = this->COMController.getPerceivedCOM() - real;
+	return real - diff;
 }
 
 /**
