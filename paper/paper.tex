@@ -1,4 +1,9 @@
+
 \documentclass[]{article}
+
+\usepackage{amssymb}
+\usepackage{amsmath}
+
 
 \title{Uncertainty in Centre of Mass and Transformation Frames Applied to Physically-Based Character Animation Systems}
 \author{Monty Thibault, Paul Kry}
@@ -20,7 +25,32 @@ Traditional character animation systems used in film \& games rely artist-driven
 
 Significant study has been done in the field of neuroscience on the brain's representation of the human body. This topic has been coined various names self-attribution \cite{2010-TOG-gbwc}, the brain-body model \cite{}, and ... . However, there has not been a call to quantify this work into representations that can recreate convincing human motor error; integration into physically-based character animation systems may be a unique use-case in this instance.
 
-Locomotion in the field or robotics
+\section{A Model of COM Estimation}
+
+We use a function $g: \mathbb{R}^3 \rightarrow \mathbb{R}$ to model the relative certainty that the centre of mass, $C_M$ lies at point $p \in \mathbb{R}^3$. The function itself is composed of the following components.
+
+\begin{gather}
+g = \alpha g_0 + V + \sum{J_R + J_V}
+\end{gather}
+
+Where $g_0$ is the distribution of the previous frame, $V$ is the velocity of the previous frame, $\alpha$ is a damping constraint, $J_R$ is the change from joint rotations, and $J_V$ is the change from joint torques.
+
+
+We then consider a stochastic walk of distance $d$ from the last estimate of $C_M$ weighted along the gradient of the function $g$. $d$ is given precisely as the change in the function $g$ monte-carlo sampled about the point $C_M$.
+
+\begin{gather}
+d = \iiint_M (g_0 - g)dV
+\end{gather}
+
+
+\section{}
+TODO
+
+\begin{enumerate}
+	\item{Better random sampling function. (more random sins?)}
+	\item{g function setup.}
+	\item{Volume integral setup.}
+\end{enumerate}
 
 \bibliographystyle{plain}
 \bibliography{paper}

@@ -124,6 +124,8 @@ class SNMApp(wx.App):
         self._showCenterOfMass = True
         
         self._COMErrorScale = 0.03
+        
+        self._timeAtStart = time.time() * 1000
             
     #
     # Private methods
@@ -167,6 +169,8 @@ class SNMApp(wx.App):
             
         if len(self._characters) > 0:
             self.COMPanel.update()
+            
+            self._characters[0].COMController.step()
             
             self._characters[0].drawRealCOM(flags)
             self._characters[0].drawPerceivedCOM(flags)

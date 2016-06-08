@@ -1,10 +1,25 @@
 #include "CentreOfMass.h"
 
+RigidBodyError::RigidBodyError(void) {
+}
+
+RigidBodyError::RigidBodyError(ArticulatedRigidBody *arb) {
+	this->arb = arb;
+}
+
 CentreOfMass::CentreOfMass() {
 }
 
 CentreOfMass::CentreOfMass(ArticulatedFigure *af) {
 	this->af = af;
+
+	for(unsigned i = 0; i < af->arbs.size(); i++) {
+		ArticulatedRigidBody *arb = af->arbs[i];
+
+		this->rbe.push_back(RigidBodyError(arb));
+	}
+
+	this->root = RigidBodyError(af->root);
 }
 
 CentreOfMass::~CentreOfMass(void) {
@@ -12,16 +27,18 @@ CentreOfMass::~CentreOfMass(void) {
 
 Vector3d CentreOfMass::getRealCOM(void) {
 	
-	ArticulatedRigidBody *root = this->af->root;
-	DynamicArray<Joint*> joints = this->af->joints;
+	ArticulatedRigidBody *root = this->root.arb;
 
 	Vector3d COM = Vector3d(root->getCMPosition()) * root->getMass();
 	double curMass = root->getMass();
 	double totalMass = curMass;
-	for (uint i=0; i <joints.size(); i++){
-		curMass = joints[i]->child->getMass();
+
+	DynamicArray<ArticulatedRigidBody*> arbs = this->af->arbs;
+
+	for (uint i=0; i < arbs.size(); i++){
+		curMass = arbs[i]->getMass();
 		totalMass += curMass;
-		COM.addScaledVector(joints[i]->child->getCMPosition() , curMass);
+		COM.addScaledVector(arbs[i]->getCMPosition() , curMass);
 	}
 
 	COM /= totalMass;
@@ -49,15 +66,40 @@ Vector3d CentreOfMass::getRealCOMVelocity(void) {
 	return COMVel;
 }
 
+// Each joint <-> rigid body needs an uncertainty measure on its CM position and velocity (not angular)
+
+
+/*
+ * This is called internally by the animation system. It is not called in 
+ * consistent intervals.
+ */
 Vector3d CentreOfMass::getPerceivedCOM(void) {
-
-	// if(this->currentCOM.length() == 0.0)
-	//	this->currentCOM = this->getRealCOM();
-
-	this->currentCOM -= this->gGrad(this->currentCOM) * 0.001;
-
 	return this->currentCOM;
+}
 
+// Returns a random number between -1 and 1
+double fRand() {
+	double r = (double) rand() / RAND_MAX;
+	return r * 2 - 1;
+}
+
+/*
+ * This method is called by the Python program on every frame draw.
+ */
+void CentreOfMass::step(void) {
+
+	// 30 fps
+	double timeDiff = 1.0 / 30.0;
+
+	Vector3d grad = this->gGrad(this->currentCOM);
+	
+	// NOT isotropic!
+	// Only an approximation of randomness for now
+	Vector3d randVec = Vector3d(fRand(), (fRand() + 1) / 2, fRand());
+
+	grad += randVec;
+
+	this->currentCOM -= grad * 0.01;
 }
 
 double CentreOfMass::g(Vector3d p) {
