@@ -1,6 +1,7 @@
 #include "CentreOfMass.h"
 
 RigidBodyError::RigidBodyError(void) {
+	this->arb = 0;
 }
 
 RigidBodyError::RigidBodyError(ArticulatedRigidBody *arb) {
@@ -38,11 +39,9 @@ void CentreOfMass::setRBE(void) {
 
 Vector3d CentreOfMass::getRealCOM(void) {
 	this->setRBE();
-	
-	// ArticulatedRigidBody *root = this->root.arb;
 
-	ArticulatedRigidBody *root = this->af->root;
-	//ArticulatedRigidBody *root = this->af->root;
+	ArticulatedRigidBody *root = this->root.arb;
+
 
 	Vector3d COM = Vector3d(root->getCMPosition()) * root->getMass();
 	double curMass = root->getMass();
