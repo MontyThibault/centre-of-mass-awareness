@@ -203,7 +203,7 @@ void CentreOfMass::stepDraw(const int samples) {
 		x = this->getCOMESample();
 
 		accumulator += x;
-		GLUtils::drawSphere(x, 0.025, 6);
+		GLUtils::drawSphere(x, 0.05, 3);
 	}
 
 	accumulator /= (double) samples;
