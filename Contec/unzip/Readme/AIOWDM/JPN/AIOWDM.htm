@@ -1,0 +1,755 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>API-PAC(W32) アナログ入出力ドライバ 説明</title>
+
+<!--(Meta)==========================================================-->
+
+<meta http-equiv=content-type content="text/html; charset=Shift_JIS">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=4939>
+<meta name=layout-width content=937>
+
+
+
+<!--(Style Sheet)===================================================-->
+
+<style>
+<!--
+
+BODY {
+	font-size: 11pt;
+	line-height: 1.3em;
+	margin: 0em 2em;
+	padding: 1em;
+	background-color: #ffffff;
+}
+
+H1 {
+	font-family: "ＭＳ Ｐゴシック";
+	font-weight: bold;
+	font-size: 16.0pt;
+	color: #ffffff;
+	margin-bottom: 15px;
+	background-color: #000080;
+}
+
+/*=(Generated Code)=================================================*/
+/*=(WARNING: DO NOT EDIT OR DELETE THIS SECTION!)===================*/
+/*begin!kadov{{=====================================================*/ 
+LI.kadov-H1 {
+	font-family: "ＭＳ Ｐゴシック";
+	font-weight: bold;
+	font-size: 16.0pt;
+	color: #ffffff;
+}
+/*}}end!kadov=======================================================*/ 
+
+
+
+H2 {
+	font-family: "ＭＳ Ｐゴシック";
+	font-weight: bold;
+	font-size: 14.0pt;
+	color: #000080;
+	margin-bottom: 10px;
+	background-color: #EEEEEE;
+}
+
+/*=(Generated Code)=================================================*/
+/*=(WARNING: DO NOT EDIT OR DELETE THIS SECTION!)===================*/
+/*begin!kadov{{=====================================================*/ 
+LI.kadov-H2 {
+	font-family: "ＭＳ Ｐゴシック";
+	font-weight: bold;
+	font-size: 14.0pt;
+	color: #000080;
+}
+/*}}end!kadov=======================================================*/ 
+
+
+
+H3 {
+	font-size: 12pt;
+	font-weight: bold;
+	font-style: normal;
+	color: #000080;
+}
+
+/*=(Generated Code)=================================================*/
+/*=(WARNING: DO NOT EDIT OR DELETE THIS SECTION!)===================*/
+/*begin!kadov{{=====================================================*/ 
+LI.kadov-H3 {
+	font-size: 12pt;
+	font-weight: bold;
+	font-style: normal;
+	color: #000080;
+}
+/*}}end!kadov=======================================================*/ 
+
+
+
+H4 {
+	font-size: 11pt;
+	font-weight: bold;
+	font-style: normal;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+/*=(Generated Code)=================================================*/
+/*=(WARNING: DO NOT EDIT OR DELETE THIS SECTION!)===================*/
+/*begin!kadov{{=====================================================*/ 
+LI.kadov-H4 {
+	font-size: 11pt;
+	font-weight: bold;
+	font-style: normal;
+}
+/*}}end!kadov=======================================================*/ 
+
+
+
+-->
+</style>
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<form name=url>
+<!--(Table)=========================================================-->
+<!--begin!kadov{{--><div align=center><!--}}end!kadov-->
+<table x-use-null-cells
+		style="float: aligncenter;
+				width: 100%;
+				border-color: #0063AD;
+				x-border-left: 2px #0063ad table-solid;
+				x-border-top: 2px #0063ad table-solid;
+				x-border-right: 2px #0063ad table-solid;
+				x-border-bottom: 2px #0063ad table-solid;
+				border-collapse: separate;
+				x-border-left: 2px #0063ad table-solid;
+				x-border-top: 2px #0063ad table-solid;
+				x-border-right: 2px #0063ad table-solid;
+				x-border-bottom: 2px #0063ad table-solid;
+				border-collapse: separate;"
+		width=100%
+		border=2
+		bordercolor=#0063ad>
+
+<tr style="background-color: #0063AD;"
+	bgcolor=#0063AD>
+<th><font style="font-size: large; color: #ffffff;"
+			size=5
+			color=#FFFFFF>アナログ入出力ドライバの説明</font></th></tr>
+</table>
+<!--begin!kadov{{--></div><!--}}end!kadov-->
+<p><a name=TOP><a name=#Top><a href="#Topic1">1. アナログ入出力ドライバについて</a><a 
+ href="#Topic2"><br>
+2. セレクションガイド</a><a href="#Topic3"><br>
+3. 仕様比較</a><a href="#Topic4"><br>
+4. API-AIO(WDM)の特徴</a><a href="#Topic5"><br>
+5. Ｑ＆Ａ</a></a></a></p>
+
+
+<!--(HR)============================================================-->
+<hr style="/*begin!kadov{{*/ float: aligncenter; /*}}end!kadov*/ ">
+
+
+<p>　</p>
+
+<h1>1. アナログ入出力ドライバについて</h1>
+
+<p>アナログ入出力ドライバには、API-AIO(WDM)とAPI-AIO(98/PC)という二つのドライバがあります。<br>
+API-AIO(WDM)は、Windows上でアナログ入出力を行うための新しいドライバソフトです。 従来製品版のAPI-AIO(98/PC)に対して「より使いやすく便利に」「より高機能に」を目指して開発されました。</p>
+
+<p>お客様にアナログ入出力デバイスを使用していただくにあたってはAPI-AIO(WDM)の使用をお勧めしますが、 動作環境が異なりますのでご注意ください。API-AIO(WDM)では、今後の新規OS、新規デバイスへの対応 
+ は行いますが、Windows NT4.0やWindows 95、ISAバス、Cバスへの対応を行う予定はありません。ご使用の環境がこれら に該当する場合、API-AIO(98/PC)をご使用ください。<br>
+(詳しくは<a href="#Topic3">3. 仕様比較</a>をご参照ください。)</p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		style="width: 100%;
+				border-spacing: 1px;
+				border-spacing: 1px;"
+		cellspacing=1
+		width=100%>
+
+<tr>
+<td style="text-align: right;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	align=right><!--kadov_tag{{<implicit_p>}}--><font style="font-size: xx-small;"
+														size=1><a href="#top"><img 
+ src="index.gif"
+	ALT=INDEX
+	style="width: 70px;
+			height: 15px;
+			border-style: none;
+			border-style: none;"
+	width=70
+	height=15
+	border=0></a></font></td></tr>
+</table>
+
+<p>　</p>
+
+<h1>2. セレクションガイド</h1>
+
+<p>ここでは、利用可能なドライバを簡単に選択できる、セレクションガイドを紹介します。</p>
+
+<p><img src="aioflow.GIF"
+		style="width: 704px;
+				height: 766px;
+				border-style: none;
+				border-style: none;"
+		width=704
+		height=766
+		border=0> </p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		style="width: 100%;
+				border-spacing: 1px;
+				border-spacing: 1px;"
+		cellspacing=1
+		width=100%>
+
+<tr>
+<td style="text-align: right;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	align=right><!--kadov_tag{{<implicit_p>}}--><font style="font-size: xx-small;"
+														size=1><a href="#top"><img 
+ src="index.gif"
+	ALT=INDEX
+	style="width: 70px;
+			height: 15px;
+			border-style: none;
+			border-style: none;"
+	width=70
+	height=15
+	border=0></a></font></td></tr>
+</table>
+
+<p>　</p>
+
+<h1>3. 仕様比較</h1>
+
+<p>両ドライバの仕様比較表です。</p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		style="background-color: #ffffff;
+				width: 796px;
+				font-size: 10pt;
+				border-spacing: 2px;
+				border-spacing: 2px"
+		cellspacing=2
+		bgcolor=#FFFFFF>
+
+<tr style="background-color: #DDDDD0;"
+	bgcolor=#DDDDD0>
+<th style="padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;">仕様</th>
+<th style="padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;">API-AIO(WDM)</th>
+<th style="padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;" width="307">API-AIO(98/PC)</th></tr>
+
+<tr style="background-color: #EEEEEE; x-cell-content-align: top;"
+	bgcolor=#EEEEEE
+	valign=top>
+<td style="padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;">サポートOS</td>
+<td style="padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"><span>&lt;32ビットOS&gt;</span><br>
+Microsoft Windows 10<br>
+Microsoft Windows 8.1<br>
+Microsoft Windows 8<br>
+Microsoft Windows 7<br>
+Microsoft Windows Server 2008<br>
+Microsoft Windows Vista<br>
+Microsoft Windows Server 2003<br>
+Microsoft Windows XP Home Edition<br>
+Microsoft Windows XP Professional<br>
+Microsoft Windows 2000 Professional<br>
+Microsoft Windows Me<br>
+Microsoft Windows 98 Second Edition<br>
+Microsoft Windows 98<span><br>
+<br>
+&lt;64ビットOS&gt;<br>
+Microsoft Windows 10 x64 Edition<br>
+Microsoft Windows 8.1 x64 Edition<br>
+Microsoft Windows 8 x64 Edition<br>
+Microsoft Windows 7 x64 Edition<br>
+Microsoft Windows Server 2008 x64 Edition(*1)<br>
+Microsoft Windows Vista x64 Edition(*1)<br>
+Microsoft Windows Server 2003 x64 Edition(*1)<br>
+Microsoft Windows XP Professional x64 Edition(*1)</span><p>
+(*1)WOW64 未サポート</td>
+<td style="padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;" width="307">Microsoft Windows Vista<br>
+Microsoft Windows Server 2003<br>
+Microsoft Windows XP Home Edition<br>
+Microsoft Windows XP Professional<br>
+Microsoft Windows 2000 Professional<br>
+Microsoft Windows NT Workstation 4.0<br>
+Microsoft Windows NT Workstation 3.51<br>
+Microsoft Windows Me<br>
+Microsoft Windows 98 Second Edition<br>
+Microsoft Windows 98<br>
+Microsoft Windows 95</td></tr>
+
+<tr style="background-color: #EEEEEE; x-cell-content-align: top;"
+	bgcolor=#EEEEEE
+	valign=top>
+<td style="padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;">サポート言語</td>
+<td style="padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;">Microsoft Visual Basic .NET 2002, 2003<br>
+Microsoft Visual Basic Ver5.0, 6.0, 2005(*1), 2008(*1), 2010(*1), 2012(*1), 2013(*1)<br>
+Microsoft Visual C++ .NET 2002(*2), 2003(*2)<br>
+Microsoft Visual C++ Ver5.0, 6.0, 2005(*3), 2008(*3), 2010(*3), 2012, 2013<br>
+Microsoft Visual C# .NET 2002, 2003<br>
+Microsoft Visual C# 2005(*1), 2008(*1), 2010(*1), 2012(*1), 2013(*1)<br>
+Borland Delphi Ver5.0, 6.0<br>
+Borland C++ Builder Ver5.0, 6.0<p>
+(*1)Express Edition対応　(*2)MFCのみ対応<br>
+(*3)C++/CLI対応(Express Edition除く)</td>
+<td style="padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;" width="307">Microsoft Visual Basic Ver4.0, 5.0, 6.0<br>
+Microsoft Visual C++ Ver2.0, 4.0, 5.0, 6.0<br>
+Borland Delphi Ver4.0, 5.0, 6.0<br>
+Borland C++ Builder Ver4.0, 5.0, 6.0<br>
+Borland C++ Ver4.50, 5.0</td></tr>
+
+<tr style="background-color: #EEEEEE; x-cell-content-align: top;"
+	bgcolor=#EEEEEE
+	valign=top>
+<td ROWSPAN=6
+	style="padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;">サポートデバイス</td>
+<td style="padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"><b style="font-weight: bold;">PCI Expressバスボード<span 
+ style="font-weight: normal;"><br>
+AIO-121601UE3-PE<br>
+AIO-121601E3-PE<br>
+AIO-161601UE3-PE<br>
+AIO-161601E3-PE<br>
+AIO-163202F-PE<br>
+AIO-160802L-LPE<br>
+AI-1616L-LPE<br>
+AO-1604L-LPE</span></b><br>
+AIO-160802LI-PE<br>
+AI-1616LI-PE<br>
+AO-1604LI-PE<br>
+AI-1664LA-LPE<br>
+AO-1608L-LPE<br>
+AO-1616L-LPE</td>
+<td style="padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;" width="307"><b style="font-weight: bold;">PCI Expressバスボード</b><br>
+AIO-121601UE3-PE<br>
+AIO-121601E3-PE<br>
+AIO-161601UE3-PE<br>
+AIO-161601E3-PE</td></tr>
+
+<tr style="background-color: #EEEEEE; x-cell-content-align: top;"
+	bgcolor=#EEEEEE
+	valign=top>
+<td_null>
+<td style="padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"><b style="font-weight: bold;">カードバス</b><br>
+ADA16-32/2(CB)F<br>
+ADA16-8/2(CB)L</td>
+<td style="padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;" width="307">
+<p><b style="font-weight: bold;">カードバス</b><br>
+なし</td></tr>
+
+<tr style="background-color: #EEEEEE; x-cell-content-align: top;"
+	bgcolor=#EEEEEE
+	valign=top>
+<td_null>
+<td style="padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"><b style="font-weight: bold;">PCIバスボード</b><br>
+ADA16-32/2(PCI)F, ADA16-8/2(LPCI)L, ADAI16-8/2(LPCI)L<br>
+AD16-64(LPCI)LA, AD16-16(LPCI)L, ADI16-16(LPCI)L<br>
+DA16-16(LPCI)L, DA16-8(LPCI)L, DA16-4(LPCI)L<br>
+DAI16-4(LPCI)L<br>
+AI-1204Z-PCI<br>
+<br>
+AIO-121602AH-PCI, AIO-121602AL-PCI<br>
+AI-1216AH-PCI, AI-1216AL-PCI<br>
+<br>
+AIO-121601M-PCI<br>
+<br>
+AI-1216B-RB1-PCI, AI-1216B-RU1-PCI<br>
+<br>
+AD12-16(PCI)E, AD12-16U(PCI)E, AD12-16U(PCI)EH<br>
+AD16-16(PCI)E, AD16-16U(PCI)EH<br>
+AD12-16(PCI)EV, AD12-16U(PCI)EV<br>
+AD16-16(PCI)EV, AD16-16U(PCI)EV<br>
+ADI12-16(PCI)<br>
+AD12-64(PCI), AD12-16(PCI)<br>
+ADI16-4C(PCI), ADI16-4L(PCI)<br>
+<br>
+DA12-16(PCI), DA12-8(PCI), DA12-4(PCI)<br>
+DAI16-4C(PCI)</td>
+<td style="padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;" width="307"><b style="font-weight: bold;">PCIバスボード</b><br>
+AD12-16(PCI)E, AD12-16U(PCI)E, AD12-16U(PCI)EH<br>
+AD16-16(PCI)E, AD16-16U(PCI)EH<br>
+AD12-16(PCI)EV, AD12-16U(PCI)EV<br>
+AD16-16(PCI)EV, AD16-16U(PCI)EV<br>
+ADI12-16(PCI)<br>
+AD12-64(PCI), AD12-16(PCI)<br>
+ADI16-4C(PCI), ADI16-4L(PCI)<br>
+<br>
+DA12-16(PCI), DA12-8(PCI), DA12-4(PCI)<br>
+DAI16-4C(PCI)</td></tr>
+
+<tr style="background-color: #EEEEEE; x-cell-content-align: top;"
+	bgcolor=#EEEEEE
+	valign=top>
+<td_null>
+<td style="padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"><b style="font-weight: bold;">PCカード</b><br>
+AD12-8(PM)(※<span>64ビットOS対象外)</span></td>
+<td style="padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;" width="307"><b style="font-weight: bold;">PCカード</b><br>
+AD12-8(PM)</td></tr>
+
+<tr style="background-color: #EEEEEE; x-cell-content-align: top;"
+	bgcolor=#EEEEEE
+	valign=top>
+<td_null>
+<td style="padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"><b style="font-weight: bold;">ISAバスボード</b><br>
+なし</td>
+<td style="padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;" width="307"><b style="font-weight: bold;">ISAバスボード</b><br>
+AD12-16(PC)EH, AD12-16U(PC)EH, AD16-16(PC)EH,<br>
+AD16-16U(PC)EH, ADI12-16(PC), AD12-16(PC),<br>
+AD12-16LG(PC), AD12-8LT(PC),<br>
+ADI12-8CL(PC), ADI12-8CL(PC)H,<br>
+<br>
+DA12-4(PC), DA12-6LC(PC), DA12-8L(PC),<br>
+DAI12-4C(PC), DAI12-8C(PC)</td></tr>
+
+<tr style="background-color: #EEEEEE; x-cell-content-align: top;"
+	bgcolor=#EEEEEE
+	valign=top>
+<td_null>
+<td style="padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;"><b style="font-weight: bold;">Cバスボード</b><br>
+なし</td>
+<td style="padding-left: 2px;
+			padding-top: 2px;
+			padding-right: 2px;
+			padding-bottom: 2px;" width="307"><b style="font-weight: bold;">Cバスボード</b><br>
+AD12-16(98)EH, AD12-16U(98)EH, AD16-16(98)EH,<br>
+AD16-16U(98)EH, AD12-8T(98)H, AD12-16T(98)H,<br>
+AD12-16TA(98)H, AD12-16F(98)H, AD12-32F(98)H,<br>
+AD12-8RT(98)H, AD12-16RT(98)H, ADA12-8/2(98)H,<br>
+ADI12-4C(98)H, ADI12-8C(98)H, ADI12-8CL(98)H,<br>
+<br>
+DA12-16(98), DA12-2T(98), DA12-4C(98),<br>
+DA12-4T(98), DA12-8(98),<br>
+DAI12-4C(98), DAI12-8C(98)</td></tr>
+</table>
+　<table x-use-null-cells
+		style="width: 100%;
+				border-spacing: 1px;
+				border-spacing: 1px;"
+		cellspacing=1
+		width=100%>
+
+<tr>
+<td style="text-align: right;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	align=right><!--kadov_tag{{<implicit_p>}}--><font style="font-size: xx-small;"
+														size=1><a href="#top"><img 
+ src="index.gif"
+	ALT=INDEX
+	style="width: 70px;
+			height: 15px;
+			border-style: none;
+			border-style: none;"
+	width=70
+	height=15
+	border=0></a></font></td></tr>
+</table>
+
+<p>　</p>
+
+<h1>4. API-AIO(WDM)の特徴</h1>
+
+<h2>より分かりやすいユーザインターフェースに</h2>
+
+<p>機能ごとに分類された関数ラインナップは、シンプルで使いやすくなっています。<br>
+<br>
+使用可能なデバイスの一覧やチャネル数等の取得関数を用意し、汎用的なアプリケーションの作成を行いやすくなりました。<br>
+<br>
+また、各種サンプリング条件等は初期値を持っており、すべてのパラメータを調べなくても 「まず使ってみる」ことが可能です。<br>
+その為に、利用方法に応じた豊富なサンプルプログラムを用意しました。</p>
+
+<h2>より高機能に</h2>
+
+<li class=kadov-p
+	class=kadov-p><b style="font-weight: bold;">アナログ入力Eシリーズ(メモリ搭載ボード)</b><br>
+ご要望の多かったサンプリング開始条件と停止条件を別々に設定することが可能になりました。<br>
+例えば、外部信号を使ってサンプリングの開始と停止を制御することができるようになります。</li>
+
+<li class=kadov-p
+	class=kadov-p><b style="font-weight: bold;">アナログ入力メモリ非搭載ボード</b><br>
+ドライバメモリの実装により、アナログEシリーズのようにFIFOメモリを利用した無限サンプリングが可能になりました。<br>
+また、アナログトリガ(レベルトリガ)を利用することができるようになりました。</li>
+
+<li class=kadov-p
+	class=kadov-p><b style="font-weight: bold;">PCカード(AD12-8(PM))</b><br>
+カードメモリのデータ数を読めるようになりました。</li>
+
+<li class=kadov-p
+	class=kadov-p>
+<b style="font-weight: bold;">アナログ入力全般</b><b><br>
+指定回数のサンプリング毎にイベント発生</b><br>
+例えば、1000回サンプリング毎にイベントを発生させることができます。これにより、サンプリング中に一定間隔で現在のデータをグラフに表示するなどの処理が簡潔に記述できるようになります。<b><br>
+<br>
+サンプリング開始イベント</b><br>
+サンプリング終了の他に、開始イベントを追加しました。<br>
+例えば、サンプリング開始条件を外部信号に設定した場合に、いつサンプリングが開始されたかを簡単に知ることができます。 
+
+<h2>ハードウェア機能の違いを隠蔽化</h2>
+
+<p>ハードの違いを可能な限りドライバで隠蔽化いたしました。<br>
+例えば、メモリ非搭載のボードではドライバメモリを実装して、アナログ入力Eシリーズ相当の機能が実現されています。<br>
+APIはボード毎ではなく、機能毎に分類されているため、ボードの変更による修正が少なくなりました。<br>
+<br>
+この関数インターフェースは、USBデバイスのAPIとも共通です。</p>
+
+<h2>ドライバのインストール&amp;設定が簡単に</h2>
+
+<p>デバイスは自動検出され、ウィザードの指示に従ってドライバをインストールします。<br>
+インストール後はデバイスマネージャのプロパティページでデバイス名を決定するだけです。<br>　</p>
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		style="width: 100%;
+				border-spacing: 1px;
+				border-spacing: 1px;"
+		cellspacing=1
+		width=100%>
+
+<tr>
+<td style="text-align: right;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	align=right><!--kadov_tag{{<implicit_p>}}--><font style="font-size: xx-small;"
+														size=1><a href="#top"><img 
+ src="index.gif"
+	ALT=INDEX
+	style="width: 70px;
+			height: 15px;
+			border-style: none;
+			border-style: none;"
+	width=70
+	height=15
+	border=0></a></font></td></tr>
+</table>
+
+<p>　</p>
+
+<h1>5. Ｑ＆Ａ</h1>
+
+<p><a href="#TopicQA_1">API-AIO(WDM)は、API-AIO(98/PC)と互換性がありますか？</a><a href="#TopicQA_2"><br>
+API-AIO(98/PC)は今後販売されなくなるのですか？</a><a href="#TopicQA_3"><br>
+現在API-AIO(98/PC)を使用していますが、API-AIO(WDM)に変更できますか？</a><a href="#TopicQA_4"><br>
+二つのドライバを同時に使用できますか？</a><a href="#TopicQA_5"><br>
+API-AIO(WDM)は英語環境で使用できますか？</a><a href="#TopicQA_6"><br>
+API-AIO(98/PC)からAPI-AIO(WDM)へ移行するメリットは何ですか？</a></p>
+
+
+<!--(HR)============================================================-->
+<hr style="/*begin!kadov{{*/ float: aligncenter; /*}}end!kadov*/ ">
+
+
+<p><a name=#TopicQA_1><b>Q.API-AIO(WDM)は、API-AIO(98/PC)と互換性がありますか？</b></a></p>
+
+<p><b style="font-weight: bold;">A.</b> 両者のドライバには互換性はありません。<br>
+API-AIO(98/PC)ではメモリ搭載/非搭載ボードで使用する関数や機能が異なっていました。 API-AIO(WDM)ではこれらの違いを吸収して、同じインターフェースにすることを目的として開発されたため、 
+ API-AIO(98/PC)との互換性はありません。</p>
+
+<p>既存のシステムをそのままお使いの場合は、API-AIO(98/PC)をそのままご利用ください。<br>
+新たなシステムの開発や、使用するボードの変更をご検討の場合は、API-AIO(WDM)の利用をお勧めします。</p>
+
+
+<!--(HR)============================================================-->
+<hr style="/*begin!kadov{{*/ float: aligncenter; /*}}end!kadov*/ ">
+
+
+<p><a name=#TopicQA_2><b>Q.API-AIO(98/PC)は今後販売されなくなるのですか？</b></a></p>
+
+<p><b style="font-weight: bold;">A.</b> 今後も販売は継続されます。<br>
+既存のシステムを継続的に使用される場合は、引き続きAPI-AIO(98/PC)をご利用いただけます。</p>
+
+
+<!--(HR)============================================================-->
+<hr style="/*begin!kadov{{*/ float: aligncenter; /*}}end!kadov*/ ">
+
+
+<p><a name=#TopicQA_3><b>Q.現在API-AIO(98/PC)を使用していますが、API-AIO(WDM)に変更できますか？</b></a></p>
+
+<p><b style="font-weight: bold;">A.</b> はい。現在のドライバをアンインストールして、新たに使用するドライバをインストールします。</p>
+
+
+<!--(HR)============================================================-->
+<hr style="/*begin!kadov{{*/ float: aligncenter; /*}}end!kadov*/ ">
+
+
+<p><a name=#TopicQA_4><b>Q.二つのドライバを同時に使用できますか？</b></a></p>
+
+<p><b style="font-weight: bold;">A.</b> いいえ。１枚のボードに対して、二つのドライバを使用することはできません。<br>
+例えば、既にAPI-AIO(98/PC)を使用している場合、特定の機能だけをAPI-AIO(WDM)を 使ってプログラミングすることはできません。</p>
+
+
+<!--(HR)============================================================-->
+<hr style="/*begin!kadov{{*/ float: aligncenter; /*}}end!kadov*/ ">
+
+
+<p><a name=#TopicQA_5><b>Q.API-AIO(WDM)は英語環境で使用できますか？</b></a></p>
+
+<p><b style="font-weight: bold;">A.</b> 使用可能です。</p>
+
+
+<!--(HR)============================================================-->
+<hr style="/*begin!kadov{{*/ float: aligncenter; /*}}end!kadov*/ ">
+
+
+<p><a name=#TopicQA_6><b>Q.API-AIO(98/PC)からAPI-AIO(WDM)へ移行するメリットは何ですか？</b></a></p>
+
+<p><b style="font-weight: bold;">A.</b> </p>
+</li>
+
+<li class=kadov-p
+	class=kadov-p><b style="font-weight: bold;">デバイスに依存しないインターフェース</b><br>
+API-AIO(98/PC)ではメモリ搭載/非搭載のボードで使用する関数が異なりました。<br>
+API-AIO(WDM)では機能毎に分類された関数で提供しているので、デバイスによる使い方の違いがありません。<br>
+例えば、PCIバスボードをデスクトップで使っていてたシステムを、ノートパソコンとPCカードへ置き換える場合、 プログラムの修正が最小限ですみます。<br>
+様々なデバイスを利用してシステムを開発される場合は、ぜひAPI-AIO(WDM)をお勧めします。</li>
+
+<li class=kadov-p
+	class=kadov-p><b style="font-weight: bold;">アナログ入力Eシリーズをお使いの方へ</b><br>
+サンプリング開始条件と停止条件を個別に設定できるようになりました。<br>
+例えば外部信号でサンプリングの開始および停止を制御できるようになります。</li>
+
+<li class=kadov-p
+	class=kadov-p><b style="font-weight: bold;">メモリ非搭載タイプをお使いの方へ</b><br>
+メモリ搭載タイプと同様に扱えるドライバメモリの搭載によって、FIFOメモリを使用した長時間の連続サンプリングが 行えるようになりました。</li>
+
+<li class=kadov-p
+	class=kadov-p>
+<b style="font-weight: bold;">OSに依存しないドライバ</b><br>
+API-AIO(98/PC)ではWindows9X/WindowsNTのOSでそれぞれ異なるドライバを使用していました。<br>
+API-AIO(WDM)はWDM(Windows Driver Model)形式のデバイスドライバなので、 WindowsMe/98、Windows2000/XP/Vistaで共通のドライバになります。<br>
+作成したアプリケーションを配布する際も、NT用、9X用と分けて配布する必要がなくなります。 
+
+<!--(Table)=========================================================-->
+<table x-use-null-cells
+		style="width: 100%;
+				border-spacing: 1px;
+				border-spacing: 1px;"
+		cellspacing=1
+		width=100%>
+
+<tr>
+<td style="text-align: right;
+			padding-left: 1px;
+			padding-top: 1px;
+			padding-right: 1px;
+			padding-bottom: 1px;"
+	align=right><!--kadov_tag{{<implicit_p>}}--><font style="font-size: xx-small;"
+														size=1><a href="#top"><img 
+ src="index.gif"
+	ALT=INDEX
+	style="width: 70px;
+			height: 15px;
+			border-style: none;
+			border-style: none;"
+	width=70
+	height=15
+	border=0></a></font></td></tr>
+</table>
+</li>
+</form>
+
+</body>
+
+</html>
