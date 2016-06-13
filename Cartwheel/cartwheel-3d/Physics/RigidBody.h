@@ -355,7 +355,7 @@ public:
 	/**
 		Returns the mass of the rigid body
 	*/
-	inline double getMass(){
+	double getMass(){
 		return props.mass;
 	}
 

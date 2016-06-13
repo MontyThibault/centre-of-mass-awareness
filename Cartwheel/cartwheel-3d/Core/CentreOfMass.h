@@ -53,6 +53,11 @@ private:
 	Vector3d currentCOM;
 
 	/*
+	 * Updates this->rbe to wrap around the rigid bodies already present in the articulated figure.
+	 */
+	void setRBE(void);
+
+	/*
 	 * A centre-of-mass correction function that determines the path of a random walk 
 	 */
 	double g(Vector3d p);

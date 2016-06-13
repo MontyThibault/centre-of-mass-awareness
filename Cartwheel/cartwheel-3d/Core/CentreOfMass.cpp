@@ -12,22 +12,37 @@ CentreOfMass::CentreOfMass() {
 
 CentreOfMass::CentreOfMass(ArticulatedFigure *af) {
 	this->af = af;
-
-	for(unsigned i = 0; i < af->arbs.size(); i++) {
-		ArticulatedRigidBody *arb = af->arbs[i];
-
-		this->rbe.push_back(RigidBodyError(arb));
-	}
-
-	this->root = RigidBodyError(af->root);
 }
 
 CentreOfMass::~CentreOfMass(void) {
 }
 
+void CentreOfMass::setRBE(void) {
+	// If root pointer is already set
+	if(this->root.arb) 
+		return;
+
+	// If the articulated figure's root pointer is not yet set
+	if(this->af->root == 0)
+		return;
+
+
+	for(unsigned i = 0; i < this->af->arbs.size(); i++) {
+		ArticulatedRigidBody *arb = this->af->arbs[i];
+
+		this->rbe.push_back(RigidBodyError(arb));
+	}
+
+	this->root = RigidBodyError(this->af->root);
+}
+
 Vector3d CentreOfMass::getRealCOM(void) {
+	this->setRBE();
 	
-	ArticulatedRigidBody *root = this->root.arb;
+	// ArticulatedRigidBody *root = this->root.arb;
+
+	ArticulatedRigidBody *root = this->af->root;
+	//ArticulatedRigidBody *root = this->af->root;
 
 	Vector3d COM = Vector3d(root->getCMPosition()) * root->getMass();
 	double curMass = root->getMass();
@@ -44,7 +59,6 @@ Vector3d CentreOfMass::getRealCOM(void) {
 	COM /= totalMass;
 
 	return COM;
-
 }
 
 Vector3d CentreOfMass::getRealCOMVelocity(void) {
