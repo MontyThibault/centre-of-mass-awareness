@@ -7878,6 +7878,36 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_CentreOfMass_stepDraw(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  CentreOfMass *arg1 = (CentreOfMass *) 0 ;
+  int arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:CentreOfMass_stepDraw",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_CentreOfMass, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CentreOfMass_stepDraw" "', argument " "1"" of type '" "CentreOfMass *""'"); 
+  }
+  arg1 = reinterpret_cast< CentreOfMass * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "CentreOfMass_stepDraw" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  (arg1)->stepDraw(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *CentreOfMass_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *obj;
   if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
@@ -22723,6 +22753,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"CentreOfMass_getCOME", _wrap_CentreOfMass_getCOME, METH_VARARGS, NULL},
 	 { (char *)"CentreOfMass_getCOMVelocityE", _wrap_CentreOfMass_getCOMVelocityE, METH_VARARGS, NULL},
 	 { (char *)"CentreOfMass_step", _wrap_CentreOfMass_step, METH_VARARGS, NULL},
+	 { (char *)"CentreOfMass_stepDraw", _wrap_CentreOfMass_stepDraw, METH_VARARGS, NULL},
 	 { (char *)"CentreOfMass_swigregister", CentreOfMass_swigregister, METH_VARARGS, NULL},
 	 { (char *)"delete_BalanceFeedback", _wrap_delete_BalanceFeedback, METH_VARARGS, NULL},
 	 { (char *)"BalanceFeedback_getFeedbackContribution", _wrap_BalanceFeedback_getFeedbackContribution, METH_VARARGS, NULL},

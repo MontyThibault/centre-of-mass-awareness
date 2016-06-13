@@ -39,6 +39,7 @@ public:
 	Vector3d getCOMVelocityE(void);
 
 	void step(void);	
+	void stepDraw(const int samples);
 
 private:
 	/*

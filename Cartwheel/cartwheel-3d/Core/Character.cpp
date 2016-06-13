@@ -288,14 +288,29 @@ void Character::drawPerceivedCOM(int flags) {
 	if(!(flags & SHOW_CENTER_OF_MASS)) 
 		return;
 
-	Vector3d COM = this->COMController.getCOME();
-
 	glPushMatrix();
 
 	glDisable(GL_DEPTH_TEST);
+	
+
+	// Draw point cloud
+
+	// glEnable(GL_BLEND); - Already enabled
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	
+	const int samples = 25;
+	glColor4ub(230, 0, 172, (int) ceil(255.0 / samples) * 3);
+	
+	this->COMController.stepDraw(samples);
+
+	// Draw COM
+
 	glColor3ub(128, 0, 0);
 
+	Vector3d COM = this->COMController.getCOME();
+
 	GLUtils::drawSphere(COM, 0.025, 11);
+
 
 	glEnable(GL_DEPTH_TEST);
 	

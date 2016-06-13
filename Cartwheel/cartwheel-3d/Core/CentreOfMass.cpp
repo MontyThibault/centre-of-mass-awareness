@@ -3,7 +3,7 @@
 
 // Returns a random number in [0, 1)
 double fRand() {
-	double r = (double) rand() / RAND_MAX;
+	return (double) rand() / RAND_MAX;
 }
 
 // Box-muller transform
@@ -35,7 +35,7 @@ RigidBodyError::RigidBodyError(ArticulatedRigidBody *arb) {
 double RigidBodyError::getMassE() {
 
 	double mass = this->arb->getMass();
-	double error = 0.3;
+	double error = 0.5;
 	
 	return gaussian(mass, error);
 }
@@ -47,7 +47,7 @@ Vector3d RigidBodyError::getCMPositionE() {
 	Vector3d cm = this->arb->getCMPosition(),
 		v = this->arb->getCMVelocity();
 
-	double error = 0.5; // +- 50% of body velocity
+	double error = 0.25; // +- 50% of body velocity
 
 	return cm + (v * gaussian(0, error));
 }
@@ -174,29 +174,9 @@ Vector3d CentreOfMass::getCOMESample() {
 
 
 /*
- * This method is called by the Python program on every frame draw. This is 
- * where we should do updates.
+ * This method is called on every frame draw. This is where we should do updates.
  */
 void CentreOfMass::step(void) {
-
-	/*
-
-	// 30 fps
-	double timeDiff = 1.0 / 30.0;
-
-	Vector3d grad = this->gGrad(this->currentCOM);
-	
-	// NOT isotropic!
-	// Only an approximation of randomness for now
-	Vector3d randVec = Vector3d(fRand(), (fRand() + 1) / 2, fRand());
-
-	grad += randVec;
-
-	this->currentCOM -= grad * 0.01;
-
-	*/
-
-	////////////////////////////////
 
 	// Simple monte-carlo integration
 	const int samples = 10;
@@ -209,30 +189,28 @@ void CentreOfMass::step(void) {
 	accumulator /= (double) samples;
 
 	this->currentCOM = accumulator;
+}
 
+/*
+ * Special method for point cloud visualization.
+ */
+void CentreOfMass::stepDraw(const int samples) {
 
-	/*
-	this->setRBE();
+	// Simple monte-carlo integration
+	Vector3d accumulator, x;
+	
+	for(uint i = 0; i < samples; i++) {
+		x = this->getCOMESample();
 
-	ArticulatedRigidBody *root = this->root.arb;
-
-	Vector3d COM = Vector3d(root->getCMPosition()) * root->getMass();
-	double curMass = root->getMass();
-	double totalMass = curMass;
-
-	DynamicArray<ArticulatedRigidBody*> arbs = this->af->arbs;
-
-	for (uint i=0; i < arbs.size(); i++){
-		curMass = arbs[i]->getMass();
-		totalMass += curMass;
-		COM.addScaledVector(arbs[i]->getCMPosition() , curMass);
+		accumulator += x;
+		GLUtils::drawSphere(x, 0.025, 6);
 	}
 
-	COM /= totalMass;
+	accumulator /= (double) samples;
 
-	return COM;
-	*/
+	this->currentCOM = accumulator;
 }
+
 
 double CentreOfMass::g(Vector3d p) {
 	Vector3d real = this->getCOM();
