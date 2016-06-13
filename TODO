@@ -6,7 +6,4 @@
 - Consider joint rotation error models 
 - Readings
 
-
-
-- Migrate to VS2015
-
+- Migrate to VS2015/CMake
