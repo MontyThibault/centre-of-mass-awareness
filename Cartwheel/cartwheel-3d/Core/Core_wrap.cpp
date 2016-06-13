@@ -7609,7 +7609,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_RigidBodyError_getMass(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_RigidBodyError_getMassE(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   RigidBodyError *arg1 = (RigidBodyError *) 0 ;
   void *argp1 = 0 ;
@@ -7617,13 +7617,13 @@ SWIGINTERN PyObject *_wrap_RigidBodyError_getMass(PyObject *SWIGUNUSEDPARM(self)
   PyObject * obj0 = 0 ;
   double result;
   
-  if (!PyArg_ParseTuple(args,(char *)"O:RigidBodyError_getMass",&obj0)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"O:RigidBodyError_getMassE",&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_RigidBodyError, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RigidBodyError_getMass" "', argument " "1"" of type '" "RigidBodyError *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RigidBodyError_getMassE" "', argument " "1"" of type '" "RigidBodyError *""'"); 
   }
   arg1 = reinterpret_cast< RigidBodyError * >(argp1);
-  result = (double)(arg1)->getMass();
+  result = (double)(arg1)->getMassE();
   resultobj = SWIG_From_double(static_cast< double >(result));
   return resultobj;
 fail:
@@ -7631,7 +7631,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_RigidBodyError_getCMPosition(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_RigidBodyError_getCMPositionE(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   RigidBodyError *arg1 = (RigidBodyError *) 0 ;
   void *argp1 = 0 ;
@@ -7639,13 +7639,13 @@ SWIGINTERN PyObject *_wrap_RigidBodyError_getCMPosition(PyObject *SWIGUNUSEDPARM
   PyObject * obj0 = 0 ;
   Vector3d result;
   
-  if (!PyArg_ParseTuple(args,(char *)"O:RigidBodyError_getCMPosition",&obj0)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"O:RigidBodyError_getCMPositionE",&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_RigidBodyError, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RigidBodyError_getCMPosition" "', argument " "1"" of type '" "RigidBodyError *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RigidBodyError_getCMPositionE" "', argument " "1"" of type '" "RigidBodyError *""'"); 
   }
   arg1 = reinterpret_cast< RigidBodyError * >(argp1);
-  result = (arg1)->getCMPosition();
+  result = (arg1)->getCMPositionE();
   resultobj = SWIG_NewPointerObj((new Vector3d(static_cast< const Vector3d& >(result))), SWIGTYPE_p_Vector3d, SWIG_POINTER_OWN |  0 );
   return resultobj;
 fail:
@@ -7769,7 +7769,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_CentreOfMass_getRealCOM(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_CentreOfMass_getCOM(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   CentreOfMass *arg1 = (CentreOfMass *) 0 ;
   void *argp1 = 0 ;
@@ -7777,13 +7777,13 @@ SWIGINTERN PyObject *_wrap_CentreOfMass_getRealCOM(PyObject *SWIGUNUSEDPARM(self
   PyObject * obj0 = 0 ;
   Vector3d result;
   
-  if (!PyArg_ParseTuple(args,(char *)"O:CentreOfMass_getRealCOM",&obj0)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"O:CentreOfMass_getCOM",&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_CentreOfMass, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CentreOfMass_getRealCOM" "', argument " "1"" of type '" "CentreOfMass *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CentreOfMass_getCOM" "', argument " "1"" of type '" "CentreOfMass *""'"); 
   }
   arg1 = reinterpret_cast< CentreOfMass * >(argp1);
-  result = (arg1)->getRealCOM();
+  result = (arg1)->getCOM();
   resultobj = SWIG_NewPointerObj((new Vector3d(static_cast< const Vector3d& >(result))), SWIGTYPE_p_Vector3d, SWIG_POINTER_OWN |  0 );
   return resultobj;
 fail:
@@ -7791,7 +7791,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_CentreOfMass_getRealCOMVelocity(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_CentreOfMass_getCOMVelocity(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   CentreOfMass *arg1 = (CentreOfMass *) 0 ;
   void *argp1 = 0 ;
@@ -7799,13 +7799,13 @@ SWIGINTERN PyObject *_wrap_CentreOfMass_getRealCOMVelocity(PyObject *SWIGUNUSEDP
   PyObject * obj0 = 0 ;
   Vector3d result;
   
-  if (!PyArg_ParseTuple(args,(char *)"O:CentreOfMass_getRealCOMVelocity",&obj0)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"O:CentreOfMass_getCOMVelocity",&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_CentreOfMass, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CentreOfMass_getRealCOMVelocity" "', argument " "1"" of type '" "CentreOfMass *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CentreOfMass_getCOMVelocity" "', argument " "1"" of type '" "CentreOfMass *""'"); 
   }
   arg1 = reinterpret_cast< CentreOfMass * >(argp1);
-  result = (arg1)->getRealCOMVelocity();
+  result = (arg1)->getCOMVelocity();
   resultobj = SWIG_NewPointerObj((new Vector3d(static_cast< const Vector3d& >(result))), SWIGTYPE_p_Vector3d, SWIG_POINTER_OWN |  0 );
   return resultobj;
 fail:
@@ -7813,7 +7813,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_CentreOfMass_getPerceivedCOM(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_CentreOfMass_getCOME(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   CentreOfMass *arg1 = (CentreOfMass *) 0 ;
   void *argp1 = 0 ;
@@ -7821,13 +7821,35 @@ SWIGINTERN PyObject *_wrap_CentreOfMass_getPerceivedCOM(PyObject *SWIGUNUSEDPARM
   PyObject * obj0 = 0 ;
   Vector3d result;
   
-  if (!PyArg_ParseTuple(args,(char *)"O:CentreOfMass_getPerceivedCOM",&obj0)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"O:CentreOfMass_getCOME",&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_CentreOfMass, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CentreOfMass_getPerceivedCOM" "', argument " "1"" of type '" "CentreOfMass *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CentreOfMass_getCOME" "', argument " "1"" of type '" "CentreOfMass *""'"); 
   }
   arg1 = reinterpret_cast< CentreOfMass * >(argp1);
-  result = (arg1)->getPerceivedCOM();
+  result = (arg1)->getCOME();
+  resultobj = SWIG_NewPointerObj((new Vector3d(static_cast< const Vector3d& >(result))), SWIGTYPE_p_Vector3d, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_CentreOfMass_getCOMVelocityE(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  CentreOfMass *arg1 = (CentreOfMass *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  Vector3d result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:CentreOfMass_getCOMVelocityE",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_CentreOfMass, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CentreOfMass_getCOMVelocityE" "', argument " "1"" of type '" "CentreOfMass *""'"); 
+  }
+  arg1 = reinterpret_cast< CentreOfMass * >(argp1);
+  result = (arg1)->getCOMVelocityE();
   resultobj = SWIG_NewPointerObj((new Vector3d(static_cast< const Vector3d& >(result))), SWIGTYPE_p_Vector3d, SWIG_POINTER_OWN |  0 );
   return resultobj;
 fail:
@@ -22690,15 +22712,16 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"new_RigidBodyError", _wrap_new_RigidBodyError, METH_VARARGS, NULL},
 	 { (char *)"RigidBodyError_arb_set", _wrap_RigidBodyError_arb_set, METH_VARARGS, NULL},
 	 { (char *)"RigidBodyError_arb_get", _wrap_RigidBodyError_arb_get, METH_VARARGS, NULL},
-	 { (char *)"RigidBodyError_getMass", _wrap_RigidBodyError_getMass, METH_VARARGS, NULL},
-	 { (char *)"RigidBodyError_getCMPosition", _wrap_RigidBodyError_getCMPosition, METH_VARARGS, NULL},
+	 { (char *)"RigidBodyError_getMassE", _wrap_RigidBodyError_getMassE, METH_VARARGS, NULL},
+	 { (char *)"RigidBodyError_getCMPositionE", _wrap_RigidBodyError_getCMPositionE, METH_VARARGS, NULL},
 	 { (char *)"delete_RigidBodyError", _wrap_delete_RigidBodyError, METH_VARARGS, NULL},
 	 { (char *)"RigidBodyError_swigregister", RigidBodyError_swigregister, METH_VARARGS, NULL},
 	 { (char *)"new_CentreOfMass", _wrap_new_CentreOfMass, METH_VARARGS, NULL},
 	 { (char *)"delete_CentreOfMass", _wrap_delete_CentreOfMass, METH_VARARGS, NULL},
-	 { (char *)"CentreOfMass_getRealCOM", _wrap_CentreOfMass_getRealCOM, METH_VARARGS, NULL},
-	 { (char *)"CentreOfMass_getRealCOMVelocity", _wrap_CentreOfMass_getRealCOMVelocity, METH_VARARGS, NULL},
-	 { (char *)"CentreOfMass_getPerceivedCOM", _wrap_CentreOfMass_getPerceivedCOM, METH_VARARGS, NULL},
+	 { (char *)"CentreOfMass_getCOM", _wrap_CentreOfMass_getCOM, METH_VARARGS, NULL},
+	 { (char *)"CentreOfMass_getCOMVelocity", _wrap_CentreOfMass_getCOMVelocity, METH_VARARGS, NULL},
+	 { (char *)"CentreOfMass_getCOME", _wrap_CentreOfMass_getCOME, METH_VARARGS, NULL},
+	 { (char *)"CentreOfMass_getCOMVelocityE", _wrap_CentreOfMass_getCOMVelocityE, METH_VARARGS, NULL},
 	 { (char *)"CentreOfMass_step", _wrap_CentreOfMass_step, METH_VARARGS, NULL},
 	 { (char *)"CentreOfMass_swigregister", CentreOfMass_swigregister, METH_VARARGS, NULL},
 	 { (char *)"delete_BalanceFeedback", _wrap_delete_BalanceFeedback, METH_VARARGS, NULL},

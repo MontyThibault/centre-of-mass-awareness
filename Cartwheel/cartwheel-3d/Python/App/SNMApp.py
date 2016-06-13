@@ -559,7 +559,7 @@ class SNMApp(wx.App):
         if len(self._characters) > 0:
             
             controller = self._characters[0].COMController
-            return controller.getPerceivedCOM().x - controller.getRealCOM().x
+            return controller.getCOME().x - controller.getCOM().x
         else:
             return 0
         
@@ -572,7 +572,7 @@ class SNMApp(wx.App):
     def getCOMY(self):
         if len(self._characters) > 0:
             controller = self._characters[0].COMController
-            return controller.getPerceivedCOM().y - controller.getRealCOM().y
+            return controller.getCOME().y - controller.getCOM().y
         else:
             return 0
         
@@ -585,7 +585,7 @@ class SNMApp(wx.App):
     def getCOMZ(self):
         if len(self._characters) > 0:
             controller = self._characters[0].COMController
-            return controller.getPerceivedCOM().z - controller.getRealCOM().z
+            return controller.getCOME().z - controller.getCOM().z
         else:
             return 0
         

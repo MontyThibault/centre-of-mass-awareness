@@ -250,8 +250,12 @@ Vector3d Character::getCOM(){
 
 	// We must reverse the error in the perceived vs. the real centre of mass,
 	// otherwise the character corrects in the wrong direction.
-	Vector3d real = this->COMController.getRealCOM();
-	Vector3d diff = this->COMController.getPerceivedCOM() - real;
+
+	// An more straight-foreward implementation just for understanding sake would be
+	// return this->COMController.getCOME();
+
+	Vector3d real = this->COMController.getCOM();
+	Vector3d diff = this->COMController.getCOME() - real;
 	return real - diff;
 }
 
@@ -259,14 +263,14 @@ Vector3d Character::getCOM(){
 	This method is used to compute the velocity of the center of mass of the articulated figure.
 */
 Vector3d Character::getCOMVelocity(){
-	return this->COMController.getRealCOMVelocity();
+	return this->COMController.getCOMVelocity();
 }
 
 void Character::drawRealCOM(int flags) {
 	if(!(flags & SHOW_CENTER_OF_MASS))
 		return;
 
-	Vector3d COM = this->COMController.getRealCOM();
+	Vector3d COM = this->COMController.getCOM();
 
 	glPushMatrix();
 
@@ -284,7 +288,7 @@ void Character::drawPerceivedCOM(int flags) {
 	if(!(flags & SHOW_CENTER_OF_MASS)) 
 		return;
 
-	Vector3d COM = this->COMController.getPerceivedCOM();
+	Vector3d COM = this->COMController.getCOME();
 
 	glPushMatrix();
 

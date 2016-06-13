@@ -11,7 +11,7 @@ public:
 	ArticulatedRigidBody *arb;
 
 	/* 
-	 * The naming convention methodNameE signifies that measurement with artificial 
+	 * The naming convention methodNameE signifies that measurement with artificial error
 	 * applied. This error can depend on randomness, so may be sampled multiple times.
 	 */
 	double getMassE();
@@ -28,10 +28,15 @@ public:
 
 	~CentreOfMass(void);
 
-	Vector3d getRealCOM(void);
-	Vector3d getRealCOMVelocity(void);
+	Vector3d getCOM(void);
+	Vector3d getCOMVelocity(void);
 
-	Vector3d getPerceivedCOM(void);
+	/* 
+	 * The naming convention methodNameE signifies that measurement with artificial error
+	 * applied. This error can depend on randomness, so may be sampled multiple times.
+	 */
+	Vector3d getCOME(void);
+	Vector3d getCOMVelocityE(void);
 
 	void step(void);	
 

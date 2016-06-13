@@ -48,13 +48,13 @@ void CentreOfMass::setRBE(void) {
 
 	this->root = RigidBodyError(this->af->root);
 
-	this->currentCOM = this->getRealCOM();
+	this->currentCOM = this->getCOM();
 }
 
 /*
  * This method computes the true centre of mass of the character.
  */
-Vector3d CentreOfMass::getRealCOM(void) {
+Vector3d CentreOfMass::getCOM(void) {
 	this->setRBE();
 
 	ArticulatedRigidBody *root = this->root.arb;
@@ -77,9 +77,17 @@ Vector3d CentreOfMass::getRealCOM(void) {
 }
 
 /*
+ * This is called internally by the animation system. It is not called in 
+ * consistent intervals and probably should not be changed. (See ::step)
+ */
+Vector3d CentreOfMass::getCOME(void) {
+	return this->currentCOM;
+}
+
+/*
  * This method computes the true centre of velocity of the character.
  */
-Vector3d CentreOfMass::getRealCOMVelocity(void) {
+Vector3d CentreOfMass::getCOMVelocity(void) {
 	
 	ArticulatedRigidBody *root = this->af->root;
 	DynamicArray<Joint*> joints = this->af->joints;
@@ -98,6 +106,11 @@ Vector3d CentreOfMass::getRealCOMVelocity(void) {
 	return COMVel;
 }
 
+Vector3d CentreOfMass::getCOMVelocityE(void) {
+	return this->getCOMVelocity();
+}
+
+
 // Each joint <-> rigid body needs an uncertainty measure on its CM position and velocity (not angular)
 
 // Returns a random number between -1 and 1
@@ -106,16 +119,6 @@ double fRand() {
 	return r * 2 - 1;
 }
 
-Vector3d monteCarloIntegrate(int n) {
-}
-
-/*
- * This is called internally by the animation system. It is not called in 
- * consistent intervals and probably should not be changed.
- */
-Vector3d CentreOfMass::getPerceivedCOM(void) {
-	return this->currentCOM;
-}
 
 /*
  * This method is called by the Python program on every frame draw. This is 
@@ -138,9 +141,12 @@ void CentreOfMass::step(void) {
 
 	////////////////////////////////
 
+	// Number of samples
+	int n = 5;
+
 	Vector3d accumulator = Vector3d();
 	for(int i = 0; i < n; i++) {
-		accumulator += 
+		// accumulator += 
 	}
 
 	/*
@@ -167,7 +173,7 @@ void CentreOfMass::step(void) {
 }
 
 double CentreOfMass::g(Vector3d p) {
-	Vector3d real = this->getRealCOM();
+	Vector3d real = this->getCOM();
 
 	return (real - p).length();
 }
