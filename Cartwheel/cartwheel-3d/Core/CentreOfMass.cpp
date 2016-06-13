@@ -8,6 +8,14 @@ RigidBodyError::RigidBodyError(ArticulatedRigidBody *arb) {
 	this->arb = arb;
 }
 
+double RigidBodyError::getMassE() {
+	return this->arb->getMass();
+}
+
+Vector3d RigidBodyError::getCMPositionE() {
+	return this->arb->getCMPosition();
+}
+
 CentreOfMass::CentreOfMass() {
 }
 
@@ -18,6 +26,10 @@ CentreOfMass::CentreOfMass(ArticulatedFigure *af) {
 CentreOfMass::~CentreOfMass(void) {
 }
 
+/*
+ * This method sets the array of RigidBodyErrors corresponding to the array of ArticulatedRigidBodies
+ * and same for the root. The section after the if-statements should run only once.
+ */
 void CentreOfMass::setRBE(void) {
 	// If root pointer is already set
 	if(this->root.arb) 
@@ -35,13 +47,17 @@ void CentreOfMass::setRBE(void) {
 	}
 
 	this->root = RigidBodyError(this->af->root);
+
+	this->currentCOM = this->getRealCOM();
 }
 
+/*
+ * This method computes the true centre of mass of the character.
+ */
 Vector3d CentreOfMass::getRealCOM(void) {
 	this->setRBE();
 
 	ArticulatedRigidBody *root = this->root.arb;
-
 
 	Vector3d COM = Vector3d(root->getCMPosition()) * root->getMass();
 	double curMass = root->getMass();
@@ -60,6 +76,9 @@ Vector3d CentreOfMass::getRealCOM(void) {
 	return COM;
 }
 
+/*
+ * This method computes the true centre of velocity of the character.
+ */
 Vector3d CentreOfMass::getRealCOMVelocity(void) {
 	
 	ArticulatedRigidBody *root = this->af->root;
@@ -81,23 +100,26 @@ Vector3d CentreOfMass::getRealCOMVelocity(void) {
 
 // Each joint <-> rigid body needs an uncertainty measure on its CM position and velocity (not angular)
 
-
-/*
- * This is called internally by the animation system. It is not called in 
- * consistent intervals.
- */
-Vector3d CentreOfMass::getPerceivedCOM(void) {
-	return this->currentCOM;
-}
-
 // Returns a random number between -1 and 1
 double fRand() {
 	double r = (double) rand() / RAND_MAX;
 	return r * 2 - 1;
 }
 
+Vector3d monteCarloIntegrate(int n) {
+}
+
 /*
- * This method is called by the Python program on every frame draw.
+ * This is called internally by the animation system. It is not called in 
+ * consistent intervals and probably should not be changed.
+ */
+Vector3d CentreOfMass::getPerceivedCOM(void) {
+	return this->currentCOM;
+}
+
+/*
+ * This method is called by the Python program on every frame draw. This is 
+ * where we should do updates.
  */
 void CentreOfMass::step(void) {
 
@@ -113,6 +135,35 @@ void CentreOfMass::step(void) {
 	grad += randVec;
 
 	this->currentCOM -= grad * 0.01;
+
+	////////////////////////////////
+
+	Vector3d accumulator = Vector3d();
+	for(int i = 0; i < n; i++) {
+		accumulator += 
+	}
+
+	/*
+	this->setRBE();
+
+	ArticulatedRigidBody *root = this->root.arb;
+
+	Vector3d COM = Vector3d(root->getCMPosition()) * root->getMass();
+	double curMass = root->getMass();
+	double totalMass = curMass;
+
+	DynamicArray<ArticulatedRigidBody*> arbs = this->af->arbs;
+
+	for (uint i=0; i < arbs.size(); i++){
+		curMass = arbs[i]->getMass();
+		totalMass += curMass;
+		COM.addScaledVector(arbs[i]->getCMPosition() , curMass);
+	}
+
+	COM /= totalMass;
+
+	return COM;
+	*/
 }
 
 double CentreOfMass::g(Vector3d p) {

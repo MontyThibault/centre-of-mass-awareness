@@ -9,6 +9,13 @@ public:
 	RigidBodyError(ArticulatedRigidBody *arb);
 
 	ArticulatedRigidBody *arb;
+
+	/* 
+	 * The naming convention methodNameE signifies that measurement with artificial 
+	 * applied. This error can depend on randomness, so may be sampled multiple times.
+	 */
+	double getMassE();
+	Vector3d getCMPositionE();
 };
 
 

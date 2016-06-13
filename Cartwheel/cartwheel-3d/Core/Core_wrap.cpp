@@ -7609,6 +7609,50 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_RigidBodyError_getMass(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  RigidBodyError *arg1 = (RigidBodyError *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:RigidBodyError_getMass",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_RigidBodyError, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RigidBodyError_getMass" "', argument " "1"" of type '" "RigidBodyError *""'"); 
+  }
+  arg1 = reinterpret_cast< RigidBodyError * >(argp1);
+  result = (double)(arg1)->getMass();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_RigidBodyError_getCMPosition(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  RigidBodyError *arg1 = (RigidBodyError *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  Vector3d result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:RigidBodyError_getCMPosition",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_RigidBodyError, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RigidBodyError_getCMPosition" "', argument " "1"" of type '" "RigidBodyError *""'"); 
+  }
+  arg1 = reinterpret_cast< RigidBodyError * >(argp1);
+  result = (arg1)->getCMPosition();
+  resultobj = SWIG_NewPointerObj((new Vector3d(static_cast< const Vector3d& >(result))), SWIGTYPE_p_Vector3d, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_delete_RigidBodyError(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   RigidBodyError *arg1 = (RigidBodyError *) 0 ;
@@ -22646,6 +22690,8 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"new_RigidBodyError", _wrap_new_RigidBodyError, METH_VARARGS, NULL},
 	 { (char *)"RigidBodyError_arb_set", _wrap_RigidBodyError_arb_set, METH_VARARGS, NULL},
 	 { (char *)"RigidBodyError_arb_get", _wrap_RigidBodyError_arb_get, METH_VARARGS, NULL},
+	 { (char *)"RigidBodyError_getMass", _wrap_RigidBodyError_getMass, METH_VARARGS, NULL},
+	 { (char *)"RigidBodyError_getCMPosition", _wrap_RigidBodyError_getCMPosition, METH_VARARGS, NULL},
 	 { (char *)"delete_RigidBodyError", _wrap_delete_RigidBodyError, METH_VARARGS, NULL},
 	 { (char *)"RigidBodyError_swigregister", RigidBodyError_swigregister, METH_VARARGS, NULL},
 	 { (char *)"new_CentreOfMass", _wrap_new_CentreOfMass, METH_VARARGS, NULL},
