@@ -70,6 +70,11 @@ private:
 	void setRBE(void);
 
 	/*
+	 * Returns a single random sample of the centre of mass.
+	 */
+	Vector3d getCOMESample();
+
+	/*
 	 * A centre-of-mass correction function that determines the path of a random walk 
 	 */
 	double g(Vector3d p);

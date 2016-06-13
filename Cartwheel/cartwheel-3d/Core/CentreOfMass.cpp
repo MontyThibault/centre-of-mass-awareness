@@ -1,4 +1,25 @@
 #include "CentreOfMass.h"
+#include <math.h>
+
+// Returns a random number in [0, 1)
+double fRand() {
+	double r = (double) rand() / RAND_MAX;
+}
+
+// Box-muller transform
+double gaussian(double mu, double sigma) {
+	const double epsilon = 0.00000000001;
+	
+	double u1, u2;
+	do {
+		u1 = fRand();
+		u2 = fRand();
+	} while(u1 <= epsilon);
+
+	double z0 = sqrt(-2 * log(u1)) * cos(2.0 * 3.14159265 * u2);
+
+	return mu + (z0 * sigma);
+}
 
 RigidBodyError::RigidBodyError(void) {
 	this->arb = 0;
@@ -8,12 +29,27 @@ RigidBodyError::RigidBodyError(ArticulatedRigidBody *arb) {
 	this->arb = arb;
 }
 
+/* 
+ * This method returns the mass of the rigid body with a small degree of error.
+ */
 double RigidBodyError::getMassE() {
-	return this->arb->getMass();
+
+	double mass = this->arb->getMass();
+	double error = 0.3;
+	
+	return gaussian(mass, error);
 }
 
+/* 
+ * This method returns the position of the rigid body with error proportional to its speed
+ */
 Vector3d RigidBodyError::getCMPositionE() {
-	return this->arb->getCMPosition();
+	Vector3d cm = this->arb->getCMPosition(),
+		v = this->arb->getCMVelocity();
+
+	double error = 0.5; // +- 50% of body velocity
+
+	return cm + (v * gaussian(0, error));
 }
 
 CentreOfMass::CentreOfMass() {
@@ -78,7 +114,7 @@ Vector3d CentreOfMass::getCOM(void) {
 
 /*
  * This is called internally by the animation system. It is not called in 
- * consistent intervals and probably should not be changed. (See ::step)
+ * consistent intervals and probably should not be changed. (See CentreOfMass::step)
  */
 Vector3d CentreOfMass::getCOME(void) {
 	return this->currentCOM;
@@ -113,10 +149,27 @@ Vector3d CentreOfMass::getCOMVelocityE(void) {
 
 // Each joint <-> rigid body needs an uncertainty measure on its CM position and velocity (not angular)
 
-// Returns a random number between -1 and 1
-double fRand() {
-	double r = (double) rand() / RAND_MAX;
-	return r * 2 - 1;
+Vector3d CentreOfMass::getCOMESample() {
+	this->setRBE();
+
+	RigidBodyError root = this->root;
+
+	double curMass = root.getMassE();
+	Vector3d COM = Vector3d(root.getCMPositionE()) * curMass;
+	
+	double totalMass = curMass;
+
+	DynamicArray<RigidBodyError> rbe = this->rbe;
+
+	for (uint i=0; i < rbe.size(); i++){
+		curMass = rbe[i].getMassE();
+		totalMass += curMass;
+		COM.addScaledVector(rbe[i].getCMPositionE() , curMass);
+	}
+
+	COM /= totalMass;
+
+	return COM;
 }
 
 
@@ -125,6 +178,8 @@ double fRand() {
  * where we should do updates.
  */
 void CentreOfMass::step(void) {
+
+	/*
 
 	// 30 fps
 	double timeDiff = 1.0 / 30.0;
@@ -139,15 +194,22 @@ void CentreOfMass::step(void) {
 
 	this->currentCOM -= grad * 0.01;
 
+	*/
+
 	////////////////////////////////
 
-	// Number of samples
-	int n = 5;
-
-	Vector3d accumulator = Vector3d();
-	for(int i = 0; i < n; i++) {
-		// accumulator += 
+	// Simple monte-carlo integration
+	const int samples = 10;
+	Vector3d accumulator;
+	
+	for(uint i = 0; i < samples; i++) {
+		accumulator += this->getCOMESample();
 	}
+
+	accumulator /= (double) samples;
+
+	this->currentCOM = accumulator;
+
 
 	/*
 	this->setRBE();
