@@ -35,7 +35,7 @@ RigidBodyError::RigidBodyError(ArticulatedRigidBody *arb) {
 double RigidBodyError::getMassE() {
 
 	double mass = this->arb->getMass();
-	double error = 0.5;
+	double error = 0.3 * mass; // +- 30%
 	
 	return gaussian(mass, error);
 }
@@ -182,7 +182,7 @@ Vector3d CentreOfMass::getCOMESample() {
 void CentreOfMass::step(void) {
 
 	// Simple monte-carlo integration
-	const int samples = 10;
+	const int samples = 2;
 	Vector3d accumulator;
 	
 	for(uint i = 0; i < samples; i++) {
@@ -206,7 +206,7 @@ void CentreOfMass::stepDraw(const int samples) {
 		x = this->getCOMESample();
 
 		accumulator += x;
-		GLUtils::drawSphere(x, 0.03, 3);
+		GLUtils::drawSphere(x, 0.025, 6);
 	}
 
 	accumulator /= (double) samples;
