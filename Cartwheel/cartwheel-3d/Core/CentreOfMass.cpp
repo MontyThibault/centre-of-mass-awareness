@@ -147,8 +147,6 @@ Vector3d CentreOfMass::getCOMVelocityE(void) {
 }
 
 
-// Each joint <-> rigid body needs an uncertainty measure on its CM position and velocity (not angular)
-
 Vector3d CentreOfMass::getCOMESample() {
 	this->setRBE();
 
@@ -203,7 +201,7 @@ void CentreOfMass::stepDraw(const int samples) {
 		x = this->getCOMESample();
 
 		accumulator += x;
-		GLUtils::drawSphere(x, 0.05, 3);
+		GLUtils::drawSphere(x, 0.03, 3);
 	}
 
 	accumulator /= (double) samples;
