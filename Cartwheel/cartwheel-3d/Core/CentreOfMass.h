@@ -15,7 +15,7 @@ public:
 	 * applied. This error can depend on randomness, so may be sampled multiple times.
 	 */
 	double getMassE();
-	Vector3d getCMPositionE();
+	Vector3d getCMPositionE(Vector3d charv);
 };
 
 

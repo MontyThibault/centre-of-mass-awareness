@@ -42,14 +42,18 @@ double RigidBodyError::getMassE() {
 
 /* 
  * This method returns the position of the rigid body with error proportional to its speed
+ * 
+ * Vector3d charv: character COM velocity
  */
-Vector3d RigidBodyError::getCMPositionE() {
+Vector3d RigidBodyError::getCMPositionE(Vector3d charv) {
 	Vector3d cm = this->arb->getCMPosition(),
 		v = this->arb->getCMVelocity();
 
-	double error = 0.25; // +- 50% of body velocity
+	double error = 0.5; // +- 25% of relative velocity
 
-	return cm + (v * gaussian(0, error));
+	// v - charv is the relative body velocity relative to the overall centre of mass
+
+	return cm + ((v - charv) * gaussian(0, error));
 }
 
 CentreOfMass::CentreOfMass() {
@@ -153,9 +157,10 @@ Vector3d CentreOfMass::getCOMESample() {
 	this->setRBE();
 
 	RigidBodyError root = this->root;
+	Vector3d charv = this->getCOMVelocity();
 
 	double curMass = root.getMassE();
-	Vector3d COM = Vector3d(root.getCMPositionE()) * curMass;
+	Vector3d COM = Vector3d(root.getCMPositionE(charv)) * curMass;
 	
 	double totalMass = curMass;
 
@@ -164,7 +169,7 @@ Vector3d CentreOfMass::getCOMESample() {
 	for (uint i=0; i < rbe.size(); i++){
 		curMass = rbe[i].getMassE();
 		totalMass += curMass;
-		COM.addScaledVector(rbe[i].getCMPositionE() , curMass);
+		COM.addScaledVector(rbe[i].getCMPositionE(charv) , curMass);
 	}
 
 	COM /= totalMass;

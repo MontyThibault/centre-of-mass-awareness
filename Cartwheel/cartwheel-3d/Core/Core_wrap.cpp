@@ -7634,18 +7634,35 @@ fail:
 SWIGINTERN PyObject *_wrap_RigidBodyError_getCMPositionE(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   RigidBodyError *arg1 = (RigidBodyError *) 0 ;
+  Vector3d arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
   PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
   Vector3d result;
   
-  if (!PyArg_ParseTuple(args,(char *)"O:RigidBodyError_getCMPositionE",&obj0)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"OO:RigidBodyError_getCMPositionE",&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_RigidBodyError, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RigidBodyError_getCMPositionE" "', argument " "1"" of type '" "RigidBodyError *""'"); 
   }
   arg1 = reinterpret_cast< RigidBodyError * >(argp1);
-  result = (arg1)->getCMPositionE();
+  {
+    res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_Vector3d,  0  | 0);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "RigidBodyError_getCMPositionE" "', argument " "2"" of type '" "Vector3d""'"); 
+    }  
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "RigidBodyError_getCMPositionE" "', argument " "2"" of type '" "Vector3d""'");
+    } else {
+      Vector3d * temp = reinterpret_cast< Vector3d * >(argp2);
+      arg2 = *temp;
+      if (SWIG_IsNewObj(res2)) delete temp;
+    }
+  }
+  result = (arg1)->getCMPositionE(arg2);
   resultobj = SWIG_NewPointerObj((new Vector3d(static_cast< const Vector3d& >(result))), SWIGTYPE_p_Vector3d, SWIG_POINTER_OWN |  0 );
   return resultobj;
 fail:
