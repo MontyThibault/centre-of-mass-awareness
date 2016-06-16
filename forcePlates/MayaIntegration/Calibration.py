@@ -34,7 +34,11 @@ class Calibration(object):
 		self.gain = 1.0 / (c + self.offset)
 
 	def load(self):
-		(self.offset, self.gain) = LoadHelper.load(self.name)
+		if LoadHelper.exists(self.name):
+			(self.offset, self.gain) = LoadHelper.load(self.name)
+		else:
+			# Save with defaults
+			self.save()
 
 	def save(self):
 		LoadHelper.save(self.name, (self.offset, self.gain))
@@ -42,7 +46,6 @@ class Calibration(object):
 	def delete(self):
 		""" Deletes the calibration entry, not the instance. """
 		LoadHelper.delete(self.name)
-		
 
 
 class SixAxisCalibrationMatrix(object):
@@ -262,8 +265,8 @@ class LoadHelper(object):
 
 	@classmethod
 	def clear(cls):
+		""" Call this once in case of an "insecure pickle string" error. """
 		cls._savedict({})
-
 
 
 class Tests(object):
