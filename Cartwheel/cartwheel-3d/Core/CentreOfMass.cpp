@@ -49,7 +49,7 @@ Vector3d RigidBodyError::getCMPositionE(Vector3d charv) {
 	Vector3d cm = this->arb->getCMPosition(),
 		v = this->arb->getCMVelocity();
 
-	double error = 0.5; // +- 25% of relative velocity
+	double error = 1; // +- 25% of relative velocity
 
 	// v - charv is the relative body velocity relative to the overall centre of mass
 
@@ -182,7 +182,7 @@ Vector3d CentreOfMass::getCOMESample() {
 void CentreOfMass::step(void) {
 
 	// Simple monte-carlo integration
-	const int samples = 2;
+	const int samples = 1;
 	Vector3d accumulator;
 	
 	for(uint i = 0; i < samples; i++) {
@@ -198,20 +198,10 @@ void CentreOfMass::step(void) {
  * Special method for point cloud visualization.
  */
 void CentreOfMass::stepDraw(const int samples) {
-
-	// Simple monte-carlo integration
-	Vector3d accumulator, x;
 	
 	for(uint i = 0; i < samples; i++) {
-		x = this->getCOMESample();
-
-		accumulator += x;
-		GLUtils::drawSphere(x, 0.025, 6);
+		GLUtils::drawSphere(this->getCOMESample(), 0.025, 6);
 	}
-
-	accumulator /= (double) samples;
-
-	this->currentCOM = accumulator;
 }
 
 

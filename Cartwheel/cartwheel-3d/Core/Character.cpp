@@ -298,8 +298,8 @@ void Character::drawPerceivedCOM(int flags) {
 	// glEnable(GL_BLEND); - Already enabled
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	
-	const int samples = 100;
-	glColor4ub(230, 0, 172, (int) ceil(255.0 / samples) * 3);
+	const int samples = 200;
+	glColor4ub(230, 0, 172, (int) ceil(255.0 / samples) * 12.5);
 	
 	this->COMController.stepDraw(samples);
 
