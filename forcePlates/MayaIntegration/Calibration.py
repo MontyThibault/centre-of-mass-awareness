@@ -1,5 +1,9 @@
 import pickle
 import os
+
+# Not good, but necessary for the GridCalibration simplicity.
+import maya.cmds as cmds
+
 import unittest
 
 class Calibration(object):
@@ -217,6 +221,86 @@ class SixAxisCalibrationMatrix(object):
 		M5170_inv.save()
 
 
+class GridCalibrate(object):
+	""" Performs a series of calibrations in a grid pattern and saves to file. """
+
+	def __init__(self):
+
+		# Length & width of board rectangle
+		l = 53.0
+		w = 44.5
+
+		l_segments = 6
+		w_segments = 5
+
+		# Number of sample points
+		self.limit = (l_segments + 1) * (w_segments + 1)
+
+		# Changes in length & width for each box
+		dl = l / l_segments
+		dw = w / w_segments
+
+		# Set of all points along length/width
+		W = [dw * i for i in range(w_segments + 1)]
+		L = [dl * i for i in range(l_segments + 1)]
+
+		print(W, L)
+
+		# W & L currently range from [0, w] and [0, l]. 
+		# We will scale them to range from [-w, w] and [-l, l].
+		W = [(w_ * 2 - w) for w_ in W]
+		L = [(l_ * 2 - l) for l_ in L]
+
+		# Set of all points on grid
+
+		# Before being calibrated (what each element is set to during initialization):
+		# (realX, realY)
+		
+		# After being calibrated:
+		# ((realX, realY), (sensorX, sensorY, totalWeight))
+		self.WxL = [(w, l) for w in W for l in L]
+
+		self.counter = 0
+
+		self.setGridpoint()
+
+	def next(self, plates):
+		""" Saves the current calibration point and moves to the next one. """
+
+		if self.counter > self.limit - 1:
+			return
+
+		self.setCalibration(plates)
+
+		self.counter += 1
+
+		# Save to file if we are at the end
+		if self.counter > self.limit - 1:
+			Calibration.LoadHelper.save('gridcalibration%s' % time.time(), self.WxL)
+			return
+
+		self.setGridpoint()
+
+
+	def setCalibration(self, plates):
+
+		totalWeight = sum(plates.forces)
+		center = cmds.xform("center", query = True, t = True, ws = True)
+
+		self.WxL[self.counter] = (self.WxL[self.counter], (center[0], center[2], totalWeight))
+
+		print(self.WxL[self.counter])
+
+
+	def setGridpoint(self):
+
+		# Set gridpoint to the current target
+		cmds.xform("gridpoint", t = [
+			self.WxL[self.counter][0], 
+			0, 
+			self.WxL[self.counter][1]
+		])
+
 
 class LoadHelper(object):
 	""" Keeps calibration data persistent between sessions. This class defines 
@@ -265,7 +349,7 @@ class LoadHelper(object):
 
 	@classmethod
 	def clear(cls):
-		""" Call this once in case of an "insecure pickle string" error. """
+		""" Call this once in case of an "insecure pickle string" error. That means the file is corrupted. """
 		cls._savedict({})
 
 

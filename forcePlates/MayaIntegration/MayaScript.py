@@ -67,10 +67,20 @@ def main():
 		cmds.createNode( "transform", name="plate3" )
 		cmds.createNode( "locator", parent = "plate3" )
 		cmds.move(10, 0, 10, "plate3")
+	if not cmds.objExists('plate4'):
+		cmds.createNode( "transform", name="plate4" )
+		cmds.createNode( "locator", parent = "plate4" )
+		cmds.move(10, 0, 10, "plate4")
+
 
 	if not cmds.objExists('center'):
 		cmds.createNode( "transform", name="center" )
 		cmds.createNode( "locator", parent = "center" )
+
+
+	if not cmds.objExists('gridpoint'):
+		cmds.createNode( "transform", name="gridpoint" )
+		cmds.createNode( "locator", parent = "gridpoint" )
 
 
 	plates = LabPro.ForcePlates()
@@ -82,9 +92,11 @@ def main():
 	deviceA001.AioSetAiRangeAll(aio.PM10)
 
 	channels = [6, 7, 8, 9, 10, 11]
-	rock = SixAxis.SixAxis(deviceA001, channels, "M5237")
 
-	cmds.createNode("locator", n = "locator%s" % hash(rock), p = rock.transform)
+	# rock = SixAxis.SixAxis(deviceA001, channels, "M5237")
+	rock = None
+
+	# cmds.createNode("locator", n = "locator%s" % hash(rock), p = rock.transform)
 
 	SensorUpdate(plates, rock).start()
 
@@ -137,11 +149,21 @@ class SensorUpdate(threading.Thread):
 		cmds.button(label = 'Set One (1)', command = callWith(self.plates.calibrations[0].setOne))
 		cmds.button(label = 'Set One (2)', command = callWith(self.plates.calibrations[1].setOne))
 		cmds.button(label = 'Set One (3)', command = callWith(self.plates.calibrations[2].setOne))
+		cmds.button(label = 'Set One (4)', command = callWith(self.plates.calibrations[3].setOne))
+
 
 		cmds.button(label = 'Blink (kills program)', command = callWith(self.plates.blink))
 
 
 		cmds.text(label='Contec Six-Axis Sensors')
+		cmds.text(label='Point-grid Calibration')
+
+
+		self.gridcalibrate = Calibration.GridCalibrate()
+
+		cmds.button(label = 'Next Point', command = callWith(self.gridcalibrate.next, self.plates))
+
+		cmds.button(label = 'Clear All Calibration Data', command = callWith(Calibration.LoadHelper.clear))
 
 		# cmds.rowColumnLayout(numberOfColumns = 2, columnWidth = [(1, 350 / 2), (2, 350 / 2)])
 
@@ -167,6 +189,7 @@ class SensorUpdate(threading.Thread):
 		# Reopen window when closed (You need the button to kill threads safely)
 		self.reopen_id = cmds.scriptJob(uiDeleted = ["ForceSensors", self.initWindow])
 
+
 	def kill(self):
 		self.dead = True
 
@@ -187,8 +210,8 @@ class SensorUpdate(threading.Thread):
 		if self.dead:
 			return
 
-		self.rock.updateMeasurements()
-		self.rock.updateTransform()
+		# self.rock.updateMeasurements()
+		# self.rock.updateTransform()
 
 		self.plates.updateMeasurements()
 
@@ -196,12 +219,21 @@ class SensorUpdate(threading.Thread):
 		cmds.xform("plate1", s = [self.plates.forces[0] * 18 for i in range(3)])
 		cmds.xform("plate2", s = [self.plates.forces[1] * 18 for i in range(3)])
 		cmds.xform("plate3", s = [self.plates.forces[2] * 18 for i in range(3)])
+		cmds.xform("plate4", s = [self.plates.forces[3] * 18 for i in range(3)])
+
+
+		# totalWeight = sum(self.plates.forces)
 
 		# Get translation vectors for plates
-		vecs = [(self.plates.forces[i], 
+		vecs = []
+		for i in range(4):
+			vecs.append((
+				self.plates.forces[i], 
 				maya.OpenMaya.MVector(
+					# Get the translation of the current plate in world space
 					*cmds.xform('plate%s' % (i + 1), ws = True, t = 1, q = 1)
-				)) for i in range(3)]
+				)
+			))
 				
 		# Barycentric interpolation between vectors
 		center = maya.OpenMaya.MVector(0, 0, 0)

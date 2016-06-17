@@ -117,6 +117,7 @@ class ForcePlates(Singleton):
 		return [self.calibrations[i].process(self.measurements[i])
 				for i in range(4)]
 
+
 	def save(self):
 		""" Saves calibration on all channels. Load is handled automatically on 
 		creation. """
@@ -142,4 +143,6 @@ class ForcePlates(Singleton):
 		file.close()
 
 	def __getattr__(self, key):
+		""" Access methods provided by the LabPro dll directly through this object. """
+
 		return getattr(self.labpro, key)
