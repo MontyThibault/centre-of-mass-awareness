@@ -163,7 +163,7 @@ class SensorUpdate(threading.Thread):
 
 		cmds.button(label = 'Next Point', command = callWith(self.gridcalibrate.next, self.plates))
 
-		cmds.button(label = 'Clear All Calibration Data', command = callWith(Calibration.LoadHelper.clear))
+		# cmds.button(label = 'Clear All Calibration Data', command = callWith(Calibration.LoadHelper.clear))
 
 		# cmds.rowColumnLayout(numberOfColumns = 2, columnWidth = [(1, 350 / 2), (2, 350 / 2)])
 

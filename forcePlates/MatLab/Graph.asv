@@ -1,0 +1,17 @@
+load('calib.mat');
+
+% gridcalibration1466177615
+
+gc = gridcalibration1466177615;
+
+rows = size(gc, 1);
+
+for i = 1:rows
+    row = gc(i, :);
+    
+    from = row(1);
+    to = row(2);
+    weight = row(3);
+    
+    quiver(from{1}, from{2}, to{1}, to{2});
+end

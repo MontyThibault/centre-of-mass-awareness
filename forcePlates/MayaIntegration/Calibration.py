@@ -3,6 +3,7 @@ import os
 
 # Not good, but necessary for the GridCalibration simplicity.
 import maya.cmds as cmds
+import time
 
 import unittest
 
@@ -276,7 +277,7 @@ class GridCalibrate(object):
 
 		# Save to file if we are at the end
 		if self.counter > self.limit - 1:
-			Calibration.LoadHelper.save('gridcalibration%s' % time.time(), self.WxL)
+			LoadHelper.save('gridcalibration%s' % int(time.time()), self.WxL)
 			return
 
 		self.setGridpoint()
@@ -287,7 +288,7 @@ class GridCalibrate(object):
 		totalWeight = sum(plates.forces)
 		center = cmds.xform("center", query = True, t = True, ws = True)
 
-		self.WxL[self.counter] = (self.WxL[self.counter], (center[0], center[2], totalWeight))
+		self.WxL[self.counter] = [self.WxL[self.counter], [center[0], center[2]], totalWeight]
 
 		print(self.WxL[self.counter])
 
