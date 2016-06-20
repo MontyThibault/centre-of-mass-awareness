@@ -1,17 +1,36 @@
 load('calib.mat');
 
-% gridcalibration1466177615
+% gridcalibration1466187461
 
-gc = gridcalibration1466177615;
+gc = gridcalibration1466187461;
 
 rows = size(gc, 1);
 
+clf;
+hold on;
+
+% Draw 
+
+
+% Draw displacement vectors
 for i = 1:rows
     row = gc(i, :);
     
     from = row(1);
-    to = row(2);
-    weight = row(3);
+    from = from{:};
     
-    quiver(from{1}, from{2}, to{1}, to{2});
+    to = row(2);
+    to = to{:};
+    
+    diff = to - from;
+    
+    weight = row(3);
+    weight = weight{:};
+    
+    q = quiver(from(1), from(2), diff(1), diff(2), 5);
+    
+    set(q, 'linewidth', weight * 6);
+    % set(q, 'color', weight);
 end
+
+hold off;
