@@ -1,9 +1,12 @@
 import pickle
 import os
 
-# Not good, but necessary for the GridCalibration simplicity.
+# TODO: revise/remove these imports to be more encapsulated
+# They are used in GridCalibrate
 import maya.cmds as cmds
+import maya.utils
 import time
+import threadutils
 
 import unittest
 
@@ -258,17 +261,22 @@ class GridCalibrate(object):
 		# (realX, realY)
 		
 		# After being calibrated:
-		# ((realX, realY), (sensorX, sensorY, totalWeight))
+		# ((realX, realY), (sensorX, sensorY) totalWeight)
 		self.WxL = [(w, l) for w in W for l in L]
 
 		self.counter = 0
 
 		self.setGridpoint()
 
+	@property
+	def done(self):
+		return self.counter > self.limit - 1
+	
+
 	def next(self, plates):
 		""" Saves the current calibration point and moves to the next one. """
 
-		if self.counter > self.limit - 1:
+		if self.done:
 			return
 
 		self.setCalibration(plates)
@@ -276,7 +284,7 @@ class GridCalibrate(object):
 		self.counter += 1
 
 		# Save to file if we are at the end
-		if self.counter > self.limit - 1:
+		if self.done:
 			LoadHelper.save('gridcalibration%s' % int(time.time()), self.WxL)
 			return
 
@@ -301,6 +309,51 @@ class GridCalibrate(object):
 			0, 
 			self.WxL[self.counter][1]
 		])
+
+
+	def auto(self, plates):
+		""" Performs an automatic count-down for solo data collecton. """
+
+		self.AutoNext(plates, self).start()
+
+
+	class AutoNext(threadutils.KillableThread):
+		def __init__(self, plates, gridcalibrate):
+			super(GridCalibrate.AutoNext, self).__init__()
+
+			self.kill()
+
+			self.plates = plates
+			self.gridcalibrate = gridcalibrate
+
+		@staticmethod
+		def callwith(f, *args, **kwargs):
+
+			def g(*_args, **_kwargs):
+				return f(*args, **kwargs)
+
+			return g
+
+		def run(self):
+
+			if self.dead:
+				return
+
+			for second in range(3, 0, -1):
+				print(second)
+				time.sleep(1)
+
+
+			# Call `self.gridcalibrate.next` with argument `self.plates` when Maya is available
+			maya.utils.executeDeferred(self.callwith(self.gridcalibrate.next, self.plates))
+
+			time.sleep(1)
+
+			# Since the above command can be delayed in calling, this might run more times
+			# than it has to before `self.gridcalirate.done` is updated, although that isn't a big problem.
+			if not self.gridcalibrate.done:
+				
+				self.run()
 
 
 class LoadHelper(object):

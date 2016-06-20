@@ -3,6 +3,7 @@ import maya.utils
 import maya.OpenMaya
 
 import threading
+import threadutils
 import time
 
 import sys 
@@ -19,6 +20,7 @@ reload(LabPro)
 reload(PAIO)
 reload(SixAxis)
 reload(Calibration)
+reload(threadutils)
 
 
 def testSuite():
@@ -42,6 +44,7 @@ def testSuite():
 	runTests(Calibration)
 	runTests(PAIO)
 	runTests(SixAxis)
+	runTests(threadutils)
 
 	print "---------- All tests passed! ---------"
 
@@ -126,9 +129,10 @@ class SensorUpdate(threading.Thread):
 		except:
 			pass
 
+		# Keep this thread in the globals so that it can be accessed above
 		globals()['sensor_thread'] = self
-
 		print("Thread started")
+
 
 		self.initWindow()
 
@@ -162,6 +166,7 @@ class SensorUpdate(threading.Thread):
 		self.gridcalibrate = Calibration.GridCalibrate()
 
 		cmds.button(label = 'Next Point', command = callWith(self.gridcalibrate.next, self.plates))
+		cmds.button(label = 'Auto Countdown', command = callWith(self.gridcalibrate.auto, self.plates))
 
 		# cmds.button(label = 'Clear All Calibration Data', command = callWith(Calibration.LoadHelper.clear))
 
