@@ -38,7 +38,7 @@ end
 
 gcs = {};
 
-gcs{1} = gridcalibration1466606548;
+gcs{1} = gridcalibration1466608773;
 
 
 for j = 1:numel(gcs)
@@ -66,15 +66,17 @@ for j = 1:numel(gcs)
         weight = row(3);
         weight = weight{:};
 
-        if weight < 0.05
+        target = 1;
+        epsilon = 0.95;
+        if weight < target - epsilon || weight > target + epsilon
             continue
         end
         
         redComponent = min(1, weight * 3);
         blueComponent = max(0, 1 - (weight * 3));
-        q = quiver(from(1), from(2), diff(1), diff(2), 2, 'color', [redComponent, 0.3, blueComponent]);
+        q = quiver(from(1), from(2), diff(1), diff(2), 4, 'color', [redComponent, 0.3, blueComponent]);
         
-        set(q, 'linewidth', weight * 20);
+        set(q, 'linewidth', 2);
     end
 end
 

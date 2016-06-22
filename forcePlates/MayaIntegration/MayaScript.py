@@ -6,6 +6,8 @@ import threading
 import threadutils
 import time
 
+import test_lib
+
 import sys 
 import os
 
@@ -15,12 +17,15 @@ import LabPro
 import PAIO
 import SixAxis
 import Calibration
+import GridCalibration
 
 reload(LabPro)
 reload(PAIO)
 reload(SixAxis)
 reload(Calibration)
 reload(threadutils)
+reload(test_lib)
+reload(GridCalibration)
 
 
 def testSuite():
@@ -45,6 +50,9 @@ def testSuite():
 	runTests(PAIO)
 	runTests(SixAxis)
 	runTests(threadutils)
+	runTests(GridCalibration)
+
+	test_lib.runall()
 
 	print "---------- All tests passed! ---------"
 
