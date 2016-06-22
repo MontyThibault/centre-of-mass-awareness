@@ -5,9 +5,6 @@ class KillableThread(threading.Thread):
 	objs = set()
 
 	def __init__(self):
-
-		print('hello, world')
-
 		threading.Thread.__init__(self)
 		
 		self.objs.add(self)

@@ -165,8 +165,8 @@ class SensorUpdate(threading.Thread):
 
 		self.gridcalibrate = Calibration.GridCalibrate()
 
-		cmds.button(label = 'Next Point', command = callWith(self.gridcalibrate.next, self.plates))
-		cmds.button(label = 'Auto Countdown', command = callWith(self.gridcalibrate.auto, self.plates))
+		cmds.button(label = 'Take Sample', command = callWith(self.gridcalibrate.takeSample, self.plates))
+		cmds.button(label = 'Next Reference Point', command = callWith(self.gridcalibrate.nextReferencePoint))
 
 		# cmds.button(label = 'Clear All Calibration Data', command = callWith(Calibration.LoadHelper.clear))
 

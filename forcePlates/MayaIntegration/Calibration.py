@@ -6,7 +6,6 @@ import os
 import maya.cmds as cmds
 import maya.utils
 import time
-import threadutils
 
 import unittest
 
@@ -231,129 +230,76 @@ class GridCalibrate(object):
 	def __init__(self):
 
 		# Length & width of board rectangle
-		l = 53.0
-		w = 44.5
+		self.l = 53.0
+		self.w = 44.5
 
-		l_segments = 6
-		w_segments = 5
+		self.l_segments = 6
+		self.w_segments = 5
 
-		# Number of sample points
-		self.limit = (l_segments + 1) * (w_segments + 1)
+		self.done = False
+
+
+		self.rpg = self.referencePointGenerator()
+
+		self.nextReferencePoint()
+		self.setGridMarker(self.referencePoint)
+		
+		self.samples = []
+
+
+	def referencePointGenerator(self):
 
 		# Changes in length & width for each box
-		dl = l / l_segments
-		dw = w / w_segments
+		dl = self.l / self.l_segments
+		dw = self.w / self.w_segments
 
 		# Set of all points along length/width
-		W = [dw * i for i in range(w_segments + 1)]
-		L = [dl * i for i in range(l_segments + 1)]
+		W = [dw * i for i in range(self.w_segments + 1)]
+		L = [dl * i for i in range(self.l_segments + 1)]
 
 		print(W, L)
 
 		# W & L currently range from [0, w] and [0, l]. 
 		# We will scale them to range from [-w, w] and [-l, l].
-		W = [(w_ * 2 - w) for w_ in W]
-		L = [(l_ * 2 - l) for l_ in L]
+		W = [(w * 2 - self.w) for w in W]
+		L = [(l * 2 - self.l) for l in L]
 
-		# Set of all points on grid
+		for w in W:
+			for l in L:
+				yield (w, l)
 
-		# Before being calibrated (what each element is set to during initialization):
-		# (realX, realY)
-		
-		# After being calibrated:
-		# ((realX, realY), (sensorX, sensorY) totalWeight)
-		self.WxL = [(w, l) for w in W for l in L]
+		self.done = True
 
-		self.counter = 0
-
-		self.setGridpoint()
-
-	@property
-	def done(self):
-		return self.counter > self.limit - 1
-	
-
-	def next(self, plates):
-		""" Saves the current calibration point and moves to the next one. """
-
-		if self.done:
-			return
-
-		self.setCalibration(plates)
-
-		self.counter += 1
+	def nextReferencePoint(self):
 
 		# Save to file if we are at the end
 		if self.done:
-			LoadHelper.save('gridcalibration%s' % int(time.time()), self.WxL)
+			LoadHelper.save('gridcalibration%s' % int(time.time()), self.samples)
+
+			print("Data saved!")
+			
 			return
 
-		self.setGridpoint()
+		self.referencePoint = self.rpg.next()
+		self.setGridMarker(self.referencePoint)
 
 
-	def setCalibration(self, plates):
+	def takeSample(self, plates):
 
 		totalWeight = sum(plates.forces)
 		center = cmds.xform("center", query = True, t = True, ws = True)
 
-		self.WxL[self.counter] = [self.WxL[self.counter], [center[0], center[2]], totalWeight]
-
-		print(self.WxL[self.counter])
+		self.samples.append((self.referencePoint, (center[0], center[2]), totalWeight))
 
 
-	def setGridpoint(self):
+	def setGridMarker(self, point):
 
 		# Set gridpoint to the current target
 		cmds.xform("gridpoint", t = [
-			self.WxL[self.counter][0], 
+			point[0], 
 			0, 
-			self.WxL[self.counter][1]
+			point[1]
 		])
-
-
-	def auto(self, plates):
-		""" Performs an automatic count-down for solo data collecton. """
-
-		self.AutoNext(plates, self).start()
-
-
-	class AutoNext(threadutils.KillableThread):
-		def __init__(self, plates, gridcalibrate):
-			super(GridCalibrate.AutoNext, self).__init__()
-
-			self.kill()
-
-			self.plates = plates
-			self.gridcalibrate = gridcalibrate
-
-		@staticmethod
-		def callwith(f, *args, **kwargs):
-
-			def g(*_args, **_kwargs):
-				return f(*args, **kwargs)
-
-			return g
-
-		def run(self):
-
-			if self.dead:
-				return
-
-			for second in range(3, 0, -1):
-				print(second)
-				time.sleep(1)
-
-
-			# Call `self.gridcalibrate.next` with argument `self.plates` when Maya is available
-			maya.utils.executeDeferred(self.callwith(self.gridcalibrate.next, self.plates))
-
-			time.sleep(1)
-
-			# Since the above command can be delayed in calling, this might run more times
-			# than it has to before `self.gridcalirate.done` is updated, although that isn't a big problem.
-			if not self.gridcalibrate.done:
-				
-				self.run()
 
 
 class LoadHelper(object):
