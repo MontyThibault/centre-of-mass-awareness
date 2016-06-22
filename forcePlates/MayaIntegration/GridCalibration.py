@@ -23,6 +23,8 @@ class Grid(object):
 		self.reset()
 
 	def reset(self):
+		""" Reset the iterator. """
+
 		self._pg = self._pointGenerator()
 		self.currentPoint = self._pg.next()
 		
@@ -31,6 +33,26 @@ class Grid(object):
 			self.currentPoint = self._pg.next()
 
 		return self.currentPoint
+
+	def square(self, point):
+		""" Returns the square to which the point belongs (in no particular order).
+
+		Ex. grid.square((3, 4)) = [(0, 0), (10, 0), (0, 10), (10, 10)]
+		"""
+
+		dl = (self.l * 2) / self.l_seg
+		dw = (self.w * 2) / self.w_seg
+
+		for l in range(-self.l, self.l, dl * 2):
+			pass
+
+		for w in range(-self.w, self.w, dw * 2):
+			pass
+
+		
+
+
+
 
 	def _pointGenerator(self):
 		""" This generator object iterates through all pairs of points in the form (w, l)
@@ -87,6 +109,18 @@ class Grid(object):
 		assert x.currentPoint == (-10, -10)
 		assert x.hasMorePoints == True
 
+	@test
+	def simple_square():
+
+		# Unit divisions
+		x = Grid(10, 10, 20, 20)
+
+		p = (0.5, 0.5)
+
+		assert (1, 1) in x.square(p)
+		assert (0, 0) in x.square(p)
+		assert (0, 1) in x.square(p)
+		assert (0, 1) in x.square(p)
 
 
 class GridCalibrate(object):
@@ -175,11 +209,12 @@ class Maker(object):
 class Processor(object):
 	""" Processes points through an existing grid calibration. """
 
-	def __init__(self, samples):
+	def __init__(self, samples, grid):
 		self.samples = samples
+		self.grid = grid
 
 	def _processPointWithSample(self, point, sample):
-		""" Returns the point-to-be-processed with offset applied by the sample. """
+		""" Returns the point-to-be-processed with simple offset applied by the sample. """
 
 		(actual, measured, weight) = sample
 
@@ -188,9 +223,14 @@ class Processor(object):
 		return (point[0] + measuredToActual[0], point[1] + measuredToActual[1])
 
 
+	def _weightSquare(self, point):
+		""" Returns a 4-tuple of (point, weight), where the weights correspond to the 
+		proximity of the point to that vertex of the grid. The sum of the weights is one. """
+
+		square = grid.square(point)
+
+
 	def process(self, point, weight):
-
-
 
 		return self._processPointWithSample(point, self.samples[0])
 
@@ -199,8 +239,9 @@ class Processor(object):
 	def simple_identity():
 
 		gc_object = [((0, 0), (0, 0), 1)]
+		grid = Grid(3, 3, 6, 6)
 
-		x = Processor(gc_object)
+		x = Processor(gc_object, grid)
 
 		assert x.process((0, 0), 1) == (0, 0)
 		assert x.process((100, 100), 5) == (100, 100)
@@ -209,8 +250,9 @@ class Processor(object):
 	def single_point_correction():
 
 		gc_object = [((0, 0), (5, 3), 10)]
+		grid = Grid(3, 3, 6, 6)
 
-		x = Processor(gc_object)
+		x = Processor(gc_object, grid)
 
 		assert x.process((5, 3), 100) == (0, 0)
 
@@ -221,8 +263,9 @@ class Processor(object):
 			((0, 0), (0, 0), 0),
 			((0, 0), (1, 1), 1)
 		]
+		grid = Grid(3, 3, 6, 6)
 
-		x = Processor(gc_object)
+		x = Processor(gc_object, grid)
 		
 		assert x.process((1, 1), 1) == (0, 0)
 
@@ -233,7 +276,8 @@ class Processor(object):
 			((0, 0), (0, 0), 0),
 			((1, 1), (2, 2), 0)
 		]
+		grid = Grid(3, 3, 6, 6)
 
-		x = Processor(gc_object)
+		x = Processor(gc_object, grid)
 
 		assert x.process((0.5, 0.5), 0) == (1, 1) # ???
