@@ -312,8 +312,96 @@ class Maker(object):
 # 4. Subtract the difference
 
 
+class Sampler(object):
+
+	def __init__(self, samples, grid):
+		self.samples = samples
+		self.grid = grid
+
+	def sample(self, point, force):
+		pass
+
+	def _fetchSamplesWithinRadius(self, point, force, radius):
+		pass
+
+	def _fetchClosestSample(self, point, force, radius):
+		pass
+
+	# def _fetchClosestGridPoint(self, point):
+	# 	pass
+
+	def _averageSamplesWithinRadius(self, point, force, radius):
+		pass
+
+
+	@test
+	def fetch_best_sample_spot_on():
+
+		gc_object = [
+			((0, 0), (8, -7), 0),
+			((0, 0), (1, 1), 1)
+			((0, 0), (-10, 2), 3)
+		]
+
+		grid = Grid(30, 30, 6, 6)
+
+		x = Sampler(gc_object, grid)
+		
+		assert x.sample((0, 0), 0) == ((0, 0), (8, -7), 0)
+
+	@test
+	def simple_fetch_best_sample_within_radius():
+
+		gc_object = [
+			((0, 0), (8, -7), 0),
+			((0, 0), (1, 1), 1)
+			((0, 0), (-10, 2), 3)
+		]
+
+		grid = Grid(30, 30, 6, 6)
+
+		x = Sampler(gc_object, grid)
+		
+		assert x.sample((0, 0), 0) == ((0, 0), (8, -7), 0)
+
+
+	# @test
+	# def grid_aligned_sample():
+
+	# 	gc_object = [
+	# 		((0, 0), (5, 3), 10)
+	# 	]
+	# 	grid = Grid(3, 3, 6, 6)
+
+	# 	x = Processor(gc_object, grid)
+
+	# @test
+	# def choose_most_appropriate_force_sample():
+
+	# 	gc_object = [
+	# 		((0, 0), (5, 3), 10)
+	# 	]
+	# 	grid = Grid(3, 3, 6, 6)
+
+	# 	x = Processor(gc_object, grid)
+
+	# @test 
+	# def choose_best_sample():
+
+	# 	gc_object = [
+	# 		((0, 0), (0, 0), 0),
+	# 		((0, 0), (1, 1), 1)
+	# 	]
+	# 	grid = Grid(3, 3, 6, 6)
+
+	# 	x = Processor(gc_object, grid)
+		
+	# 	assert x.process((1, 1), 1) == (0, 0)
+
+
+
 class Processor(object):
-	""" Processes points through an existing grid calibration. """
+	""" Processes points through an existing grid calibration & applies corrections. """
 
 	def __init__(self, samples, grid):
 		self.samples = samples
@@ -322,20 +410,71 @@ class Processor(object):
 	def _processPointWithSample(self, point, sample):
 		""" Returns the point-to-be-processed with simple offset applied by the sample. """
 
-		(actual, measured, weight) = sample
+		(actual, measured, force) = sample
 
 		measuredToActual = (actual[0] - measured[0], actual[1] - measured[1])
 
 		return (point[0] + measuredToActual[0], point[1] + measuredToActual[1])
 
-	def _chooseSample(self, point, weight):
-		""" With a grid-aligned point """
+	def _chooseSample(self, point, force):
+		""" Chooses the most appropriate sample (ex. matching desired force) with a 
+		grid-aligned point. """
 
-		pass
+		best = None
+		diff = -1
 
-	def process(self, point, weight):
+		for sample in self.samples:
+			if sample[0] == point:
 
-		return self._processPointWithSample(point, self.samples[0])
+				currentDiff = abs(sample[2] - force)
+
+				if diff < 0 or currentDiff < diff:
+					diff = currentDiff
+					best = sample
+
+		if best:
+
+			return best
+
+		else:
+			# Assume identity for grid points with no samples
+			return (point, point, force)
+
+	@staticmethod
+	def _weightedSum(points):
+		""" Weighted sum with a list of points of the form [(point, weight), (point, weight)]..."""
+
+		accumulator = [0, 0]
+
+		for point, weight in points:
+			accumulator[0] += point[0] * weight
+			accumulator[1] += point[1] * weight
+
+		totalWeight = sum([weight for _, weight in points])
+
+		accumulator[0] /= totalWeight
+		accumulator[1] /= totalWeight
+
+		return (accumulator[0], accumulator[1])
+
+
+	def process(self, point, force):
+		""" Processes a given point & force and applies correction based on the library
+		of samples. """
+
+		ws = self.grid.weightedSquare(point)
+
+		weightedArray = []
+
+		for vert, weight in ws:
+
+			sample = self._chooseSample(vert, force)
+			afterCorrection = self._processPointWithSample(point, sample)
+
+			weightedArray.append((afterCorrection, weight))
+
+
+		return self._weightedSum(weightedArray)
 
 
 	@test 
@@ -347,7 +486,7 @@ class Processor(object):
 		x = Processor(gc_object, grid)
 
 		assert x.process((0, 0), 1) == (0, 0)
-		assert x.process((100, 100), 5) == (100, 100)
+		assert x.process((3, -3), 5) == (3, -3)
 
 	@test
 	def single_point_correction():
@@ -357,8 +496,24 @@ class Processor(object):
 
 		x = Processor(gc_object, grid)
 
-		assert x.process((5, 3), 100) == (0, 0)
+		assert x.process((5, 3), 10) == (0, 0)
 
+	@test
+	def simple_weighted_sum():
+
+		l = [((0, 0), 10), ((15, 15), 20), ((-32, 132), 0)]
+
+		assert Processor._weightedSum(l) == (10, 10)
+
+	@test
+	def choose_most_appropriate_force_sample():
+
+		gc_object = [
+			((0, 0), (5, 3), 10)
+		]
+		grid = Grid(3, 3, 6, 6)
+
+		x = Processor(gc_object, grid)
 
 	@test 
 	def choose_best_sample():
@@ -372,16 +527,3 @@ class Processor(object):
 		x = Processor(gc_object, grid)
 		
 		assert x.process((1, 1), 1) == (0, 0)
-
-	@test
-	def interpolate_samples_by_distance():
-
-		gc_object = [
-			((0, 0), (0, 0), 0),
-			((1, 1), (2, 2), 0)
-		]
-		grid = Grid(3, 3, 6, 6)
-
-		x = Processor(gc_object, grid)
-
-		assert x.process((0.5, 0.5), 0) == (1, 1) # ???

@@ -31,26 +31,26 @@ reload(GridCalibration)
 def testSuite():
 	print "--------- Running tests -------------"
 
-	def runTests(mod):
-		obj = mod.Tests()
+	# def runTests(mod):
+	# 	obj = mod.Tests()
 
-		if hasattr(obj, 'setUp'):
-			obj.setUp()
+	# 	if hasattr(obj, 'setUp'):
+	# 		obj.setUp()
 
-		for key in dir(obj):
-			if key.startswith('test'):
-				print "Running test: %s.%s" % (mod.__name__, key)
-				getattr(obj, key)()
-				print "Test passed.\n"
+	# 	for key in dir(obj):
+	# 		if key.startswith('test'):
+	# 			print "Running test: %s.%s" % (mod.__name__, key)
+	# 			getattr(obj, key)()
+	# 			print "Test passed.\n"
 
-		if hasattr(obj, 'tearDown'):
-			obj.tearDown()
+	# 	if hasattr(obj, 'tearDown'):
+	# 		obj.tearDown()
 
-	runTests(Calibration)
-	runTests(PAIO)
-	runTests(SixAxis)
-	runTests(threadutils)
-	runTests(GridCalibration)
+	# runTests(Calibration)
+	# runTests(PAIO)
+	# runTests(SixAxis)
+	# runTests(threadutils)
+	# runTests(GridCalibration)
 
 	test_lib.runall()
 
