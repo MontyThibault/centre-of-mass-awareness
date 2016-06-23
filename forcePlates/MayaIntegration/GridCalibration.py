@@ -35,40 +35,105 @@ class Grid(object):
 
 		return self.currentPoint
 
-	def square(self, point):
-		""" Returns the square to which the point belongs (in no particular order).
-		If the square lies exactly on a vertex or edge, we return those vertices
-		as both upper/lower bounds.
 
-		Ex. grid.square((3, 4)) = [(0, 0), (10, 0), (0, 10), (10, 10)]
-		Ex. grid.square((0, 0)) = [(0, 0), (0, 0), (0, 0), (0, 0)]
+	def _toIntegerForm(self, point):
+		""" The point is transformed in such a way that the integeral values correspond to
+		vertices on the graph, with (0, 0) being the first vertex, and (l_seg, w_seg) being
+		the far corner.
+
+		They can then be used for rounding or testing, and transormed back again.
 		"""
-
-		# Transform from point[0/1] to nw/nl:
-
-		# We have it that the integers of nw/nl correspond to the points on the grid
-		# So the idea is to apply a rounding operation and then apply the inverse transformation
 
 		nw = ((point[0] + self.w) * (self.w_seg)) / (2 * self.w)
 		nl = ((point[1] + self.l) * (self.l_seg)) / (2 * self.l)
 
+		return (nw, nl)
+
+	def _fromIntegerForm(self, point):
+		""" Inverse of _toIntegerForm. """
+
+		w = (2 * self.w * point[0]) / (self.w_seg) - self.w
+		l = (2 * self.l * point[1]) / (self.l_seg) - self.l
+
+		return (w, l)		
+
+
+	def contains(self, point):
+		""" If this grid contains the given point. """
+
+		(w, l) = self._toIntegerForm(point)
+
+		inside = l <= self.l_seg and w <= self.w_seg
+
+		aligned = round(w) == w and round(l) == l
+
+
+		return inside and aligned
+
+
+	def square(self, point):
+		""" Returns the square to which the point belongs. Opposite vertices are
+		congruent modulo 2 the index. IE. 0 is opposite 2 and 1 is opposite 3.
+
+		If the square lies exactly on a vertex or edge, we return those vertices
+		as both upper/lower bounds.
+
+		Ex. grid.square((3, 4)) = [(10, 0), (0, 0), (0, 10), (10, 10)]
+		Ex. grid.square((0, 0)) = [(0, 0), (0, 0), (0, 0), (0, 0)]
+		"""
+
+
+		# Go to integer form, apply a rounding operation, and then apply the 
+		# inverse transformation.
+
+		(nw, nl) = self._toIntegerForm(point)
+
 
 		points = [
-			(math.floor(nw), math.ceil(nl)), 
 			(math.floor(nw), math.floor(nl)), 
+			(math.floor(nw), math.ceil(nl)), 
 			(math.ceil(nw), math.ceil(nl)), 
-			(math.ceil(nw), math.floor(nl))]
-
-
-		points = [
-			(
-				(2 * self.w * p[0]) / (self.w_seg) - self.w,
-				(2 * self.l * p[1]) / (self.l_seg) - self.l
-			)
-			for p in points
+			(math.ceil(nw), math.floor(nl))
 		]
 
+
+		points = [self._fromIntegerForm(p) for p in points]
+
 		return points
+
+
+	def weightedSquare(self, point):
+		""" Returns a list of (point, weight), where the weights correspond to the 
+		proximity of the point to that vertex of the grid. The sum of the weights is one. """
+
+		square = self.square(point)
+
+
+		# Splice lines going horizontally and vertically through the point & calculate
+		# the areas for each vertex corner.
+
+		areas = [
+			abs((vert[0] - point[0]) * (vert[1] - point[1]))
+			for vert in square
+		]
+
+		totalArea = sum(areas)
+
+		if totalArea == 0:
+
+			# Single point case
+			areas = [1, 0, 0, 0]
+
+		else:
+			areas = [a / totalArea for a in areas]
+
+
+		# Shuffle indicies around such that we interchange opposite vertices on the square.
+		# With this we define the weight as the relative area of the opposite vertex.
+
+		opposites = [square[(i + 2) % 2] for i in range(4)]
+
+		return zip(opposites, areas)
 
 
 	def _pointGenerator(self):
@@ -79,27 +144,13 @@ class Grid(object):
 
 		self.hasMorePoints = True
 
-		# Changes in length & width for each box
-		dl = self.l / self.l_seg
-		dw = self.w / self.w_seg
+		for w in range(self.w_seg + 1):
+			for l in range(self.l_seg + 1):
 
-		# W/L are the sets of all points along length/width
-		W = [dw * i for i in range(self.w_seg + 1)]
-		L = [dl * i for i in range(self.l_seg + 1)]
-
-		# W & L currently range from [0, w] and [0, l]. 
-		# We will scale them to range from [-w, w] and [-l, l].
-		W = [(w * 2 - self.w) for w in W]
-		L = [(l * 2 - self.l) for l in L]
-
-		for w in W:
-			for l in L:
-
-				# Last iteration
-				if w is W[-1] and l is L[-1]:
+				if w == self.w_seg and l == self.l_seg:
 					self.hasMorePoints = False
 
-				yield (w, l)
+				yield self._fromIntegerForm((w, l))
 
 	@test
 	def iterate_simple_grid():
@@ -127,6 +178,17 @@ class Grid(object):
 		assert x.hasMorePoints == True
 
 	@test
+	def simple_contains():
+
+		x = Grid(10, 5, 20, 10)
+
+		assert x.contains((10, 5))
+		assert x.contains((-3, -2))
+		assert not x.contains((0.3, 3))
+		assert not x.contains((11, 0))
+
+
+	@test
 	def simple_square():
 
 		# Unit divisions
@@ -146,6 +208,24 @@ class Grid(object):
 		assert (7, -8) in x.square(p)
 		assert (6, -7) in x.square(p)
 		assert (7, -7) in x.square(p)
+
+	@test
+	def weighted_square():
+
+		x = Grid(10, 10, 1, 1)
+
+		p = (0, 0)
+
+		assert x.weightedSquare(p)[0][1] == 0.25
+
+		p = (10, 10)
+
+		assert ((10, 10), 1) in x.weightedSquare(p)
+
+		p = (4.4324, -8.54323)
+		ws = x.weightedSquare(p)
+
+		assert sum([w for (p, w) in ws]) == 1
 
 
 
@@ -248,13 +328,10 @@ class Processor(object):
 
 		return (point[0] + measuredToActual[0], point[1] + measuredToActual[1])
 
+	def _chooseSample(self, point, weight):
+		""" With a grid-aligned point """
 
-	def _weightSquare(self, point):
-		""" Returns a 4-tuple of (point, weight), where the weights correspond to the 
-		proximity of the point to that vertex of the grid. The sum of the weights is one. """
-
-		square = grid.square(point)
-
+		pass
 
 	def process(self, point, weight):
 
@@ -281,6 +358,7 @@ class Processor(object):
 		x = Processor(gc_object, grid)
 
 		assert x.process((5, 3), 100) == (0, 0)
+
 
 	@test 
 	def choose_best_sample():
