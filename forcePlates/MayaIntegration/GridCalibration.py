@@ -319,28 +319,150 @@ class Sampler(object):
 	def __init__(self, samples):
 		self.samples = samples
 
-	def closestSample(self, point, force):
+	def closest(self, point, force):
 		
+		best = None
+		diff = -1
+
+		for sample in self.samples:
+
+			if sample[0] != point:
+				continue
+
+			currentDiff = abs(force - sample[2])
+
+			if diff == -1 or currentDiff < diff:
+				best = sample
+				diff = currentDiff
+
+		if best:
+			return best
+		else:
+
+			# Assume identity for grid points with no samples
+			return (point, point, force)
+
+
+	def distanceComposite(self, point, force, radius):
 		
+		weightedSamples = self._weightedSamplesWithinRadius(point, force, radius)
+		return self._averageWeightedSamples(weightedSamples)
 
-	# def _fetchClosestGridPoint(self, point):
-	# 	pass
 
-	def compositeSample(self, point, force, radius):
-		pass
+	def simpleComposite(self, point, force, radius):
+		
+		samples = self._samplesWithinRadius(point, force, radius)
+		return self._averageSamples(samples)
+
 
 	def _samplesWithinRadius(self, point, force, radius):
-		pass
+		""" Returns a list of samples for the specified point within the radius
+		of the given force. """
+		
+		samples = []
+
+		for sample in self.samples:
+
+			if sample[0] != point:
+				continue
+
+			diff = abs(force - sample[2])
+			if diff <= radius:
+
+				samples.append(sample)
+
+		return samples
+
+	def _weightedSamplesWithinRadius(self, point, force, radius):
+		""" The distance metric in this instance is defined to be a linear curve with
+		spot-on sample corresponding to a value of one, sample exactly on the radius
+		corresponding to a value of zero. This way we can easily take a weighted
+		average. """
+
+		samples = []
+
+		for sample in self.samples:
+
+			if sample[0] != point:
+				continue
+
+			diff = abs(force - sample[2])
+			if diff <= radius:
+
+				# Normalized linear function
+				weight = (radius - diff) / radius
+
+				samples.append((sample, weight))
+
+		return samples
+
 
 	@staticmethod
 	def _averageSamples(samples):
 
-		pass
+		acc = [0, 0, 0, 0, 0]
+
+		for sample in samples:
+
+			acc[0] += sample[0][0]
+			acc[1] += sample[0][1]
+			acc[2] += sample[1][0]
+			acc[3] += sample[1][1]
+			acc[4] += sample[2]
+
+		acc = [x / len(samples) for x in acc]
+
+		return ((acc[0], acc[1]), (acc[2], acc[3]), acc[4])
+
 
 	@staticmethod
-	def _averageWeightedSamples(samples):
-		pass
+	def _averageWeightedSamples(weightedSamples):
+		
+		acc = [0, 0, 0, 0, 0]
+		totalWeight = 0
 
+		for sample, weight in weightedSamples:
+
+			acc[0] += sample[0][0] * weight
+			acc[1] += sample[0][1] * weight
+			acc[2] += sample[1][0] * weight
+			acc[3] += sample[1][1] * weight
+			acc[4] += sample[2] * weight
+
+			totalWeight += weight
+
+		acc = [x / totalWeight for x in acc]
+
+		return ((acc[0], acc[1]), (acc[2], acc[3]), acc[4])
+
+
+	@test
+	def average_samples():
+
+		samples = [
+			((0, 0), (-3, -3), 0),
+			((0, 0), (3, 3), 1),
+			((0, 0), (0, 0), -1)
+		]
+
+		assert Sampler._averageSamples(samples) == ((0, 0), (0, 0), 0)
+
+	@test
+	def weighted_average_samples():
+
+		samples = [
+			((0, 0), (0, 0), 0),
+			((0, 0), (3, 3), 6)
+		]
+
+		weights = [
+			1,
+			2
+		]
+
+		weightedSamples = zip(samples, weights)
+
+		assert Sampler._averageWeightedSamples(weightedSamples) == ((0, 0), (2, 2), 4)
 
 	@test
 	def fetch_best_sample_spot_on():
@@ -353,55 +475,28 @@ class Sampler(object):
 
 		x = Sampler(samples)
 		
-		assert x.closestSample((0, 0), 0) == ((0, 0), (8, -7), 0)
-		assert x.compositeSample((0, 0), 0, 0.5) == ((0, 0), (8, -7), 0)
+		assert x.closest((0, 0), 0) == ((0, 0), (8, -7), 0)
 
 	@test
 	def fetch_closest_sample_without_exact_match():
 
 		samples = [
 			((0, 0), (8, -7), 0),
-			((0, 0), (1, 1), 1)
+			((0, 0), (1, 1), 1),
 			((0, 0), (-10, 2), 4)
 		]
 
 		x = Sampler(samples)
 		
-		assert x.sample((0, 0), 2) == ((0, 0), (1, 1), 1)
-
-	@test
-	def average_samples():
-
-		samples = [
-			((0, 0), (-3, -3), 0),
-			((0, 0), (3, 3), 1)
-			((0, 0), (0, 0), -1)
-		]
-
-		assert Sampler._averageSamples(samples) == ((0, 0), (0, 0), 0)
-
-	@test
-	def weighted_average_samples():
-
-		samples = [
-			((0, 0), (0, 0), 1),
-			((0, 0), (1, 1), 99)
-		]
-
-		weights = [
-			99,
-			1
-		]
-
-		weightedSamples = zip(samples, weights)
-
-		assert Sampler._averageWeightedSamples(weightedSamples) == ((0, 0), (0.99, 0.99), 50)
+		assert x.closest((0, 0), 2) == ((0, 0), (1, 1), 1)
 
 	@test
 	def simpleCompositeSample():
 
+		import pdb
+
 		samples = [
-			((0, 0), (442, -33), -0.1),
+			((0, 0), (442, -33), -1.1),
 			((0, 0), (0, 0), -1),
 			((0, 0), (-3, -3), 0),
 			((0, 0), (3, 3), 1),
@@ -410,7 +505,9 @@ class Sampler(object):
 
 		s = Sampler(samples)
 
-		assert s.compositeSample((0, 0), 0, 1) == ((0, 0), (0, 0), 0)
+		# pdb.set_trace()
+
+		assert s.simpleComposite((0, 0), 0, 1) == ((0, 0), (0, 0), 0)
 
 
 	# @test

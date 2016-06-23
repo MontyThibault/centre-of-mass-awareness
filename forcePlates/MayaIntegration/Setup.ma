@@ -1,6 +1,6 @@
 //Maya ASCII 2016 scene
 //Name: Setup.ma
-//Last modified: Wed, Jun 22, 2016 10:36:05 AM
+//Last modified: Thu, Jun 23, 2016 03:35:08 PM
 //Codeset: 1252
 requires maya "2016";
 requires "stereoCamera" "10.0";
@@ -76,7 +76,7 @@ createNode camera -s -n "sideShape" -p "side";
 	setAttr ".o" yes;
 createNode transform -n "center";
 	rename -uid "B4A58403-44B5-A9AA-286B-E095D21F9D20";
-	setAttr ".t" -type "double3" -0.375055937373308 0 -0.44669583552326431 ;
+	setAttr ".t" -type "double3" -43.81864925203736 0 -105.60395005518077 ;
 	setAttr ".s" -type "double3" 5.7610233975559488 5.7610233975559488 5.7610233975559488 ;
 createNode locator -n "locatorShape4" -p "center";
 	rename -uid "40FC08D3-4EB7-56D1-B482-A5A78C0F4937";
@@ -117,7 +117,7 @@ createNode transform -n "scaling";
 	rename -uid "45F7A337-4637-235E-0C16-04BC0610BAE3";
 createNode transform -n "gridpoint" -p "scaling";
 	rename -uid "0F49061C-4ACD-4B5F-7B57-4B9A75115827";
-	setAttr ".t" -type "double3" 44.5 0 53 ;
+	setAttr ".t" -type "double3" -44.5 0 -53 ;
 	setAttr ".s" -type "double3" 5.9902106980046677 5.9902106980046677 5.9902106980046677 ;
 createNode locator -n "locatorShape5" -p "gridpoint";
 	rename -uid "E1AC3E68-4A12-E678-BA4F-74B41D9E77B6";
@@ -166,7 +166,7 @@ createNode annotationShape -n "annotationShape1" -p "|scaling|plate4|annotationL
 createNode transform -n "plate1" -p "scaling";
 	rename -uid "23EDAE12-4648-7CD9-F24B-04BFE74D876B";
 	setAttr ".t" -type "double3" -44.5 0 -53 ;
-	setAttr ".s" -type "double3" 0.027821415902295622 0.027821415902295622 0.027821415902295622 ;
+	setAttr ".s" -type "double3" -0.054702643446196748 -0.054702643446196748 -0.054702643446196748 ;
 createNode transform -n "nurbsCircle3" -p "plate1";
 	rename -uid "D62D909F-4C18-38FF-ADEF-1483022E9821";
 	setAttr ".t" -type "double3" 0.0075646172921121791 0 0.014774444270008784 ;
@@ -192,7 +192,7 @@ createNode annotationShape -n "annotationShape3" -p "annotation3";
 createNode transform -n "plate2" -p "scaling";
 	rename -uid "38F23663-454F-6BF5-D02E-7D816D463E7F";
 	setAttr ".t" -type "double3" 44.5 0 -53 ;
-	setAttr ".s" -type "double3" 9.9999999999999998e-013 9.9999999999999998e-013 9.9999999999999998e-013 ;
+	setAttr ".s" -type "double3" -0.027778379021111486 -0.027778379021111486 -0.027778379021111486 ;
 createNode transform -n "nurbsCircle2" -p "plate2";
 	rename -uid "34CA3E24-4E06-C3F2-5FFA-21BB91F35183";
 	setAttr ".t" -type "double3" -1722173067687.7175 -0.061452776099889264 0.0089244809583587971 ;
