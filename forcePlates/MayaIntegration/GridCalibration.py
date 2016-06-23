@@ -313,56 +313,104 @@ class Maker(object):
 
 
 class Sampler(object):
+	""" Given a constant grid point, this class controls the choice and manipulation of 
+	samples alongside associated force data, to be used in the processor. """
 
-	def __init__(self, samples, grid):
+	def __init__(self, samples):
 		self.samples = samples
-		self.grid = grid
 
-	def sample(self, point, force):
-		pass
-
-	def _fetchSamplesWithinRadius(self, point, force, radius):
-		pass
-
-	def _fetchClosestSample(self, point, force, radius):
-		pass
+	def closestSample(self, point, force):
+		
+		
 
 	# def _fetchClosestGridPoint(self, point):
 	# 	pass
 
-	def _averageSamplesWithinRadius(self, point, force, radius):
+	def compositeSample(self, point, force, radius):
+		pass
+
+	def _samplesWithinRadius(self, point, force, radius):
+		pass
+
+	@staticmethod
+	def _averageSamples(samples):
+
+		pass
+
+	@staticmethod
+	def _averageWeightedSamples(samples):
 		pass
 
 
 	@test
 	def fetch_best_sample_spot_on():
 
-		gc_object = [
+		samples = [
 			((0, 0), (8, -7), 0),
-			((0, 0), (1, 1), 1)
+			((0, 0), (1, 1), 1),
 			((0, 0), (-10, 2), 3)
 		]
 
-		grid = Grid(30, 30, 6, 6)
-
-		x = Sampler(gc_object, grid)
+		x = Sampler(samples)
 		
-		assert x.sample((0, 0), 0) == ((0, 0), (8, -7), 0)
+		assert x.closestSample((0, 0), 0) == ((0, 0), (8, -7), 0)
+		assert x.compositeSample((0, 0), 0, 0.5) == ((0, 0), (8, -7), 0)
 
 	@test
-	def simple_fetch_best_sample_within_radius():
+	def fetch_closest_sample_without_exact_match():
 
-		gc_object = [
+		samples = [
 			((0, 0), (8, -7), 0),
 			((0, 0), (1, 1), 1)
-			((0, 0), (-10, 2), 3)
+			((0, 0), (-10, 2), 4)
 		]
 
-		grid = Grid(30, 30, 6, 6)
-
-		x = Sampler(gc_object, grid)
+		x = Sampler(samples)
 		
-		assert x.sample((0, 0), 0) == ((0, 0), (8, -7), 0)
+		assert x.sample((0, 0), 2) == ((0, 0), (1, 1), 1)
+
+	@test
+	def average_samples():
+
+		samples = [
+			((0, 0), (-3, -3), 0),
+			((0, 0), (3, 3), 1)
+			((0, 0), (0, 0), -1)
+		]
+
+		assert Sampler._averageSamples(samples) == ((0, 0), (0, 0), 0)
+
+	@test
+	def weighted_average_samples():
+
+		samples = [
+			((0, 0), (0, 0), 1),
+			((0, 0), (1, 1), 99)
+		]
+
+		weights = [
+			99,
+			1
+		]
+
+		weightedSamples = zip(samples, weights)
+
+		assert Sampler._averageWeightedSamples(weightedSamples) == ((0, 0), (0.99, 0.99), 50)
+
+	@test
+	def simpleCompositeSample():
+
+		samples = [
+			((0, 0), (442, -33), -0.1),
+			((0, 0), (0, 0), -1),
+			((0, 0), (-3, -3), 0),
+			((0, 0), (3, 3), 1),
+			((0, 0), (-54, 999), 1.36)
+		]
+
+		s = Sampler(samples)
+
+		assert s.compositeSample((0, 0), 0, 1) == ((0, 0), (0, 0), 0)
 
 
 	# @test
