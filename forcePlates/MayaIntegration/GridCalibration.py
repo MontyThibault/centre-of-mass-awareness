@@ -1,4 +1,5 @@
 import Calibration
+import math
 from test_lib import test
 
 
@@ -36,22 +37,38 @@ class Grid(object):
 
 	def square(self, point):
 		""" Returns the square to which the point belongs (in no particular order).
+		If the square lies exactly on a vertex or edge, we return those vertices
+		as both upper/lower bounds.
 
 		Ex. grid.square((3, 4)) = [(0, 0), (10, 0), (0, 10), (10, 10)]
+		Ex. grid.square((0, 0)) = [(0, 0), (0, 0), (0, 0), (0, 0)]
 		"""
 
-		dl = (self.l * 2) / self.l_seg
-		dw = (self.w * 2) / self.w_seg
+		# Transform from point[0/1] to nw/nl:
 
-		for l in range(-self.l, self.l, dl * 2):
-			pass
+		# We have it that the integers of nw/nl correspond to the points on the grid
+		# So the idea is to apply a rounding operation and then apply the inverse transformation
 
-		for w in range(-self.w, self.w, dw * 2):
-			pass
-
-		
+		nw = ((point[0] + self.w) * (self.w_seg)) / (2 * self.w)
+		nl = ((point[1] + self.l) * (self.l_seg)) / (2 * self.l)
 
 
+		points = [
+			(math.floor(nw), math.ceil(nl)), 
+			(math.floor(nw), math.floor(nl)), 
+			(math.ceil(nw), math.ceil(nl)), 
+			(math.ceil(nw), math.floor(nl))]
+
+
+		points = [
+			(
+				(2 * self.w * p[0]) / (self.w_seg) - self.w,
+				(2 * self.l * p[1]) / (self.l_seg) - self.l
+			)
+			for p in points
+		]
+
+		return points
 
 
 	def _pointGenerator(self):
@@ -121,6 +138,15 @@ class Grid(object):
 		assert (0, 0) in x.square(p)
 		assert (0, 1) in x.square(p)
 		assert (0, 1) in x.square(p)
+
+
+		p = (6.321, -7.466)
+
+		assert (6, -8) in x.square(p)
+		assert (7, -8) in x.square(p)
+		assert (6, -7) in x.square(p)
+		assert (7, -7) in x.square(p)
+
 
 
 class GridCalibrate(object):
