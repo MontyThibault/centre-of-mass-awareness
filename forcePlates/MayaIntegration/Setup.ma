@@ -1,6 +1,6 @@
 //Maya ASCII 2016 scene
 //Name: Setup.ma
-//Last modified: Thu, Jun 23, 2016 03:35:08 PM
+//Last modified: Mon, Jun 27, 2016 10:53:43 AM
 //Codeset: 1252
 requires maya "2016";
 requires "stereoCamera" "10.0";
@@ -15,13 +15,13 @@ fileInfo "license" "student";
 createNode transform -s -n "persp";
 	rename -uid "1A78BDDF-4D61-BEC6-2602-7C8E2BE055ED";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" 0.32486992671378562 104.58477671272202 -153.51042942955951 ;
+	setAttr ".t" -type "double3" 0.22943724255065548 123.82665597566475 -180.8497684983281 ;
 	setAttr ".r" -type "double3" -35.138352729192334 -539.79999999970062 0 ;
 createNode camera -s -n "perspShape" -p "persp";
 	rename -uid "0D4DF0B2-4984-2D89-DCEA-DDA0E82829A0";
 	setAttr -k off ".v" no;
 	setAttr ".fl" 34.999999999999993;
-	setAttr ".coi" 190.03856949017006;
+	setAttr ".coi" 223.47056742155254;
 	setAttr ".imn" -type "string" "persp";
 	setAttr ".den" -type "string" "persp_depth";
 	setAttr ".man" -type "string" "persp_mask";
@@ -237,6 +237,8 @@ createNode annotationShape -n "annotationShape1" -p "|scaling|plate3|annotationL
 	rename -uid "465FA32B-48E5-EBA5-2F26-018EA20EFF53";
 	setAttr -k off ".v";
 	setAttr ".txt" -type "string" "Plate 3";
+createNode transform -n "nurbsSquare1";
+	rename -uid "53095147-45CF-8988-6108-01A330167E03";
 createNode lightLinker -s -n "lightLinker1";
 	rename -uid "8D5CC16A-4992-5CAC-5F08-979A0BDE1E76";
 	setAttr -s 2 ".lnk";

@@ -314,12 +314,12 @@ class Maker(object):
 
 class Sampler(object):
 	""" Given a constant grid point, this class controls the choice and manipulation of 
-	samples alongside associated force data, to be used in the processor. """
+	samples from calibration data. Note all sample methods shares a common interface. """
 
 	def __init__(self, samples):
 		self.samples = samples
 
-	def closest(self, point, force):
+	def closest(self, point, force, radius = 0):
 		""" Returns the closest sample on the given point. """
 		
 		best = None
@@ -493,7 +493,7 @@ class Sampler(object):
 		assert x.closest((0, 0), 2) == ((0, 0), (1, 1), 1)
 
 	@test
-	def simpleCompositeSample():
+	def simple_composite_sample():
 
 		samples = [
 			((0, 0), (442, -33), -1.1),
@@ -509,7 +509,7 @@ class Sampler(object):
 
 
 class Processor(object):
-	""" Processes points through an existing grid calibration & applies corrections. """
+	""" Processes points & applies corrections. Used in conjunction with a sampler. """
 
 	def __init__(self, sampler, grid):
 
@@ -517,7 +517,8 @@ class Processor(object):
 		self.grid = grid
 
 
-	def _processPointWithSample(self, point, sample):
+	@staticmethod
+	def _processPointWithSample(point, sample):
 		""" Returns the point-to-be-processed with simple offset applied by the sample. """
 
 		(actual, measured, force) = sample
@@ -538,8 +539,8 @@ class Processor(object):
 
 		totalWeight = sum([weight for _, weight in points])
 
-		accumulator[0] /= totalWeight
-		accumulator[1] /= totalWeight
+		accumulator[0] /= float(totalWeight)
+		accumulator[1] /= float(totalWeight)
 
 		return (accumulator[0], accumulator[1])
 
@@ -554,7 +555,7 @@ class Processor(object):
 
 		for vert, weight in ws:
 
-			sample = self._chooseSample(vert, force)
+			sample = self.sampler(vert, force, 10)
 			afterCorrection = self._processPointWithSample(point, sample)
 
 			weightedArray.append((afterCorrection, weight))
@@ -562,6 +563,37 @@ class Processor(object):
 
 		return self._weightedSum(weightedArray)
 
+
+	@test
+	def simple_sample_process():
+
+		sample =  ((10, -3), (5, 3), 40)
+
+		assert Processor._processPointWithSample((5, 3), sample) == (10, -3)
+
+	@test
+	def equal_weighted_sum():
+
+		points = [
+			((0, 0), 1),
+			((0, 1), 1),
+			((1, 0), 1),
+			((1, 1), 1)
+		]
+
+		assert Processor._weightedSum(points) == (0.5, 0.5)
+
+	@test
+	def lopsided_weighted_sum():
+
+		points = [
+			((0, 0), 1),
+			((0, 1), 0),
+			((1, 0), 0),
+			((1, 1), 0)
+		]
+
+		assert Processor._weightedSum(points) == (0, 0)
 
 	@test 
 	def setup():
@@ -571,43 +603,90 @@ class Processor(object):
 
 		@instance
 		class sampler(object):
-			def closest(*args):
+			def identity(*args):
+
+				# Identity sample
+
 				return ((0, 0), (0, 0), 1)
+
+
+			def off_by_one(*args):
+
+				# Offset by (1, 1)
+
+				return ((0, 0), (1, 1), 1)
+
+			def square_identities(self, point, force, radius):
+
+				# Identities for each point on a unit square
+
+				return {
+					(0, 0): ((0, 0), (0, 0), 1),
+					(1, 0): ((1, 0), (1, 0), 1),
+					(0, 1): ((0, 1), (0, 1), 1),
+					(1, 1): ((1, 1), (1, 1), 1)
+				}[point]
+
+			def square_off_by_one(self, point, force, radius):
+
+				# Offset by (1, 1) for each point on a unit square
+
+				return {
+					(0, 0): ((0, 0), (1, 1), 1),
+					(1, 0): ((1, 0), (2, 1), 1),
+					(0, 1): ((0, 1), (1, 2), 1),
+					(1, 1): ((1, 1), (2, 2), 1)
+				}[point]
+
+			def square_mixture(self, point, force, radius):
+
+				# Offset by (1, 1) for the (0, 0) point; the rest are identities
+
+				return {
+					(0, 0): ((0, 0), (1, 1), 1),
+					(1, 0): ((1, 0), (1, 0), 1),
+					(0, 1): ((0, 1), (0, 1), 1),
+					(1, 1): ((1, 1), (1, 1), 1)
+				}[point]
+
 
 		@instance
 		class grid(object):
-			def weightedSquare(point);
-				return [((0, 0), 0.5), ((1, 0), 0.5), ((0, 1), 0), ((1, 1), 0)]
+			def weightedSquare(*args):
 
+				# This is a unit square where the point lies in the exact centre.
+
+				return [((0, 0), 0.25), ((1, 0), 0.25), ((0, 1), 0.25), ((1, 1), 0.25)]
 
 
 		@test
 		def single_point_identity():
-			gc_object = [((0, 0), (0, 0), 1)]
-			grid = Grid(3, 3, 6, 6)
 
-			x = Processor(sampler, grid)
+			x = Processor(sampler.identity, grid)
 
 			assert x.process((0, 0), 1) == (0, 0)
-			assert x.process((3, -3), 5) == (3, -3)
+			assert x.process((32, -3), 0.1) == (32, -3)
+
 
 		@test
-		def single_point_correction():
+		def single_point_offset():
 
-			gc_object = [((0, 0), (5, 3), 10)]
-			grid = Grid(3, 3, 6, 6)
+			x = Processor(sampler.off_by_one, grid)
 
-			x = Processor(sampler, grid)
+			assert x.process((0, 0), 1) == (-1, -1)
+			assert x.process((32, -3), 0.1) == (31, -4)
 
-			assert x.process((5, 3), 10) == (0, 0)
-
-		@test
-		def simple_weighted_sum():
-
-			l = [((0, 0), 10), ((15, 15), 20), ((-32, 132), 0)]
-
-			assert Processor._weightedSum(l) == (10, 10)
 
 		@test
-		def complicated_sum():
-			pass
+		def square_identity():
+
+			x = Processor(sampler.square_identities, grid)
+
+			assert x.process((0.5, 0.5), 1) == (0.5, 0.5)
+
+		@test
+		def square_offset():
+
+			x = Processor(sampler.square_off_by_one, grid)
+
+			assert x.process((0.5, 0.5), 1) == (-0.5, -0.5)
