@@ -1,28 +1,8 @@
+from plugin.killable_thread import KillableThread
 import unittest
-import threading
 
-class KillableThread(threading.Thread):
-	objs = set()
+class TestKillableThread(unittest.TestCase):
 
-	def __init__(self):
-		threading.Thread.__init__(self)
-		
-		self.objs.add(self)
-		self.dead = False
-
-	def __del__(self):
-		self.objs.remove(self)
-			
-	def kill(self):
-		self.dead = True
-
-	@classmethod
-	def killAll(cls):
-		for obj in cls.objs:
-			obj.kill()
-
-
-class Tests(object):
 	def test_spawn_killable_thread(self):
 		
 		class A(KillableThread):
