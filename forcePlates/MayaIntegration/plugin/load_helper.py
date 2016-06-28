@@ -12,9 +12,7 @@ once.
 import os
 import pickle
 
-
-# Append to Calibration.py's directory
-calibration_file = os.path.dirname(os.path.realpath(__file__)) + "/calibration/calib.txt"
+calibration_file = os.path.dirname(os.path.realpath(__file__)) + "/../../calibration/calib.txt"
 
 
 def _getdict():

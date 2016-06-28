@@ -1,47 +1,26 @@
 class Affine(object):
 	""" Defines an affine transformation on a single input. """
 
-	def __init__(self, name = False, load = True):
-		self.name = name
+	def __init__(self):
 		self.offset = 0
 		self.gain = 1
 
-		# The last 
+		# The last output
 		self.last = 0
-
-		if name and load:
-			self.load()
 
 	def process(self, c):
 		self.last = c
 
 		return (c + self.offset) * self.gain
 
-	def setZero(self, c = None):
-		if c is None:
-			c = self.last
-
+	def setZero(self, c):
 		self.offset = -c
 
-	def setOne(self, c = None):
-		if c is None:
-			c = self.last
+	def setZeroLast(self):
+		self.offset = -self.last
 
+	def setOne(self, c):
 		self.gain = 1.0 / (c + self.offset)
 
-	def load(self):
-		if LoadHelper.exists(self.name):
-			(self.offset, self.gain) = LoadHelper.load(self.name)
-		else:
-			# Save with defaults
-			self.save()
-
-	def save(self):
-		LoadHelper.save(self.name, (self.offset, self.gain))
-
-
-	def delete(self):
-		""" Deletes the calibration entry, not the instance. """
-		LoadHelper.delete(self.name)
-
-
+	def setOneLast(self):
+		self.gain = 1.0 / (self.last + self.offset)

@@ -1,26 +1,26 @@
-from plugin.sixaxis.sixaxis_calibration import SixAxisCalibrationMatrix
-import unittest
+# from plugin.sixaxis.sixaxis_calibration import SixAxisCalibrationMatrix
+# import unittest
 
-class TestSixAxisCalibration(unittest.TestCase):
+# class TestSixAxisCalibration(unittest.TestCase):
 
-	def test_calibrate_matrix_test_and_save(self):
+# 	def test_calibrate_matrix_test_and_save(self):
 
-		x = SixAxisCalibrationMatrix()
+# 		x = SixAxisCalibrationMatrix()
 
-		assert x.process([1, 2, 3, 4, 5, 6]) == [1, 2, 3, 4, 5, 6]
+# 		assert x.process([1, 2, 3, 4, 5, 6]) == [1, 2, 3, 4, 5, 6]
 
-		x.matrix[2][3] = 1
-		assert x.process([0, 0, 0, 1, 0, 0]) == [0, 0, 1, 1, 0, 0]
+# 		x.matrix[2][3] = 1
+# 		assert x.process([0, 0, 0, 1, 0, 0]) == [0, 0, 1, 1, 0, 0]
 
-		x.name = 'test'
-		x.save()
+# 		x.name = 'test'
+# 		x.save()
 
-		x.matrix[2][3] = 0
+# 		x.matrix[2][3] = 0
 
-		x.load()
-		assert x.process([0, 0, 0, 1, 0, 0]) == [0, 0, 1, 1, 0, 0]
+# 		x.load()
+# 		assert x.process([0, 0, 0, 1, 0, 0]) == [0, 0, 1, 1, 0, 0]
 
-		x.delete()
+# 		x.delete()
 
-	def test_insert_factory_six_axis_calibrations(self):
-		SixAxisCalibrationMatrix.insert_factory_six_axis_calibrations()
+# 	def test_insert_factory_six_axis_calibrations(self):
+# 		SixAxisCalibrationMatrix.insert_factory_six_axis_calibrations()
