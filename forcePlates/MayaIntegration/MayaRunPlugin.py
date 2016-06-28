@@ -2,10 +2,15 @@
 
 import sys
 
+
+# Replace your absolute path here
+
 sys.path.append('C:/Users/Monty/Desktop/COMAwareness/forcePlates/MayaIntegration')
 
-import MayaScript
-reload(MayaScript)
 
-MayaScript.main()
-# MayaScript.testSuite()
+import plugin
+plugin.main()
+
+
+# import tests
+# tests.main()

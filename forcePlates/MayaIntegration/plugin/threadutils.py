@@ -1,7 +1,6 @@
 import unittest
 import threading
 
-
 class KillableThread(threading.Thread):
 	objs = set()
 
@@ -23,7 +22,7 @@ class KillableThread(threading.Thread):
 			obj.kill()
 
 
-class TestKillableThread(unittest.TestCase):
+class Tests(object):
 	def test_spawn_killable_thread(self):
 		
 		class A(KillableThread):

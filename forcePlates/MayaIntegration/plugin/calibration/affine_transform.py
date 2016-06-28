@@ -50,6 +50,7 @@ class Calibration(object):
 	def save(self):
 		LoadHelper.save(self.name, (self.offset, self.gain))
 
+
 	def delete(self):
 		""" Deletes the calibration entry, not the instance. """
 		LoadHelper.delete(self.name)

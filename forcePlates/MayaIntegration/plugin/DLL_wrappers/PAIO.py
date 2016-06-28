@@ -84,7 +84,7 @@ class AIODevice(object):
 		return self._callableWithID(getattr(self.aio, key))
 
 
-class Tests(object):
+class AIOTests(unittest.TestCase):
 	def test_paio_singleton_interface(self):
 		x = AIO()
 		x.test = 10

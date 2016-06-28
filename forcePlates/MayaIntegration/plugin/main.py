@@ -17,7 +17,7 @@ import LabPro
 import PAIO
 import SixAxis
 import Calibration
-import GridCalibration
+import gridcalibration
 
 reload(LabPro)
 reload(PAIO)
@@ -25,36 +25,7 @@ reload(SixAxis)
 reload(Calibration)
 reload(threadutils)
 reload(test_lib)
-reload(GridCalibration)
-
-
-def testSuite():
-	print "--------- Running tests -------------"
-
-	# def runTests(mod):
-	# 	obj = mod.Tests()
-
-	# 	if hasattr(obj, 'setUp'):
-	# 		obj.setUp()
-
-	# 	for key in dir(obj):
-	# 		if key.startswith('test'):
-	# 			print "Running test: %s.%s" % (mod.__name__, key)
-	# 			getattr(obj, key)()
-	# 			print "Test passed.\n"
-
-	# 	if hasattr(obj, 'tearDown'):
-	# 		obj.tearDown()
-
-	# runTests(Calibration)
-	# runTests(PAIO)
-	# runTests(SixAxis)
-	# runTests(threadutils)
-	# runTests(GridCalibration)
-
-	test_lib.runall()
-
-	print "---------- All tests passed! ---------"
+reload(gridcalibration)
 
 
 def main():

@@ -63,26 +63,7 @@ class SixAxis(object):
 
 
 
-	# def setChannelsZero(self, channels):
-	# 	""" Sets given channels to zero. These are channel indicies, not the 
-	# 	channel numbers themselves. For instance, setting all forces to zero
-	# 	would be `setChannelsZero([0, 1, 2])` """
-
-	# 	for channel in channels:
-	# 		self.calibrations[channel].setZero()
-
-	# def setChannelsOne(self, channels):
-	# 	""" Sets given channels to one. These are channel indicies, not the 
-	# 	channel numbers themselves. For instance, setting all forces to one
-	# 	would be `setChannelsOne([0, 1, 2])` """
-
-	# 	for channel in channels:
-	# 		self.calibrations[channel].setOne()
-
-
-
-
-class Tests(object):
+class Tests(unittest.TestCase):
 
 	class FauxDevice(object):
 		def Init():
