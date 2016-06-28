@@ -1,17 +1,11 @@
 from ctypes import *
-import unittest
 
-class Singleton(object):
-	"""Ensures only one instance of subtypes exist at a time."""
-
-	_instance = None
-	def __new__(class_, *args, **kwargs):
-		if not isinstance(class_._instance, class_):
-			class_._instance = object.__new__(class_, *args, **kwargs)
-		return class_._instance
+def instance(cls):
+	return cls()
 
 
-class AIO(Singleton):
+@instance
+class aio(object):
 	""" This class overrides the default attribute lookup of the aio DLL library
 	in to implement automated error catching for all functions, assuming the 
 	common interface is a zero-valued return. 
@@ -21,26 +15,6 @@ class AIO(Singleton):
 	# Should be on system path if device drivers were installed properly
 	_raw = cdll.LoadLibrary('CAIO.dll')
 
-	class ErrorWrapper:
-		def __init__(self, f):
-			self.f = f
-
-		def __call__(self, *args, **kwargs):
-			errorCode = self.f(*args, **kwargs)
-
-			if errorCode != 0:
-
-				# Max error string length of 200 characters
-				errorStringBuffer = create_string_buffer(200)
-
-				# Copy error code into buffer
-				AIO()._raw.AioGetErrorString(errorCode, errorStringBuffer)
-
-				print("aio.%s = %s : %s" % 
-					(self.f.__name__, errorCode, errorStringBuffer.value.decode("utf-8")))
-			
-			return errorCode
-
 	def __getattr__(self, key):
 		if key in consts:
 
@@ -49,15 +23,52 @@ class AIO(Singleton):
 		else:
 
 			# For functions
-			return self.ErrorWrapper(getattr(self._raw, key))
+			return _ErrorWrapper(getattr(self._raw, key))
 	
+
+class _ErrorWrapper(object):
+	"""
+
+	By default, the imported library from cdll.LoadLibrary('CAIO.dll') returns
+	functons whose return values are certain error codes. This class is an abstraction
+	over that interface such that the error codes are looked up automatically and printed
+	to the console. Despite this, there is no exception raised... so beware!
+
+	"""
+
+	def __init__(self, f):
+		self.f = f
+
+	def __call__(self, *args, **kwargs):
+		errorCode = self.f(*args, **kwargs)
+
+		if errorCode != 0:
+
+			# Max error string length of 200 characters
+			errorStringBuffer = create_string_buffer(200)
+
+			# Copy error code into buffer
+			aio._raw.AioGetErrorString(errorCode, errorStringBuffer)
+
+			print("aio.%s = %s : %s" % 
+				(self.f.__name__, errorCode, errorStringBuffer.value.decode("utf-8")))
+		
+		return errorCode
 
 
 class AIODevice(object):
-	""" Sensor instance with single device name and device ID (each device has 
-	up to 32 channels). """
+	""" 
 
-	aio = AIO()
+	Sensor instance with single device name and device ID (each device has 
+	up to 32 channels).
+
+	By default, the aio functions require the device ID as the first argument.
+	This class contains the ID and abstracts the first argument away from method
+	calls.
+
+	"""
+
+	aio = aio
 
 	def __init__(self, name = b"AIO000"):
 		self.deviceName = c_char_p(name)
@@ -81,48 +92,9 @@ class AIODevice(object):
 	def __getattr__(self, key):
 		""" Eliminates "deviceID" syntax from all AIO functions. Note: C function 
 		usage & examples are specified in the Contec help files """
+
 		return self._callableWithID(getattr(self.aio, key))
 
-
-class AIOTests(unittest.TestCase):
-	def test_paio_singleton_interface(self):
-		x = AIO()
-		x.test = 10
-		y = AIO()
-
-		assert y.test == 10
-
-	def test_access_PAIO_functions(self):
-		assert hasattr(AIO(), 'AioInit')
-		assert hasattr(AIO(), 'AioGetErrorString')
-
-	def test_access_PAIO_constants(self):
-		assert hasattr(AIO(), 'PM10')
-		assert hasattr(AIO(), 'AIOM_CNTM_CARRY_BORROW')
-
-	def test_PAIO_error_wrapping(self):
-
-		def alwaysFails():
-			return 10101
-
-		AIO()._raw.bad = alwaysFails
-		assert AIO().bad() == 10101
-
-		del AIO()._raw.bad
-
-	def test_PAIO_device_argument_elision(self):
-
-		def noArguments(deviceID):
-			assert deviceID == 123
-
-		AIO()._raw.noargs = noArguments
-
-		d = AIODevice('name')
-		d.deviceID = 123
-
-		d.noargs()
-
-		del AIO()._raw.noargs
 
 
 consts = {

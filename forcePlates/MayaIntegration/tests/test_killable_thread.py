@@ -1,4 +1,4 @@
-from plugin.killable_thread import KillableThread
+from plugin.killable_thread import KillableThread, ThreadError
 import unittest
 
 class TestKillableThread(unittest.TestCase):
@@ -9,7 +9,9 @@ class TestKillableThread(unittest.TestCase):
 			x = 10
 			y = 20
 
-			def run(self):
+			fps = 60
+
+			def loop(self):
 				pass
 
 		a = A()
@@ -22,14 +24,31 @@ class TestKillableThread(unittest.TestCase):
 
 		assert a.dead == True
 
+
+	# TODO: how to test a thread exception?
+
+
+	# def test_killable_thread_should_throw_error_with_no_loop_method(self):
+
+	# 	class A(KillableThread):
+	# 		pass
+
+	# 	a = A().start()
+
+	# 	with self.assertRaises(ThreadError):
+	# 		a.kill()
+			
+
 	def test_spawn_multiple_killable_threads(self):
 
 		class A(KillableThread):
-			def run(self):
+			fps = 1
+			def loop(self):
 				pass
 
 		class B(KillableThread):
-			def run(self):
+			fps = 1
+			def loop(self):
 				pass
 
 		a = A()

@@ -1,8 +1,39 @@
 import threading
+import time
 
-# TODO - override the loop function to die automatically??
+class ThreadError(Exception):
+	"""
+	The loop method of KillableThread has not been overwritten.
+	"""
+
+	pass
 
 class KillableThread(threading.Thread):
+	""" 
+
+	Denotes threads with a set framerate that are capable of being killed. The `run` 
+	method is provided in this class whereas subtypes are expected to implement a 
+	`loop` method as the body of the repeating portion.
+
+	Ex.
+
+	class MyKillableThread(KillableThread):
+		fps = 10
+
+		def loop(self):
+			print 'hello, world ten times per second!'
+
+	>>> mkt = MyKillableThread().start()
+
+	hello, world ten times per second!
+	hello, world ten times per second!
+	...
+
+	>>> mkt.kill()
+
+	"""
+
+
 	objs = set()
 
 	def __init__(self):
@@ -21,3 +52,20 @@ class KillableThread(threading.Thread):
 	def killAll(cls):
 		for obj in cls.objs:
 			obj.kill()
+
+	def run(self):
+
+		while not self.dead:
+
+			self.loop()
+
+			time.sleep(1 / self.fps)
+
+
+	# The following should be overridden in subtypes. A `ThreadError` will be raised
+	# if the default method is used.
+
+	def loop(self):
+		raise ThreadError()
+
+	fps = 1
