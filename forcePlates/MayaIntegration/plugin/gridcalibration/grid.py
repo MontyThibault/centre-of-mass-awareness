@@ -1,3 +1,5 @@
+import math
+
 class Grid(object):
 	""" Represents a rectangular grid of points with iterable capabilities.
 

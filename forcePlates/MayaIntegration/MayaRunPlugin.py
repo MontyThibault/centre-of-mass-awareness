@@ -8,9 +8,13 @@ import sys
 sys.path.append('C:/Users/Monty/Desktop/COMAwareness/forcePlates/MayaIntegration')
 
 
-import plugin
-plugin.main()
+def f():
+
+	# Import inside of a function to prevent polluting the global namespace
+
+	import plugin
+	
+	plugin.main()
 
 
-# import tests
-# tests.main()
+f()

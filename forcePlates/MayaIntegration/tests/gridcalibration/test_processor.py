@@ -1,14 +1,14 @@
 from plugin.gridcalibration.processor import Processor
 import unittest
 
+
+def instance(cls):
+	return cls()
+
 class ProcessorTest(unittest.TestCase):
 
-	@staticmethod
-	def instance(cls):
-		return cls()
 
-
-	# Mimic sampler sampler interface
+	# Mimic sampler interface
 
 	@instance
 	class sampler(object):
@@ -107,7 +107,7 @@ class ProcessorTest(unittest.TestCase):
 
 	def test_single_point_identity(self):
 
-		x = Processor(sampler.identity, grid)
+		x = Processor(self.sampler.identity, self.grid)
 
 		assert x.process((0, 0), 1) == (0, 0)
 		assert x.process((32, -3), 0.1) == (32, -3)
@@ -115,7 +115,7 @@ class ProcessorTest(unittest.TestCase):
 
 	def test_single_point_offset(self):
 
-		x = Processor(sampler.off_by_one, grid)
+		x = Processor(self.sampler.off_by_one, self.grid)
 
 		assert x.process((0, 0), 1) == (-1, -1)
 		assert x.process((32, -3), 0.1) == (31, -4)
@@ -123,13 +123,13 @@ class ProcessorTest(unittest.TestCase):
 
 	def test_square_identity(self):
 
-		x = Processor(sampler.square_identities, grid)
+		x = Processor(self.sampler.square_identities, self.grid)
 
 		assert x.process((0.5, 0.5), 1) == (0.5, 0.5)
 
 
 	def test_square_offset(self):
 
-		x = Processor(sampler.square_off_by_one, grid)
+		x = Processor(self.sampler.square_off_by_one, self.grid)
 
 		assert x.process((0.5, 0.5), 1) == (-0.5, -0.5)
