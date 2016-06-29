@@ -11,7 +11,27 @@ sys.path.append('C:/Users/Monty/Desktop/COMAwareness/forcePlates/MayaIntegration
 # Enable stacktrace error catching in Python scripts
 
 import maya.cmds
+import maya.utils
+
 cmds.stackTrace(state = True)
+
+
+
+
+# Clean up all imported modules in case the script was ran before
+# (The Maya python environment is persistent)
+
+# Important!!!
+
+
+if 'existing' in vars():
+
+
+	for key in sys.modules.keys():
+
+		if key not in existing:
+
+			del sys.modules[key]
 
 
 
@@ -31,17 +51,3 @@ except Exception, e:
 
 	import traceback
 	traceback.print_exc()
-
-
-
-
-# Clean up all imported modules in case the script was ran before
-# (The Maya python environment is persistent)
-
-# Important!!!
-
-for key in sys.modules.keys():
-
-	if key not in existing:
-
-		del sys.modules[key]

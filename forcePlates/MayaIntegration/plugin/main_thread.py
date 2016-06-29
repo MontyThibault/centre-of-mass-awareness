@@ -2,7 +2,6 @@ from killable_thread import KillableThread
 import maya.utils
 
 
-
 def _callWith(f, *args, **kwargs):
 	""" 
 
@@ -20,7 +19,8 @@ def _callWith(f, *args, **kwargs):
 def _defer(f):
 	"""
 
-	Wraps the specified function in a maya.utils.executeDeffered().
+	Wraps the specified function in a maya.utils.executeDeffered(). Should be called
+	on a method with `self` as the first argument.
 
 	"""
 

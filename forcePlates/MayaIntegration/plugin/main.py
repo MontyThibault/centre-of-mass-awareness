@@ -7,4 +7,13 @@ from main_thread import MainThread
 
 def main():
 
-	MainThread().start()
+	print "hey, world"
+
+	mt = MainThread()
+	mt.start()
+
+	mt.tasks.add(loopsy)
+
+
+def loopsy():
+	print "looping"
