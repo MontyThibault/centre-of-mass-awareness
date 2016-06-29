@@ -1,68 +1,23 @@
+# TODO: this code is disfunctional and raises an error on import
+
 from ctypes import *
-import Calibration as C
 import os
-import sys
 
-class Singleton(object):
-	"""Ensures only one instance of subtypes exist at a time."""
+from DLL_wrappers.LabProUSB import LabProUSB
 
-	_instance = None
-	def __new__(class_, *args, **kwargs):
-		if not isinstance(class_._instance, class_):
-			class_._instance = object.__new__(class_, *args, **kwargs)
-		return class_._instance
+def instance(cls):
+	return cls()
 
 
+@instance
+class ForcePlates(object):
+	"""
 
-class LabProUSB(Singleton):
-	""" Load the library only once & prints error message given the common 
-	interface is `0 = success`. See `LabProUSB_interface.h for function 
-	descriptions. """
+	TODO: This class is doing too much. 
 
-	# Load dependency
-	cdll.LoadLibrary(os.path.dirname(os.path.realpath(__file__)) + 
-		"/../LabProUSB_SDK/redist/LabProUSB_lib/win64/wdapi921.dll")
+	"""
 
-	_raw = cdll.LoadLibrary(
-		os.path.dirname(os.path.realpath(__file__)) + 
-		"/../LabProUSB_SDK/redist/LabProUSB_lib/win64/LabProUSB.dll")
-
-
-	# Oddballs
-	def Close(self):
-		self._raw.LabProUSB_Close()
-
-	def IsOpen(self):
-		return self._raw.LabProUSB_Close()
-
-	def SendString(self, string):
-		length = c_int32(len(string) + 1)
-		encoded = string.encode('ASCII')
-
-		self.WriteBytes(byref(length), c_char_p(encoded))
-
-		print("Sending program string: %s" % string)
-
-	# Normal methods
-	class ErrorWrapper(object):
-		def __init__(self, f):
-			self.f = f
-
-		def __call__(self, *args, **kwargs):
-			errorCode = self.f(*args, **kwargs)
-
-			if errorCode < 0:
-				print("%s = %s : Returned unsuccessful." % 
-					(self.f.__name__, errorCode))
-			
-			return errorCode
-
-	def __getattr__(self, key):
-		return self.ErrorWrapper(getattr(self._raw, "LabProUSB_" + key))
-
-
-class ForcePlates(Singleton):
-	labpro = LabProUSB()
+	labpro = LabProUSB
 
 	def __init__(self, name = 'plates'):
 
