@@ -30,6 +30,8 @@ class KillableThread(threading.Thread):
 	...
 
 	>>> mkt.kill()
+	OR
+	>>> KillableThread.killAll()
 
 	"""
 

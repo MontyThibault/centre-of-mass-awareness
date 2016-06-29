@@ -1,4 +1,6 @@
 # TODO: this code is disfunctional and raises an error on import
+# Just awful
+
 
 from ctypes import *
 import os

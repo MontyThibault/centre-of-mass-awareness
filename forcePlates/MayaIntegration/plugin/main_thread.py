@@ -31,7 +31,20 @@ def _defer(f):
 
 
 
+# Run this in cmd to kill
+
+# from plugin.killable_thread import KillableThread
+# KillableThread.killAll()
+
+
 class MainThread(KillableThread):
+	"""
+
+	Simpler looper; executres all tasks inside of the tasks set with self as an argument
+	on each frame.
+
+	"""
+
 
 	fps = 10
 	tasks = set()
@@ -40,4 +53,4 @@ class MainThread(KillableThread):
 	def loop(self):
 		
 		for task in self.tasks:
-			task()
+			task(self)
