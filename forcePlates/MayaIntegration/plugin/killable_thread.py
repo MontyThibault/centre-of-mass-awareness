@@ -43,6 +43,8 @@ class KillableThread(threading.Thread):
 		self.dead = False
 
 	def __del__(self):
+		threading.Thread.__del__(self)
+
 		self.objs.remove(self)
 			
 	def kill(self):
@@ -59,7 +61,7 @@ class KillableThread(threading.Thread):
 
 			self.loop()
 
-			time.sleep(1 / self.fps)
+			time.sleep(1.0 / self.fps)
 
 
 	# The following should be overridden in subtypes. A `ThreadError` will be raised

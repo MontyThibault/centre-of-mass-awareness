@@ -8,13 +8,25 @@ import sys
 sys.path.append('C:/Users/Monty/Desktop/COMAwareness/forcePlates/MayaIntegration')
 
 
-def f():
+# Enable stacktrace error catching in Python scripts
 
-	# Import inside of a function to prevent polluting the global namespace
-
-	import plugin
-	
-	plugin.main()
+import maya.cmds
+cmds.stackTrace(state = True)
 
 
-f()
+
+# Force refresh on all imported modules in case the script was ran before
+# (The Maya python environment is persistent)
+
+# Important!!!
+
+for mod in sys.modules.keys():
+
+	if mod.startswith('plugin'):
+		del sys.modules[mod]
+
+
+# Main
+
+from plugin.main import main
+main()
