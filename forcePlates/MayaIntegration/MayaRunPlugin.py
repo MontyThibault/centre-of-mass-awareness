@@ -15,18 +15,33 @@ cmds.stackTrace(state = True)
 
 
 
-# Force refresh on all imported modules in case the script was ran before
-# (The Maya python environment is persistent)
+existing = sys.modules.keys()
 
-# Important!!!
-
-for mod in sys.modules.keys():
-
-	if mod.startswith('plugin'):
-		del sys.modules[mod]
 
 
 # Main
 
-from plugin.main import main
-main()
+try:
+
+	from plugin.main import main
+
+	main()
+
+except Exception, e:
+
+	import traceback
+	traceback.print_exc()
+
+
+
+
+# Clean up all imported modules in case the script was ran before
+# (The Maya python environment is persistent)
+
+# Important!!!
+
+for key in sys.modules.keys():
+
+	if key not in existing:
+
+		del sys.modules[key]
