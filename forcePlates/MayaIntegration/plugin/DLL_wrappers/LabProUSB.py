@@ -5,6 +5,10 @@ def instance(cls):
 	return cls()
 
 
+class LabProUSBError(Exception):
+	pass
+
+
 @instance
 class LabProUSB(object):
 	""" 
@@ -38,14 +42,6 @@ class LabProUSB(object):
 	def IsOpen(self):
 		return self._raw.LabProUSB_Close()
 
-	def SendString(self, string):
-		length = c_int32(len(string) + 1)
-		encoded = string.encode('ASCII')
-
-		self.WriteBytes(byref(length), c_char_p(encoded))
-
-		print("Sending program string: %s" % string)
-
 	def __getattr__(self, key):
 		return _ErrorWrapper(getattr(self._raw, "LabProUSB_" + key))
 
@@ -59,7 +55,6 @@ class _ErrorWrapper(object):
 		errorCode = self.f(*args, **kwargs)
 
 		if errorCode < 0:
-			print("%s = %s : Returned unsuccessful." % 
-				(self.f.__name__, errorCode))
-		
-		return errorCode
+
+			code = "%s = %s : Returned unsuccessful." % (self.f.__name__, errorCode)
+			raise LabProUSBError(code)
