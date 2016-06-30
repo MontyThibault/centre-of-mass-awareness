@@ -40,7 +40,7 @@ def _defer(f):
 class MainThread(KillableThread):
 	"""
 
-	Simpler looper; executres all tasks inside of the tasks set with self as an argument
+	Simpler looper; executes all tasks inside of the tasks set with self as an argument
 	on each frame.
 
 	"""

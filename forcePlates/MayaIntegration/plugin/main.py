@@ -8,6 +8,9 @@ def main():
 	mt.start()
 
 
+# file = open(os.path.dirname(os.path.realpath(__file__)) + 
+		# 	'/programs/simple_program.txt', 'r')
+
 
 	# For tomorrow
 
