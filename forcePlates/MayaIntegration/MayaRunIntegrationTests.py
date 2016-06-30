@@ -2,10 +2,14 @@
 
 import sys
 
-
 # Replace your absolute path here
 
 sys.path.append('C:/Users/Monty/Desktop/COMAwareness/forcePlates/MayaIntegration')
+
+
+# For pytest dependency
+
+sys.path.append('C:/Miniconda2/Lib/site-packages')
 
 
 # Enable stacktrace error catching in Python scripts

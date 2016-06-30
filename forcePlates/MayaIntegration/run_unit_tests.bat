@@ -1,1 +1,1 @@
-python -m unittest discover
+py.test tests_unit
