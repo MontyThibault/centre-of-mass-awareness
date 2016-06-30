@@ -43,9 +43,7 @@ class TestForcePlates(unittest.TestCase):
 		self.fp.send_program(self.lp, mockfile)
 
 		assert self.lp.recentString.value == b's{B}\n'
-
-
-
+		
 
 class MockAffine(object):
 

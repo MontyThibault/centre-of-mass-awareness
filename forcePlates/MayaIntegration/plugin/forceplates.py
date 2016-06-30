@@ -71,6 +71,7 @@ class ForcePlates(object):
 				for i in range(4)]
 
 
+
 	def set_all_zero(self):
 		""" 
 

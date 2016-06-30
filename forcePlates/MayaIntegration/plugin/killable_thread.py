@@ -1,7 +1,7 @@
 import threading
 import time
 
-class ThreadError(Exception):
+class ThreadError(NotImplementedError):
 	"""
 	The loop method of KillableThread has not been overwritten.
 	"""
