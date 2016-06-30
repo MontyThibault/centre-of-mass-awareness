@@ -31,14 +31,24 @@ def main():
 
 	# window
 	# todo
-	
 
-	mt.tasks.add(fp.update)
-	mt.tasks.add(gen.take_sample)
 
+	update_task = _callwith(fp.update, LabProUSB)
+	sample_task = _callwith(gen.take_sample)
+
+	mt.tasks.add(update_task)
+	mt.tasks.add(sample_task)
 
 	mt.start()
 
+
+
+def _callwith(f, *args, **kwargs):
+
+	def g(*args_, **kwargs_):
+		f(*args, **kwargs)
+
+	return g
 
 
 def init_forceplates():

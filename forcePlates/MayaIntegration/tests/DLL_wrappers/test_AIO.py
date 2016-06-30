@@ -1,4 +1,4 @@
-from plugin.DLL_wrappers.AIO import aio, AIODevice
+from plugin.DLL_wrappers.AIO import aio, AIOError, AIODevice
 import unittest
 
 class TestPAIO(unittest.TestCase):
@@ -17,7 +17,13 @@ class TestPAIO(unittest.TestCase):
 			return 10101
 
 		aio._raw.bad = alwaysFails
-		assert aio.bad() == 10101
+
+
+		# Should raise an AIOError
+
+		with self.assertRaises(AIOError):
+
+			aio.bad()
 
 		del aio._raw.bad
 
@@ -25,6 +31,11 @@ class TestPAIO(unittest.TestCase):
 
 		def noArguments(deviceID):
 			assert deviceID == 123
+
+
+			# Do not raise error
+
+			return 0
 
 		aio._raw.noargs = noArguments
 

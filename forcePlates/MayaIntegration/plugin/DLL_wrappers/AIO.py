@@ -25,6 +25,9 @@ class aio(object):
 			# For functions
 			return _ErrorWrapper(getattr(self._raw, key))
 	
+	
+class AIOError(Exception):
+	pass
 
 class _ErrorWrapper(object):
 	"""
@@ -50,7 +53,7 @@ class _ErrorWrapper(object):
 			# Copy error code into buffer
 			aio._raw.AioGetErrorString(errorCode, errorStringBuffer)
 
-			print("aio.%s = %s : %s" % 
+			raise AIOError("aio.%s = %s : %s" % 
 				(self.f.__name__, errorCode, errorStringBuffer.value.decode("utf-8")))
 		
 		return errorCode
