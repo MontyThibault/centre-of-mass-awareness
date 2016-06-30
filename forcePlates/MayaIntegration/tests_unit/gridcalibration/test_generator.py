@@ -9,14 +9,14 @@ class TestGenerator(unittest.TestCase):
 		self.mg = MockGrid()
 		self.mfp = MockForcePlate()
 
-		self.u = Generator(self.mg, self.mfp)
+		self.g = Generator(self.mg, self.mfp)
 
 
 	def test_weighted_average_single(self):
 
 		l = [((0, 0), 1)]
 
-		assert self.u._weightedAverage(l) == (0, 0)
+		assert self.g._weightedAverage(l) == (0, 0)
 
 
 	def test_weighted_average_multiple(self):
@@ -26,7 +26,7 @@ class TestGenerator(unittest.TestCase):
 			((1, 1), 1)
 		]
 
-		assert self.u._weightedAverage(l) == (0.5, 0.5)
+		assert self.g._weightedAverage(l) == (0.5, 0.5)
 
 	def test_weighted_average_lopsided(self):
 
@@ -35,15 +35,21 @@ class TestGenerator(unittest.TestCase):
 			((1, 1), 1)
 		]
 
-		assert self.u._weightedAverage(l) == (1, 1)
+		assert self.g._weightedAverage(l) == (1, 1)
+
+
+	def test_center(self):
+
+		f = [1, 1, 1, 1]
+
+		assert self.g._center(f) == (0, 0)
 
 
 	def test_take_sample(self):
 
-		self.mfp._center = (12, 34)
-		self.u.take_sample()
+		self.g.take_sample()
 
-		assert self.u.samples[0] == ((-10, -10), (12, 34), 4)
+		assert self.g.samples[0] == ((-10, -10), (0, 0), 4)
 
 
 class MockGrid(object):
@@ -52,6 +58,14 @@ class MockGrid(object):
 		
 		self.currentPoint = (-10, -10)
 
+	def corners(self):
+
+		return [
+			(-10, -10),
+			(-10, 10),
+			(10, 10),
+			(10, -10)
+		]
 
 
 class MockForcePlate(object):

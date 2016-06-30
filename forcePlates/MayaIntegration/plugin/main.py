@@ -39,7 +39,14 @@ def main():
 	mt.tasks.add(update_task)
 	mt.tasks.add(sample_task)
 
+	mt.tasks.add(_callwith(print_samples, gen))
+
 	mt.start()
+
+
+
+def print_samples(sampler):
+	print sampler.samples
 
 
 

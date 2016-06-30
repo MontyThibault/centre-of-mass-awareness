@@ -20,12 +20,30 @@ class Grid(object):
 
 		self.reset()
 
+
+	def corners(self):
+		"""
+
+		Returns the four extreme corners of the grid. Returns in the same order as 
+		square()!
+
+		"""
+
+		return [
+			(-self.l, -self.w),
+			(-self.l, self.w),
+			(self.l, self.w),
+			(self.l, -self.w)
+		]
+
+
 	def reset(self):
 		""" Reset the iterator. """
 
 		self._pg = self._pointGenerator()
 		self.currentPoint = self._pg.next()
 		
+
 	def next(self):
 		if self.hasMorePoints:
 			self.currentPoint = self._pg.next()
@@ -34,11 +52,15 @@ class Grid(object):
 
 
 	def _toIntegerForm(self, point):
-		""" The point is transformed in such a way that the integeral values correspond to
+		""" 
+
+		The point is transformed in such a way that the integeral values correspond to
 		vertices on the graph, with (0, 0) being the first vertex, and (l_seg, w_seg) being
 		the far corner.
 
 		They can then be used for rounding or testing, and transormed back again.
+		
+
 		"""
 
 		nw = ((point[0] + self.w) * (self.w_seg)) / (2 * self.w)
@@ -69,7 +91,9 @@ class Grid(object):
 
 
 	def square(self, point):
-		""" Returns the square to which the point belongs. Opposite vertices are
+		""" 
+
+		Returns the square to which the point belongs. Opposite vertices are
 		congruent modulo 2 the index. IE. 0 is opposite 2 and 1 is opposite 3.
 
 		If the square lies exactly on a vertex or edge, we return those vertices
@@ -77,6 +101,7 @@ class Grid(object):
 
 		Ex. grid.square((3, 4)) = [(10, 0), (0, 0), (0, 10), (10, 10)]
 		Ex. grid.square((0, 0)) = [(0, 0), (0, 0), (0, 0), (0, 0)]
+		
 		"""
 
 
@@ -100,8 +125,12 @@ class Grid(object):
 
 
 	def weightedSquare(self, point):
-		""" Returns a list of (point, weight), where the weights correspond to the 
-		proximity of the point to that vertex of the grid. The sum of the weights is one. """
+		""" 
+
+		Returns a list of (point, weight), where the weights correspond to the 
+		proximity of the point to that vertex of the grid. The sum of the weights is one. 
+
+		"""
 
 		square = self.square(point)
 
@@ -134,10 +163,14 @@ class Grid(object):
 
 
 	def _pointGenerator(self):
-		""" This generator object iterates through all pairs of points in the form (w, l)
+		""" 
+
+		This generator object iterates through all pairs of points in the form (w, l)
 		where w is a point along the width axis and l is a point along the length axis.
 
-		There should be no direct access to this method by outside classes. Used next() instead. """
+		There should be no direct access to this method by outside classes. Used next() instead. 
+
+		"""
 
 		self.hasMorePoints = True
 

@@ -34,10 +34,26 @@ class Generator(object):
 		totalWeight = sum([weight for point, weight in list_])
 
 
+		if totalWeight == 0:
+			return (0, 0)
+
+
 		accum[0] /= float(totalWeight)
 		accum[1] /= float(totalWeight)
 
 		return (accum[0], accum[1])
+
+
+	def _center(self, forces):
+		"""
+		
+		@argument corners - a list of four tuples representing the corners of the grid
+				in the same order as the force plate force array.
+
+		"""
+		
+		zipped = zip(self.grid.corners(), forces)
+		return self._weightedAverage(zipped)
 
 
 	def take_sample(self):
@@ -45,10 +61,20 @@ class Generator(object):
 	
 		Takes and stores a single sample from the force plate.
 
+		Ex.
+
+		>>> corners = [(0, 0), (0, 1)]
+		>>> forces = [1, 1]
+
+		>>> _center(points, forces)
+		(0, 0.5)
+
 		"""
+
+		f = self.fp.forces
 
 		# Note
 		# Sample = (source_point, measured_point, total_forces)
-		sample = (self.grid.currentPoint, self.fp.center(), sum(self.fp.forces))
+		sample = (self.grid.currentPoint, self._center(f), sum(f))
 
 		self.samples.append(sample)

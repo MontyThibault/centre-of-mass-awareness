@@ -57,8 +57,13 @@ class ForcePlates(object):
 
 		"""
 
-		self.forces = lpuu.read_and_interpret(labpro)
+		data = lpuu.read_and_interpret(labpro)
 
+
+		if data is not None:
+				
+				self.forces = data
+				
 
 	def forces_with_calibs(self):
 		""" 

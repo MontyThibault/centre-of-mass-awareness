@@ -58,3 +58,7 @@ class _ErrorWrapper(object):
 
 			code = "%s = %s : Returned unsuccessful." % (self.f.__name__, errorCode)
 			raise LabProUSBError(code)
+
+
+		returnValue = errorCode
+		return returnValue
