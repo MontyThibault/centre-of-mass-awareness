@@ -20,13 +20,7 @@ class Window(object):
 
 		if cmds.window(self.name, exists = True):
 
-			cmds.deleteUI(self.name)
-
-
-
-			# Kill previous window
-
-			self.all_windows[self.name].alive = False
+			self.all_windows[self.name].delete(cmds)
 
 
 		# Replace thyself on Hamlet's thrown
@@ -37,8 +31,23 @@ class Window(object):
 
 		cmds.window(self.name, width = 350, sizeable = False)
 		cmds.columnLayout(adjustableColumn = True)
+		
 
 		cmds.showWindow()
+
+
+	def delete(self, cmds):
+		"""
+
+		Removes this window.
+
+		"""
+
+		cmds.deleteUI(self.name)
+
+		self.alive = False
+
+		self.all_windows.pop(self.name)
 
 
 	@staticmethod
@@ -50,26 +59,23 @@ class Window(object):
 		return g
 
 
-	def button(self, cmds, label, f):
+	def button(self, label, f, cmds):
 		"""
 
 		Displays a single button on the window.
 
 		"""
 
-		cmds.select(self.name)
-
-		cmds.button(label = label, command = _stripArgs(f))
-
+		cmds.button(label = label, command = self._stripArgs(f))
+		cmds.showWindow()
 
 
-	def text(self, text):
+
+	def text(self, text, cmds):
 		"""
 
 		Displays a text label on the window.
 
 		"""
-
-		cmds.select(self.name)
 
 		cmds.text(label = text)

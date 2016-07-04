@@ -177,8 +177,7 @@ class SensorUpdate(threading.Thread):
 	def kill(self):
 		self.dead = True
 
-		if cmds.scriptJob(ex = self.reopen_id):
-			cmds.scriptJob(kill = self.reopen_id, force = True)
+		
 		cmds.deleteUI("ForceSensors")
 
 		self.plates.blink()

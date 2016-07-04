@@ -1,4 +1,5 @@
 import os
+import maya.cmds as cmds
 
 from main_thread import MainThread
 from forceplates import ForcePlates
@@ -25,8 +26,20 @@ def main():
 	gen = Generator(grid, fp)
 
 
-	# window
-	# todo
+
+
+	# cmds.window('ForcePlates', width = 350, sizeable = False)
+	# cmds.columnLayout(adjustableColumn = True)
+
+	# cmds.button(label = 'Kill', command = _callwith(mt.kill))	
+
+	# cmds.showWindow()
+
+
+
+	# Ultimately, the window interface is limited and unnecessary
+	# Is there an easy way to make a cmd-style interface?
+
 
 
 	update_task = _callwith(fp.update, LabProUSB)
@@ -37,7 +50,7 @@ def main():
 
 	mt.tasks.add(_callwith(print_samples, gen))
 
-	mt.start()
+	mt.start() 
 
 
 
