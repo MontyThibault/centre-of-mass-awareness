@@ -1,16 +1,12 @@
 import os
 
-
 from main_thread import MainThread
-
 from forceplates import ForcePlates
-
 from calibration.affine import Affine
-
 from gridcalibration.grid import Grid
 from gridcalibration.generator import Generator
-
 from DLL_wrappers.LabProUSB import LabProUSB
+from window import Window
 
 
 def main():
