@@ -1,1 +1,3 @@
-{}
+{
+  "tests_integration/test_maya_env.py::test_maya_environment": true
+}

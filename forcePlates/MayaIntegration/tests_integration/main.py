@@ -1,4 +1,12 @@
-import pytest
+try:
+
+	import pytest
+
+except:
+
+	print "pytest could not be imported (check PATH)"
+	
+
 import sys
 
 
@@ -7,7 +15,6 @@ def main():
 	overwrite_stdout()
 
 	pytest.main('C:/Users/Monty/Desktop/COMAwareness/forcePlates/MayaIntegration/tests_integration --capture=sys')
-
 
 
 def overwrite_stdout():
@@ -27,15 +34,11 @@ class FauxLogger(object):
 	def __init__(self, __stdout__):
 		self.__stdout__ = __stdout__
 
+
 	def isatty(self):
 
 		return False
 
-	def write(self, *args):
 
-		self.__stdout__.write(*args)
-
-
-	def flush(self, *args):
-
-		self.__stdout__.flush(*args)
+	def __getattr__(self, attr):
+		return getattr(self.__stdout__, attr)

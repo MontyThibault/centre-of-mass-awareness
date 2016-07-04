@@ -1,10 +1,34 @@
-class TestLoading(object):
+from utils.safe_module_wrapper import safe_module_wrapper
 
-	def test_no_external_modules(self):
+def test_safe_module_wrapper_wraps():
 
-		pass
+	@safe_module_wrapper
+	def f():
+
+		return True
 
 
-	def test_load_and_delete(self):
+	assert f()
 
-		pass
+
+def test_safe_module_wrapper_reimport_module():
+
+	@safe_module_wrapper
+	def f():
+
+		import unittest
+
+		assert unittest.TestCase
+
+	def mess_up():
+
+		import unittest
+
+		unittest.TestCase = False
+
+
+	f()
+
+	mess_up()
+
+	f()
