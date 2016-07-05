@@ -14,7 +14,7 @@ def main():
 
 	overwrite_stdout()
 
-	pytest.main('C:/Users/Monty/Desktop/COMAwareness/forcePlates/MayaIntegration/tests_integration --capture=sys')
+	pytest.main('C:/Users/Monty/Desktop/COMAwareness/forcePlates/MayaIntegration/tests_integration -s') #--capture=sys')
 
 
 def overwrite_stdout():
@@ -37,7 +37,10 @@ class FauxLogger(object):
 
 	def isatty(self):
 
-		return True
+		# We must set this to false, otherwise PyTest will try to colour the 
+		# terminal window, resulting in annoying characters everywhere.
+
+		return False
 
 
 	def __getattr__(self, attr):

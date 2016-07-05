@@ -1,5 +1,1 @@
-{
-  "tests_integration/test_maya_env.py::test_maya_environment": true, 
-  "tests_integration/test_maya_load_module.py::test_safe_module_wrapper_reimport_module": true, 
-  "tests_integration/test_maya_load_module.py::test_safe_module_wrapper_wraps": true
-}
+{}

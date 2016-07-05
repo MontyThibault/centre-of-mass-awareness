@@ -1,5 +1,5 @@
 import os
-import maya.cmds as cmds
+# import maya.cmds as cmds
 
 from main_thread import MainThread
 from forceplates import ForcePlates
@@ -7,7 +7,8 @@ from calibration.affine import Affine
 from gridcalibration.grid import Grid
 from gridcalibration.generator import Generator
 from DLL_wrappers.LabProUSB import LabProUSB
-from window import Window
+
+from console import Console
 
 
 def main():
@@ -27,21 +28,6 @@ def main():
 
 
 
-
-	# cmds.window('ForcePlates', width = 350, sizeable = False)
-	# cmds.columnLayout(adjustableColumn = True)
-
-	# cmds.button(label = 'Kill', command = _callwith(mt.kill))	
-
-	# cmds.showWindow()
-
-
-
-	# Ultimately, the window interface is limited and unnecessary
-	# Is there an easy way to make a cmd-style interface?
-
-
-
 	update_task = _callwith(fp.update, LabProUSB)
 	sample_task = _callwith(gen.take_sample)
 
@@ -51,6 +37,12 @@ def main():
 	mt.tasks.add(_callwith(print_samples, gen))
 
 	mt.start() 
+
+
+	####################################
+	# Begin interactive console
+
+	Console(locals()).start()
 
 
 
@@ -79,3 +71,9 @@ def init_forceplates():
 	file.close()
 
 	return fp
+
+
+
+if __name__ == '__main__':
+
+	main()
