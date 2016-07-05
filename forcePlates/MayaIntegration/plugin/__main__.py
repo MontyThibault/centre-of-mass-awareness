@@ -1,4 +1,5 @@
 import os
+
 # import maya.cmds as cmds
 
 from main_thread import MainThread
@@ -8,7 +9,13 @@ from gridcalibration.grid import Grid
 from gridcalibration.generator import Generator
 from DLL_wrappers.LabProUSB import LabProUSB
 
+
+from maya_listener import ListenerThread
+
 from console import Console
+
+import maya_socket_connection as msc
+from killable_thread import KillableThread as KT
 
 
 def main():
@@ -34,20 +41,32 @@ def main():
 	mt.tasks.add(update_task)
 	mt.tasks.add(sample_task)
 
-	mt.tasks.add(_callwith(print_samples, gen))
-
 	mt.start() 
+
+
+	####################################
+	# Maya listener thread
+
+	# l = ListenerThread()
+	# l.start()
+
+
+	import maya_socket_connection as msc
+
+
+	####################################
+	
+	quit = KT.killAll
 
 
 	####################################
 	# Begin interactive console
 
-	Console(locals()).start()
+	c = Console(locals())
+	c.start()
 
 
-
-def print_samples(sampler):
-	print sampler.samples
+	
 
 
 
