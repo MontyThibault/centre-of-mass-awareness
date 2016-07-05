@@ -1,48 +1,16 @@
+import code
 import threading
-import multiprocessing
-import sys
-import io
 
+class Console(threading.Thread):
 
-class StreamRedirect(io.IOBase):
-
-	maya_out = sys.stdout
-	shell_out = ExternalStream()
-
-	def __init__(self, thread_state_object):
-		pass
-
-	def write(self, message):
-
-		threading.currentThread()
-
-
-
-
-class ExternalStream(io.IOBase):
-
-	def write(self):
+	def __init__(self, local_vars):
 		
-		# Send to interpreter process
+		threading.Thread.__init__(self)
+
+		self.local_vars = local_vars
 
 
+	def run(self):
 
-def spawn_interactive_console():
-
-	multiprocessing.Process(target = f)
-
-
-	import code
-
-	console = code.InteractiveConsole()
-	console.interact()
-
-
-
-
-threading.currentThread()
-
-
-
-################
-
+		ic = code.InteractiveConsole(self.local_vars)
+		ic.interact()

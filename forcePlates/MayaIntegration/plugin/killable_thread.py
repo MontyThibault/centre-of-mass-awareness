@@ -44,9 +44,13 @@ class KillableThread(threading.Thread):
 		self.objs.add(self)
 		self.dead = False
 
+		self.fps = 1
+		
+
 	def __del__(self):
 		threading.Thread.__del__(self)
-
+		
+		self.dead = True
 		self.objs.remove(self)
 			
 	def kill(self):
@@ -71,5 +75,3 @@ class KillableThread(threading.Thread):
 
 	def loop(self):
 		raise ThreadError()
-
-	fps = 1

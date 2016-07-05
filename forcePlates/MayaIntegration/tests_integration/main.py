@@ -37,7 +37,7 @@ class FauxLogger(object):
 
 	def isatty(self):
 
-		return False
+		return True
 
 
 	def __getattr__(self, attr):
