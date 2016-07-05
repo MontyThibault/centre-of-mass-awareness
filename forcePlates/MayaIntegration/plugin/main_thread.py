@@ -50,9 +50,12 @@ class MainThread(KillableThread):
 
 	"""
 
+	def __init__(self):
+		KillableThread.__init__(self)
 
-	fps = 10
-	tasks = set()
+		self.fps = 60
+		self.tasks = set()
+
 
 	# @_defer
 	def loop(self):

@@ -37,6 +37,20 @@ def test_function_raise():
 		msc.call_func(f)
 
 
+def test_function_with_args():
+
+	complex_object = {
+		'x': [5, 'Hello', {
+			'y': set(['world', True, 9.99])
+		}]
+	}
+
+	def f(*args):
+		return args
+
+	assert msc.call_func(f, complex_object, 42) == (complex_object, 42)
+
+
 def test_import_maya_environment():
 
 	def f():
@@ -44,6 +58,8 @@ def test_import_maya_environment():
 		import maya.cmds
 		import maya.utils
 		import maya.OpenMaya
+
+		import plugin
 
 	msc.call_func(f)
 

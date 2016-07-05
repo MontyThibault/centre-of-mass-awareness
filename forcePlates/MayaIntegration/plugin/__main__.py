@@ -1,21 +1,19 @@
 import os
-
-# import maya.cmds as cmds
+import code
 
 from main_thread import MainThread
 from forceplates import ForcePlates
 from calibration.affine import Affine
 from gridcalibration.grid import Grid
 from gridcalibration.generator import Generator
-from DLL_wrappers.LabProUSB import LabProUSB
-
-
-from maya_listener import ListenerThread
-
 from console import Console
 
-import maya_socket_connection as msc
+from DLL_wrappers.LabProUSB import LabProUSB
+
 from killable_thread import KillableThread as KT
+
+import maya_utils as mu
+import maya_socket_connection as msc
 
 
 def main():
@@ -32,41 +30,41 @@ def main():
 
 	grid = Grid(10, 20, 3, 6)
 	gen = Generator(grid, fp)
+	
 
+	# How to pass arguments into call_func?
 
 
 	update_task = _callwith(fp.update, LabProUSB)
+	# move_markers_task = _callwith(msc.call_func, lambda: mu.move_markers(fp.forces))
 	sample_task = _callwith(gen.take_sample)
 
 	mt.tasks.add(update_task)
+	# mt.tasks.add(move_markers_task)
 	mt.tasks.add(sample_task)
 
 	mt.start() 
 
 
+
 	####################################
-	# Maya listener thread
 
-	# l = ListenerThread()
-	# l.start()
-
-
-	import maya_socket_connection as msc
-
+	# import maya_socket_connection as msc
 
 	####################################
 	
-	quit = KT.killAll
+	# Kill the threads and exit the interactive console
+	# Just quit() won't do it.
 
+	def kill():
+		KT.killAll()
+		exit()
 
 	####################################
 	# Begin interactive console
 
 	c = Console(locals())
 	c.start()
-
-
-	
 
 
 

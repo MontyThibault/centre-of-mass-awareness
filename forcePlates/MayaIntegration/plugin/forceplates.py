@@ -45,7 +45,7 @@ class ForcePlates(object):
 
 		"""
 
-		self.blink() # 
+		self.blink(labpro) 
 		labpro.Close()
 
 
@@ -59,10 +59,9 @@ class ForcePlates(object):
 
 		data = lpuu.read_and_interpret(labpro)
 
-
 		if data is not None:
-				
-				self.forces = data
+
+			self.forces = data[:4]
 				
 
 	def forces_with_calibs(self):

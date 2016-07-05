@@ -1,12 +1,11 @@
 # MEL
-# commandPort -name 12345 -sourceType Python -pickleOutput;
-
 # commandPort -name ":99" -sourceType "python" -pickleOutput;
 
 
 import socket
 import pickle
 import inspect
+import textwrap
 
 _PORT = 99
 
@@ -39,11 +38,30 @@ def send_and_recv(str_):
 
 
 
-def call_func(f):
+def call_func(f, *locals_):
+	"""
 
-	# Send the function definition
+	Calls a simple function by sending over the source code. A simple function 
+	consititutes anything that will run that does not have outside dependencies.
+
+	"""
+
+	# Send the locals over the socket in pickled form, which is then unpickled when
+	# the code is executed.
+
+	body = textwrap.dedent("""
+
+	import pickle
+
+	locals_ = %s
+	globals()["unpickled"] = pickle.loads(locals_)
+
+	""" % repr(pickle.dumps(locals_)))
 	
-	body = inspect.getsource(f)
+
+	# Add the function definition
+	
+	body += textwrap.dedent(inspect.getsource(f))
 
 
 	# Bind the function to the global namespace
@@ -54,6 +72,7 @@ def call_func(f):
 	send_and_recv(body)
 
 
-	# Call the function
+	# Call the function with the unpickled args
 
-	return send_and_recv('globals()["func"]()')
+	return send_and_recv('globals()["func"](*globals()["unpickled"])')
+
