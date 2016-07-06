@@ -6,8 +6,7 @@ def test_send_and_recv():
 	# Will raise error if, for instance, Maya is not loaded and the connection
 	# could not be established.
 
-	msc.maya.send('print "Test"')
-	msc.maya.recv(1024)
+	assert msc.send_and_recv('5') == 5
 
 
 def test_error_raise():

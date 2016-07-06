@@ -1,5 +1,4 @@
 import os
-import code
 
 from main_thread import MainThread
 from forceplates import ForcePlates
@@ -32,24 +31,11 @@ def main():
 	gen = Generator(grid, fp)
 	
 
-	# How to pass arguments into call_func?
-
-
-	update_task = _callwith(fp.update, LabProUSB)
-	# move_markers_task = _callwith(msc.call_func, lambda: mu.move_markers(fp.forces))
-	sample_task = _callwith(gen.take_sample)
-
-	mt.tasks.add(update_task)
-	# mt.tasks.add(move_markers_task)
-	mt.tasks.add(sample_task)
+	mt.tasks.add(feed_forces(fp))
+	mt.tasks.add(gen.take_sample)
 
 	mt.start() 
-
-
-
-	####################################
-
-	# import maya_socket_connection as msc
+	
 
 	####################################
 	
@@ -67,6 +53,13 @@ def main():
 	c.start()
 
 
+def feed_forces(fp):
+
+	def f():
+		msc.call_func(mu.move_markers, fp.forces)
+
+	return f
+
 
 def _callwith(f, *args, **kwargs):
 
@@ -79,6 +72,8 @@ def _callwith(f, *args, **kwargs):
 def init_forceplates():
 	
 	fp = ForcePlates()
+
+	fp.init_labpro(LabProUSB)
 	fp.init_calibs(Affine)
 
 	file = open(os.path.dirname(os.path.realpath(__file__)) + 

@@ -30,6 +30,40 @@ def objectLocation(name):
 
 def move_markers(forces):
 
-	import maya.cmds
+	import maya.cmds as c
 
-	print forces
+	c.xform("plate1", s = [forces[0] * 18 for i in range(3)])
+	c.xform("plate2", s = [forces[1] * 18 for i in range(3)])
+	c.xform("plate3", s = [forces[2] * 18 for i in range(3)])
+	c.xform("plate4", s = [forces[3] * 18 for i in range(3)])
+
+
+	vecs = []
+
+	for i in range(4):
+		vecs.append((
+			forces[i], 
+
+			# Get the translation of the current plate in world space
+			cmds.xform('plate%s' % (i + 1), ws = True, t = 1, q = 1)
+		))
+
+			
+	# Interpolate between vectors
+
+	center = [0, 0, 0]
+	totalWeight = 0.0
+
+	for (weight, vec) in vecs:
+
+		center = [a + (b * weight) for a, b in zip(center, vec)]
+		totalWeight += weight
+
+	if totalWeight == 0:
+		return
+
+	center = [ce / totalWeight for ce in center]
+	center[1] = 0
+
+	cmds.move(center[0], center[1], center[2], 'center')
+	cmds.refresh()

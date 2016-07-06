@@ -61,4 +61,4 @@ class MainThread(KillableThread):
 	def loop(self):
 		
 		for task in self.tasks:
-			task(self)
+			task()
