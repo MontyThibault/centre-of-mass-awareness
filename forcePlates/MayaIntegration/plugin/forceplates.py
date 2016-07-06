@@ -8,6 +8,9 @@ class ForcePlates(object):
 
 	def __init__(self):
 		self.forces = [0, 0, 0, 0]
+		self.forces_after_calibration = [0, 0, 0, 0]
+
+		self.calibrations = False
 
 
 	def init_calibs(self, Calibration):
@@ -62,6 +65,7 @@ class ForcePlates(object):
 		if data is not None:
 
 			self.forces = data[:4]
+			self.forces_after_calibration = self.forces_with_calibs()
 				
 
 	def forces_with_calibs(self):
@@ -84,7 +88,7 @@ class ForcePlates(object):
 		"""
 
  		for cal in self.calibrations:
-	 		cal.setZero()
+	 		cal.setZeroLast()
 
 
 	def blink(self, labpro):

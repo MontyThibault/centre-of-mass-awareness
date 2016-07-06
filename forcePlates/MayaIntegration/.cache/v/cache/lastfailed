@@ -1,1 +1,4 @@
-{}
+{
+  "tests_integration/test_persistence.py": true, 
+  "tests_unit/test_save_force_plates.py": true
+}

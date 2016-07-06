@@ -31,11 +31,12 @@ def main():
 	gen = Generator(grid, fp)
 	
 
+	mt.tasks.add(_callwith(fp.update, LabProUSB))
 	mt.tasks.add(feed_forces(fp))
 	mt.tasks.add(gen.take_sample)
 
 	mt.start() 
-	
+
 
 	####################################
 	
@@ -46,17 +47,24 @@ def main():
 		KT.killAll()
 		exit()
 
+
+	saz = fp.set_all_zero
+	fpc = fp.calibrations
+
 	####################################
 	# Begin interactive console
 
-	c = Console(locals())
+	l = locals()
+	l.update(globals())
+
+	c = Console(l)
 	c.start()
 
 
 def feed_forces(fp):
 
 	def f():
-		msc.call_func(mu.move_markers, fp.forces)
+		msc.call_func(mu.move_markers, fp.forces_after_calibration)
 
 	return f
 
@@ -70,11 +78,24 @@ def _callwith(f, *args, **kwargs):
 
 
 def init_forceplates():
+
 	
+	# Load ForcePlates
+
+	# pickle.load(open(file, 'rb'))
+
 	fp = ForcePlates()
 
+
+
+
+	fp.uninit_labpro(LabProUSB)
 	fp.init_labpro(LabProUSB)
-	fp.init_calibs(Affine)
+
+	if not fp.calibrations:
+
+		fp.init_calibs(Affine)
+
 
 	file = open(os.path.dirname(os.path.realpath(__file__)) + 
 		 	'/programs/simple_program.txt', 'r')
@@ -84,6 +105,9 @@ def init_forceplates():
 
 	return fp
 
+
+def save_forceplates():
+	pass
 
 
 if __name__ == '__main__':
