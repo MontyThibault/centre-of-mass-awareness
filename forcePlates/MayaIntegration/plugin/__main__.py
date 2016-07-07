@@ -1,22 +1,22 @@
 import os
-import shelve
-import atexit
 
-from main_thread import MainThread
 from forceplates import ForcePlates
 from calibration.affine import Affine
 from gridcalibration.grid import Grid
 from gridcalibration.generator import Generator
-from console import Console
-from persistence_sync_thread import PersistenceSyncThread
+
+from threads.killable_thread import KillableThread as KT
+from threads.main_thread import MainThread
+from threads.console_thread import ConsoleThread
+from threads.persistence_sync_thread import PersistenceSyncThread
 
 from DLL_wrappers.LabProUSB import LabProUSB
-
-from killable_thread import KillableThread as KT
 
 import maya_utils as mu
 import maya_socket_connection as msc
 
+
+# TODO: move all thread-related modules into a directory
 
 def main():
 
@@ -26,16 +26,18 @@ def main():
 
 	d = pst.objs
 
-
-
 	mt = MainThread()
 
 
 	#######################
 	# Force plates
 
+	# !! NO TESTS !!
+
 	if 'fp' not in d:
 		d['fp'] = init_forceplates()
+
+	fp = d['fp']
 
 
 	# Generator
@@ -44,14 +46,13 @@ def main():
 	gen = Generator(grid, fp)
 	
 
-	mt.tasks.add(_callwith(d['fp'].update, LabProUSB))
-	mt.tasks.add(feed_forces(d['fp']))
+	mt.tasks.add(_callwith(fp.update, LabProUSB))
+	mt.tasks.add(feed_forces(fp))
 	mt.tasks.add(gen.take_sample)
 
 	mt.start() 
 
-
-	# !! NO TESTS !!
+	
 
 	####################################
 	# Interactive console utilities
@@ -61,7 +62,9 @@ def main():
 	# Just quit() won't do it.
 
 	def kill():
-		d.close()
+
+		d['fp'] = fp
+
 		KT.killAll()
 		exit()
 
@@ -75,7 +78,7 @@ def main():
 	l = locals()
 	l.update(globals())
 
-	c = Console(l)
+	c = ConsoleThread(l)
 	c.start()
 
 

@@ -1,7 +1,12 @@
 import code
 import threading
 
-class Console(threading.Thread):
+class ConsoleThread(threading.Thread):
+	"""
+
+	Runs a console on top of the original executing program.
+
+	"""
 
 	def __init__(self, local_vars):
 		

@@ -1,4 +1,4 @@
-from plugin.killable_thread import KillableThread, ThreadError
+from plugin.threads.killable_thread import KillableThread, ThreadError
 import unittest
 
 class TestKillableThread(unittest.TestCase):

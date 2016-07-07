@@ -1,4 +1,4 @@
-from plugin.persistence_sync_thread import PersistenceSyncThread as PST
+from plugin.threads.persistence_sync_thread import PersistenceSyncThread as PST
 
 import os
 import pytest
