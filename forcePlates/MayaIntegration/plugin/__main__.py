@@ -1,6 +1,7 @@
 import os
 
 from forceplates import ForcePlates
+
 from calibration.affine import Affine
 from gridcalibration.grid import Grid
 from gridcalibration.generator import Generator
@@ -47,6 +48,8 @@ def main():
 	
 
 	mt.tasks.add(_callwith(fp.update, LabProUSB))
+	# mt.tasks.add(lambda: fp.update(LabProUSB))
+
 	mt.tasks.add(feed_forces(fp))
 	mt.tasks.add(gen.take_sample)
 
