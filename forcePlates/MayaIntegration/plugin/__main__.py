@@ -1,4 +1,6 @@
 import os
+import shelve
+import atexit
 
 from main_thread import MainThread
 from forceplates import ForcePlates
@@ -20,9 +22,16 @@ def main():
 	mt = MainThread()
 
 
+	#######################
 	# Force plates
 
-	fp = init_forceplates()
+	d = shelve.open(os.path.dirname(os.path.realpath(__file__)) +
+			'/.ForcePlates.pickle')
+
+	if 'fp' not in d:
+		d['fp'] = init_forceplates()
+
+	fp = d['fp']
 
 
 	# Generator
@@ -44,6 +53,9 @@ def main():
 	# Just quit() won't do it.
 
 	def kill():
+		d['fp'] = fp
+		d.close()
+
 		KT.killAll()
 		exit()
 
@@ -53,7 +65,7 @@ def main():
 
 	####################################
 	# Begin interactive console
-
+	
 	l = locals()
 	l.update(globals())
 
@@ -79,22 +91,12 @@ def _callwith(f, *args, **kwargs):
 
 def init_forceplates():
 
-	
-	# Load ForcePlates
-
-	# pickle.load(open(file, 'rb'))
-
 	fp = ForcePlates()
-
-
-
 
 	fp.uninit_labpro(LabProUSB)
 	fp.init_labpro(LabProUSB)
 
-	if not fp.calibrations:
-
-		fp.init_calibs(Affine)
+	fp.init_calibs(Affine)
 
 
 	file = open(os.path.dirname(os.path.realpath(__file__)) + 
@@ -106,10 +108,5 @@ def init_forceplates():
 	return fp
 
 
-def save_forceplates():
-	pass
-
-
 if __name__ == '__main__':
-
 	main()

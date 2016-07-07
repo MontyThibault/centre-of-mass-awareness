@@ -88,6 +88,11 @@ class Sampler(object):
 	@staticmethod
 	def _averageSamples(samples):
 
+		if len(samples) == 0:
+
+			return ((0, 0), (0, 0), 0)
+
+
 		acc = [0, 0, 0, 0, 0]
 
 		for sample in samples:
@@ -106,6 +111,12 @@ class Sampler(object):
 	@staticmethod
 	def _averageWeightedSamples(weightedSamples):
 		
+		if len(weightedSamples) == 0:
+
+			return ((0, 0), (0, 0), 0)
+
+
+
 		acc = [0, 0, 0, 0, 0]
 		totalWeight = 0
 

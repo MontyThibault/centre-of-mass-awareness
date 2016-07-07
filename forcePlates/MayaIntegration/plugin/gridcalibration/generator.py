@@ -47,8 +47,7 @@ class Generator(object):
 	def _center(self, forces):
 		"""
 		
-		@argument corners - a list of four tuples representing the corners of the grid
-				in the same order as the force plate force array.
+		@argument forces - the forceplate force array
 
 		"""
 		

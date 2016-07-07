@@ -1,4 +1,3 @@
 {
-  "tests_integration/test_persistence.py": true, 
-  "tests_unit/test_save_force_plates.py": true
+  "tests_integration/test_force_plates.py::test_labpro_returns_non_zero_forces_then_dies": true
 }

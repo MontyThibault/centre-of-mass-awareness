@@ -65,7 +65,9 @@ class ForcePlates(object):
 		if data is not None:
 
 			self.forces = data[:4]
-			self.forces_after_calibration = self.forces_with_calibs()
+
+			if self.calibrations:
+				self.forces_after_calibration = self.forces_with_calibs()
 				
 
 	def forces_with_calibs(self):

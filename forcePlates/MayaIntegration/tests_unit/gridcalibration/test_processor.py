@@ -5,6 +5,7 @@ import unittest
 def instance(cls):
 	return cls()
 
+
 class ProcessorTest(unittest.TestCase):
 
 
@@ -12,6 +13,7 @@ class ProcessorTest(unittest.TestCase):
 
 	@instance
 	class sampler(object):
+
 		def identity(*args):
 
 			# Identity sample
