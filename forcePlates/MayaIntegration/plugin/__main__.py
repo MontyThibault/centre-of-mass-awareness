@@ -8,6 +8,7 @@ from calibration.affine import Affine
 from gridcalibration.grid import Grid
 from gridcalibration.generator import Generator
 from console import Console
+from persistence_sync_thread import PersistenceSyncThread
 
 from DLL_wrappers.LabProUSB import LabProUSB
 
@@ -19,19 +20,22 @@ import maya_socket_connection as msc
 
 def main():
 
+
+	pst = PersistenceSyncThread(os.path.dirname(__file__) + '/.sync.pickle')
+	pst.start()
+
+	d = pst.objs
+
+
+
 	mt = MainThread()
 
 
 	#######################
 	# Force plates
 
-	d = shelve.open(os.path.dirname(os.path.realpath(__file__)) +
-			'/.ForcePlates.pickle')
-
 	if 'fp' not in d:
 		d['fp'] = init_forceplates()
-
-	fp = d['fp']
 
 
 	# Generator
@@ -40,22 +44,24 @@ def main():
 	gen = Generator(grid, fp)
 	
 
-	mt.tasks.add(_callwith(fp.update, LabProUSB))
-	mt.tasks.add(feed_forces(fp))
+	mt.tasks.add(_callwith(d['fp'].update, LabProUSB))
+	mt.tasks.add(feed_forces(d['fp']))
 	mt.tasks.add(gen.take_sample)
 
 	mt.start() 
 
 
+	# !! NO TESTS !!
+
 	####################################
-	
+	# Interactive console utilities
+
+
 	# Kill the threads and exit the interactive console
 	# Just quit() won't do it.
 
 	def kill():
-		d['fp'] = fp
 		d.close()
-
 		KT.killAll()
 		exit()
 
@@ -71,6 +77,8 @@ def main():
 
 	c = Console(l)
 	c.start()
+
+
 
 
 def feed_forces(fp):

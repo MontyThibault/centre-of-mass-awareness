@@ -1,6 +1,13 @@
-# MEL
-# commandPort -name ":99" -sourceType "python" -pickleOutput;
+"""
 
+This module established a socket command port session with a running Maya program, and
+provides a way to interface very naturally with Maya from within an external Python program.
+
+Note: We must activate a command port before this script will work. Use the MEL command
+
+	commandPort -name ":99" -sourceType "python" -pickleOutput;
+
+"""
 
 import socket
 import pickle
