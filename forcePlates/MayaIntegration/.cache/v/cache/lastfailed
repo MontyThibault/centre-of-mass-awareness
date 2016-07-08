@@ -1,4 +1,3 @@
 {
-  "tests/integration/test_maya_environment.py": true, 
-  "tests/integration/test_maya_socket_connection.py": true
+  "tests/unit/test_calibration_program.py::test_calibration_program_without_thread": true
 }

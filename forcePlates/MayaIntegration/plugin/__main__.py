@@ -10,6 +10,7 @@ from threads.killable_thread import KillableThread as KT
 from threads.main_thread import MainThread
 from threads.console_thread import ConsoleThread
 from threads.persistence_sync_thread import PersistenceSyncThread
+from threads.calibration_program_thread import CalibrationProgramThread
 
 from DLL_wrappers.LabProUSB import LabProUSB
 
@@ -17,15 +18,14 @@ import maya_utils as mu
 import maya_socket_connection as msc
 
 
-# TODO: fix everything
 
 def main():
 
 
 	pst = PersistenceSyncThread(os.path.dirname(__file__) + '/.sync.pickle')
 	pst.start()
-
 	d = pst.objs
+
 
 	mt = MainThread()
 
@@ -43,6 +43,7 @@ def main():
 	send_program(fp)
 
 
+
 	# Generator
 
 	grid = Grid(10, 20, 3, 6)
@@ -57,6 +58,10 @@ def main():
 
 	mt.start() 
 
+
+	########################
+
+	kpt = CalibrationProgramThread()
 	
 
 	####################################
