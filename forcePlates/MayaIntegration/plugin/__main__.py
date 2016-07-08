@@ -17,7 +17,7 @@ import maya_utils as mu
 import maya_socket_connection as msc
 
 
-# TODO: move all thread-related modules into a directory
+# TODO: fix everything
 
 def main():
 
@@ -38,7 +38,9 @@ def main():
 	if 'fp' not in d:
 		d['fp'] = init_forceplates()
 
+
 	fp = d['fp']
+	send_program(fp)
 
 
 	# Generator
@@ -102,24 +104,22 @@ def _callwith(f, *args, **kwargs):
 
 	return g
 
-
 def init_forceplates():
 
 	fp = ForcePlates()
+	fp.init_calibs(Affine)
+
+	return fp
+
+def send_program(fp):
 
 	fp.uninit_labpro(LabProUSB)
 	fp.init_labpro(LabProUSB)
 
-	fp.init_calibs(Affine)
+	with open(os.path.dirname(os.path.realpath(__file__)) + 
+		 	'/programs/simple_program.txt', 'r') as f:
 
-
-	file = open(os.path.dirname(os.path.realpath(__file__)) + 
-		 	'/programs/simple_program.txt', 'r')
-
-	fp.send_program(LabProUSB, file)
-	file.close()
-
-	return fp
+		fp.send_program(LabProUSB, f) 
 
 
 if __name__ == '__main__':

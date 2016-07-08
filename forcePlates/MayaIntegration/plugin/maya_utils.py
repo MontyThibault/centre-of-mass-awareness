@@ -32,6 +32,8 @@ def move_markers(forces):
 
 	import maya.cmds as c
 
+	print forces
+
 	c.xform("plate1", s = [forces[0] * 18 for i in range(3)])
 	c.xform("plate2", s = [forces[1] * 18 for i in range(3)])
 	c.xform("plate3", s = [forces[2] * 18 for i in range(3)])
