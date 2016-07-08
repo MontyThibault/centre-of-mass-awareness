@@ -1,3 +1,5 @@
+import subprocess
+
 def test_program_runs_without_error():
 
-	pass
+	s = subprocess.Popen('run.bat')
