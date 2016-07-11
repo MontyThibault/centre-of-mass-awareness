@@ -1,4 +1,5 @@
 from killable_thread import KillableThread
+from ..observable import Observable
 
 
 class CalibrationProgramThread(KillableThread):
@@ -20,7 +21,9 @@ class CalibrationProgramThread(KillableThread):
 
 		self._current_time = 0
 
-		self._currently_sampling = False
+		self._currently_sampling = Observable()
+		self._currently_sampling.set(False)
+
 		self._time_when_sampling_started = 0
 		self._time_when_sampling_stopped = 0
 
@@ -35,7 +38,7 @@ class CalibrationProgramThread(KillableThread):
 
 
 
-		if self._currently_sampling:
+		if self._currently_sampling.get():
 
 			self.generator.take_sample()
 
@@ -64,7 +67,7 @@ class CalibrationProgramThread(KillableThread):
 
 
 				self._time_when_sampling_stopped = self._current_time
-				self._currently_sampling = False
+				self._currently_sampling.set(False)
 
 		else:
 
@@ -77,7 +80,7 @@ class CalibrationProgramThread(KillableThread):
 				if self.verbose:
 
 					print "Sampling started."
-					
+
 
 				self._time_when_sampling_started = self._current_time
-				self._currently_sampling = True
+				self._currently_sampling.set(True)

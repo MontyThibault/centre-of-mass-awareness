@@ -1,13 +1,13 @@
 
 
-class Observer(object):
+class Observable(object):
 	"""
 
 	Simple Python observer implementation.
 
 	Ex.
 
-	>>> obj = Observer()
+	>>> obj = Observable()
 	>>> obj.set(10)
 	>>> obj.get()
 	10

@@ -18,7 +18,7 @@ def test_calibration_program_without_running_thread():
 
 		cpt.loop()
 
-	assert cpt._currently_sampling
+	assert cpt._currently_sampling.get()
 
 	# Go to end of first sample
 
@@ -26,7 +26,7 @@ def test_calibration_program_without_running_thread():
 
 		cpt.loop()
 
-	assert not cpt._currently_sampling
+	assert not cpt._currently_sampling.get()
 
 	# Take many more samples and stop in the middle of sampling
 
@@ -34,7 +34,7 @@ def test_calibration_program_without_running_thread():
 
 		cpt.loop()
 
-	assert cpt._currently_sampling
+	assert cpt._currently_sampling.get()
 
 
 	# Suppose we have reached the end of the grid iterator
@@ -51,7 +51,7 @@ def test_calibration_program_without_running_thread():
 
 	# Test that we're not actually sampling
 
-	assert not cpt._currently_sampling
+	assert not cpt._currently_sampling.get()
 
 	assert len(cpt.generator.samples) == 55
 

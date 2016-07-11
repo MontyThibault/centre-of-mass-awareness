@@ -1,8 +1,8 @@
-from plugin.observer import Observer
+from plugin.observable import Observable
 
-def test_observer_notify():
+def test_observable_notify():
 
-	c = Observer()
+	c = Observable()
 
 	c.set(5)
 
