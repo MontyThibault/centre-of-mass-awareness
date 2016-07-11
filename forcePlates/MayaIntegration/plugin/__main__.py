@@ -61,8 +61,24 @@ def main():
 
 	########################
 
-	kpt = CalibrationProgramThread()
+	kpt = CalibrationProgramThread(gen)
+	kpt.start()
+
+	cpt.fps = mt.fps
+
+	cpt.seconds_per_point = 20
+	cpt.seconds_between_points = 10
+
 	
+
+
+	# Monday: finish this calibration program
+	# and implement reverse-correction.
+
+	# Tuesday: visualization utility
+
+	# Wednesday: Collect calibration data & ready to use
+
 
 	####################################
 	# Interactive console utilities

@@ -24,6 +24,8 @@ class CalibrationProgramThread(KillableThread):
 		self._time_when_sampling_started = 0
 		self._time_when_sampling_stopped = 0
 
+		self.verbose = False
+
 
 	def loop(self):
 
@@ -49,7 +51,17 @@ class CalibrationProgramThread(KillableThread):
 					self.kill()
 
 
+					if self.verbose:
+
+						print "Program dying"
+
+
 				self.generator.grid.next()
+
+				if self.verbose:
+
+					print "Next point: %s" % self.generator.grid.currentPoint
+
 
 				self._time_when_sampling_stopped = self._current_time
 				self._currently_sampling = False
@@ -61,6 +73,11 @@ class CalibrationProgramThread(KillableThread):
 			twss = self._time_when_sampling_stopped
 
 			if self._current_time - twss > self.seconds_between_points:
+
+				if self.verbose:
+
+					print "Sampling started."
+					
 
 				self._time_when_sampling_started = self._current_time
 				self._currently_sampling = True
