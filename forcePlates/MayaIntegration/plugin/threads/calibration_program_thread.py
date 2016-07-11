@@ -1,5 +1,5 @@
 from killable_thread import KillableThread
-from ..observable import Observable
+from plugin.observable import Observable
 
 
 class CalibrationProgramThread(KillableThread):
@@ -53,18 +53,7 @@ class CalibrationProgramThread(KillableThread):
 
 					self.kill()
 
-
-					if self.verbose:
-
-						print "Program dying"
-
-
 				self.generator.grid.next()
-
-				if self.verbose:
-
-					print "Next point: %s" % self.generator.grid.currentPoint
-
 
 				self._time_when_sampling_stopped = self._current_time
 				self._currently_sampling.set(False)
@@ -76,11 +65,6 @@ class CalibrationProgramThread(KillableThread):
 			twss = self._time_when_sampling_stopped
 
 			if self._current_time - twss > self.seconds_between_points:
-
-				if self.verbose:
-
-					print "Sampling started."
-
 
 				self._time_when_sampling_started = self._current_time
 				self._currently_sampling.set(True)

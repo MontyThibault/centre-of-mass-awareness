@@ -64,12 +64,23 @@ def main():
 	kpt = CalibrationProgramThread(gen)
 	kpt.start()
 
-	cpt.fps = mt.fps
+	kpt.fps = mt.fps
 
-	cpt.seconds_per_point = 20
-	cpt.seconds_between_points = 10
+	kpt.seconds_per_point = 20
+	kpt.seconds_between_points = 10
 
-	
+
+	def f(cs):
+
+		if cs:
+			print "Sampling started at %s" % str(gen.grid.currentPoint)
+			
+		else:
+			print "Sampling stopped."		
+
+	kpt._currently_sampling.add_listener(f)
+
+
 
 
 	# Monday: finish this calibration program
