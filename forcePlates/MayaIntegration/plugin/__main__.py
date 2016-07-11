@@ -5,6 +5,9 @@ from forceplates import ForcePlates
 from calibration.affine import Affine
 from gridcalibration.grid import Grid
 from gridcalibration.generator import Generator
+from gridcalibration.reducer import Reducer
+from gridcalibration.sampler import Sampler
+from gridcalibration.processor import Processor
 
 from threads.killable_thread import KillableThread as KT
 from threads.main_thread import MainThread
@@ -46,7 +49,7 @@ def main():
 
 	# Generator
 
-	grid = Grid(10, 20, 3, 6)
+	grid = Grid(44.5, 53, 6, 7)
 	gen = Generator(grid, fp)
 	
 
@@ -61,25 +64,68 @@ def main():
 
 	########################
 
+	# !! NO TESTS !!
+
 	kpt = CalibrationProgramThread(gen)
 	kpt.start()
 
 	kpt.fps = mt.fps
 
-	kpt.seconds_per_point = 20
-	kpt.seconds_between_points = 10
+	kpt.seconds_per_point = .02
+	kpt.seconds_between_points = .01
+
+
+	#####################
+
+	msc.call_func(mu.createLocatorTransformPair, 'sampling_marker')
 
 
 	def f(cs):
 
+		p = gen.grid.currentPoint
+
 		if cs:
-			print "Sampling started at %s" % str(gen.grid.currentPoint)
+			print "Sampling started at %s" % str(p)
 			
 		else:
-			print "Sampling stopped."		
+			print "Sampling stopped. Next point is %s" % str(p)		
+
+		msc.call_func(mu.moveObject, [p[0], 0, p[1]], 'sampling_marker')
+
 
 	kpt._currently_sampling.add_listener(f)
 
+
+
+	###################
+
+	# Load samples
+	# 
+	#
+	# How to test?
+
+	def reduce():
+
+		s = d['s']
+		reducer = Reducer()
+	
+		ps = reducer.partitionBySource(s)
+
+
+		for i, p in enumerate(ps):
+			ps[i] = reducer.reduce(p, 0.1)
+
+		return reducer.merge(ps)
+
+
+
+	def sample_and_process(p):
+		""" p = ((x, y), w) """
+
+		sampler = Sampler(d['s'])
+		processor = Processor(sampler.closest, grid)
+
+		return processor.process(*p)
 
 
 

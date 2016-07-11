@@ -73,7 +73,7 @@ class MockForcePlate(object):
 	def __init__(self):
 
 		self._center = (0, 0)
-		self.forces = [1, 1, 1, 1]
+		self.forces_after_calibration = [1, 1, 1, 1]
 
 
 	def center(self):

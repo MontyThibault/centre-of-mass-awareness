@@ -28,13 +28,14 @@ class Generator(object):
 
 		for point, weight in list_:
 
-			accum[0] += point[0]
-			accum[1] += point[1]
+			accum[0] += point[0] * weight
+			accum[1] += point[1] * weight
 
 		totalWeight = sum([weight for point, weight in list_])
 
 
 		if totalWeight == 0:
+			
 			return (0, 0)
 
 
@@ -70,10 +71,13 @@ class Generator(object):
 
 		"""
 
-		f = self.fp.forces
+		f = self.fp.forces_after_calibration
 
 		# Note
 		# Sample = (source_point, measured_point, total_forces)
 		sample = (self.grid.currentPoint, self._center(f), sum(f))
+
+		# import pdb
+		# pdb.set_trace()
 
 		self.samples.append(sample)

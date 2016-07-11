@@ -69,7 +69,7 @@ def test_integrate_grid_calibrate():
 
 	for _ in range(20):
 
-		sampler.closest(random_point(), random.random() * 4, 0.2)
+		sampler.closest(random_point(), random.random() * 4)
 		sampler.simpleComposite(random_point(), random.random() * 4, 0.2)
 		sampler.distanceComposite(random_point(), random.random() * 4, 0.2)
 
@@ -91,7 +91,7 @@ def test_integrate_grid_calibrate():
 class MockForcePlates(object):
 
 	@property
-	def forces(self):
+	def forces_after_calibration(self):
 
 		return [random.random() for i in range(4)]
 	
