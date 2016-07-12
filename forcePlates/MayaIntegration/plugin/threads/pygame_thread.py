@@ -1,5 +1,25 @@
 import threading
 import pygame
+import traceback
+from Queue import Queue
+
+
+_exceptions = Queue()
+
+def _exception_wrapper(f):
+
+	def g(*args, **kwargs):
+
+		try:
+
+			f(*args, **kwargs)
+
+		except Exception as e:
+
+			_exceptions.put((e, traceback.format_exc()))
+
+
+	return g
 
 
 class PyGameThread(threading.Thread):
@@ -36,6 +56,7 @@ class PyGameThread(threading.Thread):
 			pygame.quit()
 
 
+	@_exception_wrapper
 	def run(self):
 
 		with self.pygame_lock:
@@ -61,7 +82,7 @@ class PyGameThread(threading.Thread):
 	def loop(self):
 
 		pygame.event.pump()
-
+		
 		for event in pygame.event.get():
 
 			if event.type == pygame.QUIT: 
@@ -78,3 +99,18 @@ class PyGameThread(threading.Thread):
 
 		self.screen.fill((255, 255, 255))
 		pygame.display.flip()
+
+
+	@staticmethod
+	def query_exceptions():
+
+		while not _exceptions.empty():
+
+			e, tb = _exceptions.get()
+
+			# One could replace this with a non-terminating utility
+			# otherwise there isn't much use for a queue
+
+			raise e
+
+			e.task_done()
