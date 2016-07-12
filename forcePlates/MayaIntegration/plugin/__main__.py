@@ -14,6 +14,7 @@ from threads.main_thread import MainThread
 from threads.console_thread import ConsoleThread
 from threads.persistence_sync_thread import PersistenceSyncThread
 from threads.calibration_program_thread import CalibrationProgramThread
+from threads.pygame_thread import PyGameThread
 
 from DLL_wrappers.LabProUSB import LabProUSB
 
@@ -37,6 +38,7 @@ def main():
 	# Force plates
 
 	# !! NO TESTS !!
+	# (how?)
 
 	if 'fp' not in d:
 		d['fp'] = init_forceplates()
@@ -60,6 +62,12 @@ def main():
 	mt.tasks.add(gen.take_sample)
 
 	mt.start() 
+
+
+	########################
+
+	pgt = PyGameThread()
+	pgt.start()
 
 
 	########################
@@ -103,6 +111,7 @@ def main():
 	# 
 	#
 	# How to test?
+	# How to test MAIN program?
 
 	def reduce():
 
@@ -115,7 +124,8 @@ def main():
 		for i, p in enumerate(ps):
 			ps[i] = reducer.reduce(p, 0.1)
 
-		return reducer.merge(ps)
+		merged = reducer.merge(ps)
+		d['s'] = reducer.filter_min_max(merged, 0.1, 9999)
 
 
 

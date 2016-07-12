@@ -9,6 +9,12 @@ import random
 
 
 def test_integrate_grid_calibrate():
+	"""
+
+	We mostly check that the interfaces together do not raise errors;
+	this test does not care about the actual outputs.
+
+	"""
 
 	grid = Grid(10, 10, 20, 20)
 

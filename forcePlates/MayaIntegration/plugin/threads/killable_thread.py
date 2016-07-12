@@ -18,7 +18,9 @@ class KillableThread(threading.Thread):
 	Ex.
 
 	class MyKillableThread(KillableThread):
-		fps = 10
+		
+		def __init__(self):
+			self.fps = 10
 
 		def loop(self):
 			print 'hello, world ten times per second!'
@@ -74,4 +76,4 @@ class KillableThread(threading.Thread):
 	# if the default method is used.
 
 	def loop(self):
-		raise ThreadError()
+		raise ThreadError("Loop method not overwritten.")

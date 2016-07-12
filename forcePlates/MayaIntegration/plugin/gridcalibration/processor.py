@@ -38,6 +38,7 @@ class Processor(object):
 		""" Processes a given point & force and applies correction based on the library
 		of samples. """
 
+
 		ws = self.grid.weightedSquare(point)
 
 		weightedArray = []
