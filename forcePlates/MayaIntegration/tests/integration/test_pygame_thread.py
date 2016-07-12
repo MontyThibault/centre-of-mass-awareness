@@ -2,7 +2,15 @@ from plugin.threads.pygame_thread import PyGameThread
 import time
 import pytest
 
-def test_spin_up_and_kill_pygame_thread():
+
+@pytest.fixture
+def restart_pygame():
+
+	import pygame
+	pygame.quit()
+
+
+def test_spin_up_and_kill_pygame_thread(restart_pygame):
 
 	# Instantaneous
 
@@ -28,7 +36,7 @@ def test_spin_up_and_kill_pygame_thread():
 	pgt.query_exceptions()
 
 
-def test_exception_handler(monkeypatch):
+def test_exception_handler(restart_pygame, monkeypatch):
 
 	class ArbitraryError(Exception):
 		pass
@@ -46,5 +54,28 @@ def test_exception_handler(monkeypatch):
 
 
 	with pytest.raises(ArbitraryError):
-
 		pgt.query_exceptions()
+
+
+
+def test_drawing_tasks(restart_pygame):
+
+	pgt = PyGameThread()
+	pgt.start()
+
+
+	def draw(w, h, screen, pygame):
+
+		pygame.draw.line(screen, (255, 0, 0), (0, 0), (w, h), 10)
+
+
+	with pgt.draw_tasks_lock:
+		pgt.draw_tasks.append(draw)
+
+
+	time.sleep(1)
+
+	pgt.kill()
+	pgt.join()
+
+	pgt.query_exceptions()

@@ -47,6 +47,9 @@ class PyGameThread(threading.Thread):
 
 		self.pygame_lock = threading.Lock()
 
+		self.draw_tasks_lock = threading.Lock()
+		self.draw_tasks = []
+
 
 	def kill(self):
 
@@ -60,7 +63,7 @@ class PyGameThread(threading.Thread):
 	def run(self):
 
 		with self.pygame_lock:
-
+			
 			pygame.init()
 
 			self.screen = pygame.display.set_mode((500, 500), self.options)
@@ -98,6 +101,17 @@ class PyGameThread(threading.Thread):
 
 
 		self.screen.fill((255, 255, 255))
+
+		width = self.screen.get_width()
+		height = self.screen.get_height()
+
+
+		# Do some drawing
+
+		with self.draw_tasks_lock:
+			for task in self.draw_tasks:
+				task(width, height, self.screen, pygame)
+
 		pygame.display.flip()
 
 
