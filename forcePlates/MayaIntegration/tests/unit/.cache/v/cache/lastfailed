@@ -1,1 +1,3 @@
-{}
+{
+  "test_line_visualize.py::test_grid_visualizer_coordinate_conversions": true
+}

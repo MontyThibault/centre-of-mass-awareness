@@ -73,3 +73,18 @@ class GridTest(unittest.TestCase):
 		ws = x.weightedSquare(p)
 
 		assert sum([w for (p, w) in ws]) == 1
+
+
+	def test_points(self):
+
+		x = Grid(1, 1, 2, 2)
+
+		p = x.points()
+
+		assert (-1, -1) in p
+		assert (1, -1) in p
+		assert (1, 1) in p
+
+		assert not (0, 0) in p
+
+		assert len(p) == 4

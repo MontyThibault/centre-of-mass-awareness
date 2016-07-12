@@ -51,6 +51,25 @@ class Grid(object):
 		return self.currentPoint
 
 
+	def points(self):
+		"""
+
+		Returns a complete list of points on the grid. Useful for iteration etc.
+
+		"""
+
+		total_length = self.l * 2
+		total_width = self.w * 2
+
+		l_points = range(-self.l, self.l, total_length / (self.l_seg - 1)) + [self.l]
+		w_points = range(-self.w, self.w, total_width / (self.w_seg - 1)) + [self.w]
+
+
+		# generate cartesian product
+
+		return [(x, y) for x in l_points for y in w_points]
+
+
 	def _toIntegerForm(self, point):
 		""" 
 

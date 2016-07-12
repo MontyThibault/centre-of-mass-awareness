@@ -41,11 +41,11 @@ def generate_grid_visualizer(grid):
 		wh[1] = height
 
 
-		# for point in grid.points():
+		for point in grid.points():
 
-		# 	s = grid_to_screen(point)
+			s = grid_to_screen(point)
 
-		# 	pygame.draw.circle(s)
+			pygame.draw.circle(screen, (128, 128, 128), s, 5)
 
 
 
@@ -56,6 +56,12 @@ def generate_grid_visualizer(grid):
 
 		grid_width = grid.w
 		grid_height = grid.l
+
+
+		# Transform point to floating point representation such that all of our
+		# following calculations are not truncated!
+
+		point = (float(point[0]), float(point[1]))
 
 
 		# Transform screen coordinate such that zero lies in the center
@@ -73,8 +79,9 @@ def generate_grid_visualizer(grid):
 		point = (point[0] * grid_width, point[1] * grid_height)
 
 		# The grid is already centered about the origin so no more transormations
+		# Convert back to ints & return
 
-		return point
+		return (int(point[0]), int(point[1]))
 
 
 	def grid_to_screen(point):
@@ -85,6 +92,12 @@ def generate_grid_visualizer(grid):
 
 		grid_width = grid.w
 		grid_height = grid.l
+
+
+		# Transform point to floating point representation such that all of our
+		# following calculations are not truncated!
+
+		point = (float(point[0]), float(point[1]))
 
 
 		# Normalize to +- 1
@@ -99,7 +112,10 @@ def generate_grid_visualizer(grid):
 
 		point = (point[0] + (screen_width / 2), point[1] + (screen_height / 2))
 
-		return point
+
+		# Convert back to ints & return
+
+		return (int(point[0]), int(point[1]))
 
 
 	return f, screen_to_grid, grid_to_screen
