@@ -13,7 +13,12 @@ def restart_pygame():
 	pygame.quit()
 
 
-def test_feed_drawing_function_to_pygame(restart_pygame):
+def test_feed_visualizers_to_pygame(restart_pygame):
+	"""
+
+	This test will draw an array of ten by ten points, stretched to fit the window.
+
+	"""
 
 	pgt = PyGameThread()
 	pgt.start()
@@ -22,20 +27,35 @@ def test_feed_drawing_function_to_pygame(restart_pygame):
 
 
 
+	# Generate arbitrary samples
+
+	samples = []
+
+	for p in grid.points():
+
+		origin = p
+		destination = (p[0] + 1, p[1] + 1)
+		force = abs(p[0])
+
+		sample = (origin, destination, force)
+		samples.append(sample)
+
 
 	# Generate the drawing functions for the pygame thread
 
-	task, stg, gts = lv.generate_grid_visualizer(grid)
+	grid_task, stg, gts = lv.generate_grid_visualizer(grid)
+	sample_task = lv.generate_sample_visualizer(samples, gts)
+
 
 	with pgt.draw_tasks_lock:
 
-		pgt.draw_tasks.append(task)
+		pgt.draw_tasks.append(grid_task)
+		pgt.draw_tasks.append(sample_task)
 
 
+	# time.sleep(10)
 
-	time.sleep(10)
+	# pgt.kill()
+	# pgt.join()
 
-	pgt.kill()
-	pgt.join()
-
-	pgt.query_exceptions()
+	# pgt.query_exceptions()

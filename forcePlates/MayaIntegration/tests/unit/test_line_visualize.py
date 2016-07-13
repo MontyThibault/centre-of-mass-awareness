@@ -54,24 +54,23 @@ def screen():
 	return screen
 
 
+def test_mix_max_normalizer():
 
-#
-# What do these do? {
+	o = (0, 0)
+	samples = [(o, o, 1), (o, o, 2)]
 
-def test_visualize_empty(corners, pygame, screen):
+	f = lv._generate_min_max_normalizer(samples, -1, 1)
 
-	f = lv.generate_sample_visualizer([], corners)
+	assert f(samples[0][2]) == -1
+	assert f(samples[1][2]) == 1
 
-	f(20, 20, screen, pygame)
 
+def test_min_max_normalizer_no_data():
 
-def test_visualize_simple_samples(corners, pygame, screen, simple_sample_set):
+	samples = []
 
-	f = lv.generate_sample_visualizer(simple_sample_set, corners)
-
-	f(20, 20, screen, pygame)
-
-# }
+	with pytest.raises(ValueError):
+		f = lv._generate_min_max_normalizer(samples, -1, 1)
 
 
 class MockGrid(object):
@@ -79,6 +78,11 @@ class MockGrid(object):
 	def __init__(self):
 		self.l = 10
 		self.w = 10
+
+
+	def points(self):
+		return [(-10, -10), (10, 10)]
+
 
 
 def test_grid_visualizer_coordinate_conversions(screen, pygame):
@@ -90,10 +94,10 @@ def test_grid_visualizer_coordinate_conversions(screen, pygame):
 	# width - 200
 	# height - 200
 
-	f(200, 200, screen, pygame)
+	# f(200, 200, screen, pygame)
 
-	assert screen_to_grid((200, 200)) == (10, 10)	
-	assert screen_to_grid((0, 0)) == (-10, -10)
+	# assert screen_to_grid((200, 200)) == (10, 10)	
+	# assert screen_to_grid((0, 0)) == (-10, -10)
 
-	assert grid_to_screen((10, 10)) == (200, 200)
-	assert grid_to_screen((-10, -10)) == (0, 0)
+	# assert grid_to_screen((10, 10)) == (200, 200)
+	# assert grid_to_screen((-10, -10)) == (0, 0)

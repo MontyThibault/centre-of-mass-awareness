@@ -73,7 +73,7 @@ def test_drawing_tasks(restart_pygame):
 		pgt.draw_tasks.append(draw)
 
 
-	time.sleep(1)
+	time.sleep(0.1)
 
 	pgt.kill()
 	pgt.join()

@@ -1,7 +1,16 @@
+"""
+
+Utilities for interfacing pygame & the existing sampling data structure.
+
+TODO: convert these to classes instead of persistent functions & generators. 
+
+"""
 
 
+LINE_THICKNESS_MIN = 1
+LINE_THICKNESS_MAX = 5
 
-def generate_sample_visualizer(samples, corners):
+def generate_sample_visualizer(samples, grid_to_screen):
 	"""
 
 	Generates a callable function to be used in conjunction with pygame_thread.py 
@@ -9,12 +18,76 @@ def generate_sample_visualizer(samples, corners):
 
 	"""
 
+	rescaler = _generate_min_max_normalizer(samples, LINE_THICKNESS_MIN, LINE_THICKNESS_MAX)
+
+
 	def f(width, height, screen, pygame):
 		
 		for sample in samples:
 
-			pass
+			origin = grid_to_screen(sample[0])
+			destination = grid_to_screen(sample[1])
+			force = rescaler(sample[2])
 
+			pygame.draw.line(screen, (0, 0, 0), origin, destination, force)
+
+
+	return f
+
+
+def _generate_color_spectrum():
+	pass
+
+
+def _generate_min_max_normalizer(samples, new_min, new_max):
+	"""
+
+	Scans samples for min and max forces, then returns a linear function that maps those
+	values to min_min and new_max respectively.
+
+	"""
+
+	forces = [sample[2] for sample in samples]
+
+	old_min = min(forces)
+	old_max = max(forces)
+
+
+	return _generate_rescaler(old_min, old_max, new_min, new_max)
+
+
+
+def _generate_rescaler(old_min, old_max, new_min, new_max):
+	"""
+	
+	Returns a single-variate llinear function that maps old_min to old_max to new_max.
+
+	"""
+
+	old_delta = old_max - old_min
+	new_delta = new_max - new_min
+
+
+	def f(x):
+
+		x = float(x)
+
+		# Shift to zero
+
+		x -= old_min
+
+
+		# Stretch
+
+		x /= old_delta
+		x *= new_delta
+
+
+		# Shift to new_min
+
+		x += new_min
+
+		return int(x)
 
 	return f
 
