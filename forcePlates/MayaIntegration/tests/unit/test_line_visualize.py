@@ -65,12 +65,28 @@ def test_mix_max_normalizer():
 	assert f(samples[1][2]) == 1
 
 
+
+# Test identity functionality for incomplete data
+# {
+
 def test_min_max_normalizer_no_data():
 
 	samples = []
 
-	with pytest.raises(ValueError):
-		f = lv._generate_min_max_normalizer(samples, -1, 1)
+	f = lv._generate_min_max_normalizer(samples, -1, 1)
+
+	assert f(2) == 2
+
+
+def test_min_max_normalizer_one_sample():
+
+	samples = [((0, 0), (0, 0), 0)]
+
+	f = lv._generate_min_max_normalizer(samples, -1, 1)
+
+	assert f(2) == 2
+
+# }
 
 
 class MockGrid(object):

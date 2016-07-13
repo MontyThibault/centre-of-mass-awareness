@@ -1,1 +1,3 @@
-{}
+{
+  "test_take_samples_from_force_plates_and_visualize.py::test_take_samples_from_force_plates": true
+}

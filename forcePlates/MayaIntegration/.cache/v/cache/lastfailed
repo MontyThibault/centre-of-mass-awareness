@@ -1,5 +1,1 @@
-{
-  "tests/integration/test_maya_environment.py": true, 
-  "tests/integration/test_maya_socket_connection.py": true, 
-  "tests/unit/gridcalibration/test_grid.py::GridTest::test_points": true
-}
+{}

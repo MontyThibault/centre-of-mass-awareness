@@ -1,31 +1,24 @@
-from plugin.forceplates import ForcePlates
+from plugin.forceplates import ForcePlates, ForcePlatesThread
 from plugin.DLL_wrappers.LabProUSB import LabProUSB
 from plugin.calibration.affine import Affine
 from plugin.main_thread import MainThread
 
+from plugin.forceplates_main import main
+
 import time
+import pytest
+
+@pytest.yield_fixture
+def kill_threads_after():
+
+	yield
+
+	ForcePlatesThread.killAll()
 
 
-def test_labpro_returns_non_zero_forces_then_dies():
+def test_labpro_returns_non_zero_forces_then_dies(kill_threads_after):
 
-	fp = ForcePlates()
-	
-	fp.init_calibs(Affine)
-	fp.init_labpro(LabProUSB)
-
-
-	# Program LabPro
-
-	with open('plugin/programs/simple_program.txt', 'r') as f:
-
-		fp.send_program(LabProUSB, f)
-
-
-	# Spin up the main thread for updates
-
-	mt = MainThread()
-	mt.tasks.add(lambda: fp.update(LabProUSB))
-	mt.start()
+	fp = main()
 
 
 	max_waiting_time = 6 # seconds
@@ -40,7 +33,7 @@ def test_labpro_returns_non_zero_forces_then_dies():
 
 			assert False, "Max waiting time exceeded to get forces."
 
-		time.sleep(1.0 / mt.fps)
+		time.sleep(1.0 / 60)
 
 
 	# Blinks (terminal program) and dies
@@ -70,8 +63,9 @@ def test_labpro_returns_non_zero_forces_then_dies():
 		# Here we use ten frames instead of one frame to give a larger margin
 		# to change forces.
 
-		time.sleep(10.0 / mt.fps)
+		time.sleep(10.0 / 60)
 
 
-	mt.kill()
-	fp.uninit_labpro(LabProUSB)
+def test_main(kill_threads_after):
+
+	main()

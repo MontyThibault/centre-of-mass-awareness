@@ -1,0 +1,4 @@
+{
+  "integration/test_force_plates.py::test_labpro_returns_non_zero_forces_then_dies": true, 
+  "integration/test_take_samples_from_force_plates_and_visualize.py::test_take_samples_from_force_plates": true
+}

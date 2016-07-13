@@ -1,3 +1,6 @@
+from plugin.threads.killable_thread import KillableThread
+
+
 class Generator(object):
 	"""
 
@@ -77,7 +80,24 @@ class Generator(object):
 		# Sample = (source_point, measured_point, total_forces)
 		sample = (self.grid.currentPoint, self._center(f), sum(f))
 
-		# import pdb
-		# pdb.set_trace()
-
 		self.samples.append(sample)
+
+
+
+class SamplingThread(KillableThread):
+	"""
+
+	Periodically take samples with a generator.
+
+	"""
+
+	def __init__(self, gen):
+		KillableThread.__init__(self)
+
+		self.fps = 5
+		self.gen = gen
+
+
+	def loop(self):
+		
+		self.gen.take_sample()

@@ -1,6 +1,8 @@
 import threading
 import pygame
 import traceback
+import sys
+
 from Queue import Queue
 
 
@@ -112,6 +114,9 @@ class PyGameThread(threading.Thread):
 			for task in self.draw_tasks:
 				task(width, height, self.screen, pygame)
 
+
+		# Double buffer flip puts drawn graphics on the screen
+
 		pygame.display.flip()
 
 
@@ -120,11 +125,14 @@ class PyGameThread(threading.Thread):
 
 		while not _exceptions.empty():
 
-			e, tb = _exceptions.get()
+			e, traceback = _exceptions.get()
 
-			# One could replace this with a non-terminating utility
-			# otherwise there isn't much use for a queue
+			# One could replace this with a non-terminating utility, to print
+			# multiple errors; otherwise there isn't much use for the queue.
+
+			sys.stderr.write(traceback)
 
 			raise e
+
 
 			e.task_done()

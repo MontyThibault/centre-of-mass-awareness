@@ -3,12 +3,13 @@
 Utilities for interfacing pygame & the existing sampling data structure.
 
 TODO: convert these to classes instead of persistent functions & generators. 
+(what was I thinking?)
 
 """
 
 
-LINE_THICKNESS_MIN = 1
-LINE_THICKNESS_MAX = 5
+LINE_THICKNESS_MIN = 10
+LINE_THICKNESS_MAX = 20000
 
 def generate_sample_visualizer(samples, grid_to_screen):
 	"""
@@ -29,7 +30,7 @@ def generate_sample_visualizer(samples, grid_to_screen):
 			destination = grid_to_screen(sample[1])
 			force = rescaler(sample[2])
 
-			pygame.draw.line(screen, (0, 0, 0), origin, destination, force)
+			pygame.draw.line(screen, (0, 0, 0), origin, destination, 1)
 
 
 	return f
@@ -47,7 +48,15 @@ def _generate_min_max_normalizer(samples, new_min, new_max):
 
 	"""
 
+
+	# Define the functionality for zero or one samples to return the identity function.
+
+	if len(samples) <= 1:
+		return lambda x: int(x)
+		
+
 	forces = [sample[2] for sample in samples]
+
 
 	old_min = min(forces)
 	old_max = max(forces)

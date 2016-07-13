@@ -53,9 +53,9 @@ def test_feed_visualizers_to_pygame(restart_pygame):
 		pgt.draw_tasks.append(sample_task)
 
 
-	# time.sleep(10)
+	time.sleep(0.1)
 
-	# pgt.kill()
-	# pgt.join()
+	pgt.kill()
+	pgt.join()
 
-	# pgt.query_exceptions()
+	pgt.query_exceptions()

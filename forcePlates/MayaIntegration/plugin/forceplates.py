@@ -1,7 +1,13 @@
 from ctypes import *
 
-import DLL_wrappers.LabProUSB_utils as lpuu
+import threading
 import os
+
+import DLL_wrappers.LabProUSB_utils as lpuu
+from plugin.threads.killable_thread import KillableThread
+
+from plugin.DLL_wrappers.LabProUSB import LabProUSB
+
 
 
 class ForcePlates(object):
@@ -116,3 +122,25 @@ class ForcePlates(object):
 
 		for line in file.readlines():
 			lpuu.send_string(labpro, "s{%s}\n" % line.strip('\n'))
+
+
+
+class ForcePlatesThread(KillableThread):
+	""" 
+
+	Keep forces syncronized.
+
+	"""
+	
+	def __init__(self, fp):
+		KillableThread.__init__(self)
+
+		self.fps = 60
+		self.fp = fp
+
+
+	def loop(self):
+		self.fp.update(LabProUSB)
+
+
+
