@@ -1,4 +1,4 @@
-from plugin.forceplates_main import main
+from plugin.forceplates_main import init_forceplates, spin_fpt, send_program
 from plugin.threads.killable_thread import KillableThread
 
 from plugin.DLL_wrappers.LabProUSB import LabProUSB
@@ -15,12 +15,27 @@ import time
 import pytest
 
 
+@pytest.yield_fixture
+def pygame_thread():
 
-def test_take_samples_from_force_plates():
+	pgt = PyGameThread()
+	pgt.start()
+
+	yield pgt
+
+	pgt.kill()
+	pgt.join()
+
+	pgt.query_exceptions()
+
+
+def test_take_samples_from_force_plates(pygame_thread):
 
 	# TODO: make this test smaller, AKA, break into components
 
-	fp = main()
+	fp = init_forceplates()
+	send_program(fp)
+	spin_fpt(fp)
 
 
 	# Start generator
@@ -36,26 +51,20 @@ def test_take_samples_from_force_plates():
 
 	# Start pygame
 
-	pgt = PyGameThread()
-	pgt.start()
+	
+	pgt = pygame_thread
 
-
-	grid_task, stg, gts = lv.generate_grid_visualizer(grid)
-	sample_task = lv.generate_sample_visualizer(generator.samples, gts)
+	gv = lv.GridVisualizer(grid)
+	sv = lv.SampleVisualizer(generator.samples, gv)
 
 
 	with pgt.draw_tasks_lock:
 
-		pgt.draw_tasks.append(grid_task)
-		pgt.draw_tasks.append(sample_task)
+		pgt.draw_tasks.append(gv.draw)
+		pgt.draw_tasks.append(sv.draw)
+
 
 
 	# Kill all threads
 
 	KillableThread.killAll()
-
-
-	pgt.kill()
-	pgt.join()
-
-	pgt.query_exceptions()

@@ -72,3 +72,14 @@ def test_call_maya_function():
 		return maya.cmds.about(version = True)
 
 	assert msc.call_func(f) >= 2016
+
+
+def test_maya_correct_scene_loaded():
+
+	def f():
+
+		import maya.cmds as c
+
+		assert c.file(q = True, ns = True) == "SensorScene"
+
+	msc.call_func(f)

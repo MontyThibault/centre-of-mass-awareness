@@ -58,16 +58,20 @@ class Grid(object):
 
 		"""
 
-		total_length = self.l * 2
-		total_width = self.w * 2
-
-		l_points = range(-self.l, self.l, total_length / (self.l_seg - 1)) + [self.l]
-		w_points = range(-self.w, self.w, total_width / (self.w_seg - 1)) + [self.w]
-
+		l_points = self.linspace(-self.l, self.l, self.l_seg)
+		w_points = self.linspace(-self.w, self.w, self.w_seg)
 
 		# generate cartesian product
 
 		return [(x, y) for x in l_points for y in w_points]
+
+
+	@staticmethod
+	def linspace(from_, to, segments):
+
+		step = float(to - from_) / (segments - 1)
+
+		return [from_ + (i * step) for i in range(segments - 1)] + [to]
 
 
 	def _toIntegerForm(self, point):

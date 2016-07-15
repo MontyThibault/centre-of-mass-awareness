@@ -2,16 +2,25 @@
 
 Utilities for interfacing pygame & the existing sampling data structure.
 
-TODO: convert these to classes instead of persistent functions & generators. 
-(what was I thinking?)
-
 """
 
 
-LINE_THICKNESS_MIN = 10
-LINE_THICKNESS_MAX = 20000
+class AbstractPyGame(object):
 
-def generate_sample_visualizer(samples, grid_to_screen):
+	def draw(self, width, height, screen, pygame):
+		"""
+		
+		Perform draw functions on each frame.
+
+		"""
+
+		pass
+
+
+
+
+class SampleVisualizer(AbstractPyGame):
+
 	"""
 
 	Generates a callable function to be used in conjunction with pygame_thread.py 
@@ -19,21 +28,31 @@ def generate_sample_visualizer(samples, grid_to_screen):
 
 	"""
 
-	rescaler = _generate_min_max_normalizer(samples, LINE_THICKNESS_MIN, LINE_THICKNESS_MAX)
+
+	LINE_THICKNESS_MIN = 10
+	LINE_THICKNESS_MAX = 20000
 
 
-	def f(width, height, screen, pygame):
+	def __init__(self, samples, grid_visualizer):
+
+		self.samples = samples
+
+		self.rescaler = _generate_min_max_normalizer(
+			samples, self.LINE_THICKNESS_MIN, self.LINE_THICKNESS_MAX)
+
+		self.gts = grid_visualizer.grid_to_screen
+	
+
+	def draw(self, width, height, screen, pygame):
 		
-		for sample in samples:
+		for sample in self.samples:
 
-			origin = grid_to_screen(sample[0])
-			destination = grid_to_screen(sample[1])
-			force = rescaler(sample[2])
+			origin = self.gts(sample[0])
+			destination = self.gts(sample[1])
+			force = self.rescaler(sample[2])
 
 			pygame.draw.line(screen, (0, 0, 0), origin, destination, 1)
 
-
-	return f
 
 
 def _generate_color_spectrum():
@@ -101,7 +120,8 @@ def _generate_rescaler(old_min, old_max, new_min, new_max):
 	return f
 
 
-def generate_grid_visualizer(grid):
+class GridVisualizer(AbstractPyGame):
+
 	"""
 
 	Generates a callable function to be used in conjunction with pygame_thread.py 
@@ -115,29 +135,36 @@ def generate_grid_visualizer(grid):
 
 	"""
 
-	wh = [1, 1]
+	def __init__(self, grid):
 
-	def f(width, height, screen, pygame):
-
-		wh[0] = width
-		wh[1] = height
+		self.grid = grid
+		self.wh = [1, 1]
 
 
-		for point in grid.points():
+	def set_wh(self, width, height):
 
-			s = grid_to_screen(point)
+		self.wh[0] = width
+		self.wh[1] = height
+
+
+	def draw(self, width, height, screen, pygame):
+
+		self.set_wh(width, height)
+
+		for point in self.grid.points():
+
+			s = self.grid_to_screen(point)
 
 			pygame.draw.circle(screen, (128, 128, 128), s, 5)
 
 
+	def screen_to_grid(self, point):
 
-	def screen_to_grid(point):
+		screen_width = self.wh[0]
+		screen_height = self.wh[1]
 
-		screen_width = wh[0]
-		screen_height = wh[1]
-
-		grid_width = grid.w
-		grid_height = grid.l
+		grid_width = self.grid.l
+		grid_height = self.grid.w
 
 
 		# Transform point to floating point representation such that all of our
@@ -166,14 +193,13 @@ def generate_grid_visualizer(grid):
 		return (int(point[0]), int(point[1]))
 
 
-	def grid_to_screen(point):
+	def grid_to_screen(self, point):
 
+		screen_width = self.wh[0]
+		screen_height = self.wh[1]
 
-		screen_width = wh[0]
-		screen_height = wh[1]
-
-		grid_width = grid.w
-		grid_height = grid.l
+		grid_width = self.grid.l
+		grid_height = self.grid.w
 
 
 		# Transform point to floating point representation such that all of our
@@ -198,6 +224,3 @@ def generate_grid_visualizer(grid):
 		# Convert back to ints & return
 
 		return (int(point[0]), int(point[1]))
-
-
-	return f, screen_to_grid, grid_to_screen

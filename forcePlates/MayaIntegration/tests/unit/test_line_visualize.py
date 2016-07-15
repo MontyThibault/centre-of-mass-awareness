@@ -104,16 +104,12 @@ class MockGrid(object):
 def test_grid_visualizer_coordinate_conversions(screen, pygame):
 
 	mock_grid = MockGrid()
-	f, screen_to_grid, grid_to_screen = lv.generate_grid_visualizer(mock_grid)
+	gv = lv.GridVisualizer(mock_grid)
 
+	gv.set_wh(200, 200)
 
-	# width - 200
-	# height - 200
+	assert gv.screen_to_grid((200, 200)) == (10, 10)	
+	assert gv.screen_to_grid((0, 0)) == (-10, -10)
 
-	# f(200, 200, screen, pygame)
-
-	# assert screen_to_grid((200, 200)) == (10, 10)	
-	# assert screen_to_grid((0, 0)) == (-10, -10)
-
-	# assert grid_to_screen((10, 10)) == (200, 200)
-	# assert grid_to_screen((-10, -10)) == (0, 0)
+	assert gv.grid_to_screen((10, 10)) == (200, 200)
+	assert gv.grid_to_screen((-10, -10)) == (0, 0)

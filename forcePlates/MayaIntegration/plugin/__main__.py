@@ -1,10 +1,7 @@
 import os
 
-from forceplates import ForcePlates
-
-from calibration.affine import Affine
 from gridcalibration.grid import Grid
-from gridcalibration.generator import Generator
+from gridcalibration.generator import Generator, SamplingThread
 from gridcalibration.reducer import Reducer
 from gridcalibration.sampler import Sampler
 from gridcalibration.processor import Processor
@@ -21,6 +18,9 @@ from DLL_wrappers.LabProUSB import LabProUSB
 import maya_utils as mu
 import maya_socket_connection as msc
 
+from forceplates_main import init_forceplates, spin_fpt, send_program
+
+import line_visualize as lv
 
 
 def main():
@@ -28,10 +28,8 @@ def main():
 
 	pst = PersistenceSyncThread(os.path.dirname(__file__) + '/.sync.pickle')
 	pst.start()
+
 	d = pst.objs
-
-
-	mt = MainThread()
 
 
 	#######################
@@ -43,23 +41,30 @@ def main():
 	if 'fp' not in d:
 		d['fp'] = init_forceplates()
 
-
 	fp = d['fp']
+
 	send_program(fp)
+	spin_fpt(fp)
+	
 
 
 
 	# Generator
 
 	grid = Grid(44.5, 53, 6, 7)
-	gen = Generator(grid, fp)
-	
+	generator = Generator(grid, fp)
 
-	mt.tasks.add(_callwith(fp.update, LabProUSB))
-	# mt.tasks.add(lambda: fp.update(LabProUSB))
+
+	########################
+
+	st = SamplingThread(generator)
+	st.start()
+
+	########################
+
+	mt = MainThread()
 
 	mt.tasks.add(feed_forces(fp))
-	mt.tasks.add(gen.take_sample)
 
 	mt.start() 
 
@@ -69,13 +74,21 @@ def main():
 	pgt = PyGameThread()
 	pgt.start()
 
+	grid_task, stg, gts = lv.generate_grid_visualizer(grid)
+	sample_task = lv.generate_sample_visualizer(generator.samples, gts)
+
+	with pgt.draw_tasks_lock:
+
+		pgt.draw_tasks.append(grid_task)
+		pgt.draw_tasks.append(sample_task)
+
 
 	########################
 
 	# !! NO TESTS !!
 
-	kpt = CalibrationProgramThread(gen)
-	kpt.start()
+	kpt = CalibrationProgramThread(generator)
+	# kpt.start()
 
 	kpt.fps = mt.fps
 
@@ -88,14 +101,17 @@ def main():
 	msc.call_func(mu.createLocatorTransformPair, 'sampling_marker')
 
 
-	def f(cs):
+	def f(currently_sampling):
 
-		p = gen.grid.currentPoint
+		p = kpt.generator.grid.currentPoint
 
-		if cs:
+
+		if currently_sampling:
+
 			print "Sampling started at %s" % str(p)
 			
-		else:
+		elif not currently_sampling:
+
 			print "Sampling stopped. Next point is %s" % str(p)		
 
 		msc.call_func(mu.moveObject, [p[0], 0, p[1]], 'sampling_marker')
@@ -139,14 +155,6 @@ def main():
 
 
 
-	# Monday: finish this calibration program
-	# and implement reverse-correction.
-
-	# Tuesday: visualization utility
-
-	# Wednesday: Collect calibration data & ready to use
-
-
 	####################################
 	# Interactive console utilities
 
@@ -159,7 +167,11 @@ def main():
 		d['fp'] = fp
 
 		KT.killAll()
-		exit()
+		pgt.kill()
+
+		# c.kill() doesn't work?
+
+		quit()
 
 
 	saz = fp.set_all_zero
@@ -183,31 +195,6 @@ def feed_forces(fp):
 		msc.call_func(mu.move_markers, fp.forces_after_calibration)
 
 	return f
-
-
-def _callwith(f, *args, **kwargs):
-
-	def g(*args_, **kwargs_):
-		f(*args, **kwargs)
-
-	return g
-
-def init_forceplates():
-
-	fp = ForcePlates()
-	fp.init_calibs(Affine)
-
-	return fp
-
-def send_program(fp):
-
-	fp.uninit_labpro(LabProUSB)
-	fp.init_labpro(LabProUSB)
-
-	with open(os.path.dirname(os.path.realpath(__file__)) + 
-		 	'/programs/simple_program.txt', 'r') as f:
-
-		fp.send_program(LabProUSB, f) 
 
 
 if __name__ == '__main__':

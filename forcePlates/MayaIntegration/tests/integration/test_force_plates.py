@@ -3,7 +3,7 @@ from plugin.DLL_wrappers.LabProUSB import LabProUSB
 from plugin.calibration.affine import Affine
 from plugin.main_thread import MainThread
 
-from plugin.forceplates_main import main
+from plugin.forceplates_main import init_forceplates, spin_fpt, send_program
 
 import time
 import pytest
@@ -18,7 +18,9 @@ def kill_threads_after():
 
 def test_labpro_returns_non_zero_forces_then_dies(kill_threads_after):
 
-	fp = main()
+	fp = init_forceplates()
+	send_program(fp)
+	spin_fpt(fp)
 
 
 	max_waiting_time = 6 # seconds
@@ -68,4 +70,6 @@ def test_labpro_returns_non_zero_forces_then_dies(kill_threads_after):
 
 def test_main(kill_threads_after):
 
-	main()
+	fp = init_forceplates()
+	send_program(fp)
+	spin_fpt(fp)
