@@ -29,6 +29,8 @@ class ConsoleThread(threading.Thread):
 
 	def kill(self):
 
+		# Locks up if client attempts to kill before running
+
 		with self.console_started_lock:
 
 			try:	

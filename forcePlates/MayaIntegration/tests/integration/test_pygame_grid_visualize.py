@@ -44,18 +44,20 @@ def test_feed_visualizers_to_pygame(restart_pygame):
 	# Generate the drawing functions for the pygame thread
 
 	gv = lv.GridVisualizer(grid)
+	pv = lv.PointVisualizer((0, 0), gv)
 	sv = lv.SampleVisualizer(samples, gv)
 
 
 	with pgt.draw_tasks_lock:
 
 		pgt.draw_tasks.append(gv.draw)
+		pgt.draw_tasks.append(pv.draw)
 		pgt.draw_tasks.append(sv.draw)
 
 
 	time.sleep(0.1)
 
-	pgt.kill()
-	pgt.join()
+	# pgt.kill()
+	# pgt.join()
 
-	pgt.query_exceptions()
+	# pgt.query_exceptions()

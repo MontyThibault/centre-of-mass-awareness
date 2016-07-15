@@ -11,6 +11,7 @@ from threads.main_thread import MainThread
 from threads.console_thread import ConsoleThread
 from threads.persistence_sync_thread import PersistenceSyncThread
 from threads.calibration_program_thread import CalibrationProgramThread
+from threads.center_of_pressure_thread import CenterOfPressureThread
 from threads.pygame_thread import PyGameThread
 
 from DLL_wrappers.LabProUSB import LabProUSB
@@ -57,6 +58,11 @@ def main():
 
 	########################
 
+	copt = CenterOfPressureThread(fp, grid)
+	copt.start()
+
+	########################
+
 	st = SamplingThread(generator)
 	st.start()
 
@@ -74,13 +80,16 @@ def main():
 	pgt = PyGameThread()
 	pgt.start()
 
-	grid_task, stg, gts = lv.generate_grid_visualizer(grid)
-	sample_task = lv.generate_sample_visualizer(generator.samples, gts)
+	gv = lv.GridVisualizer(grid)
+	pv = lv.PointVisualizer(copt.center_of_pressure, gv)
+	sv = lv.SampleVisualizer(generator.samples, gv)
+
 
 	with pgt.draw_tasks_lock:
 
-		pgt.draw_tasks.append(grid_task)
-		pgt.draw_tasks.append(sample_task)
+		pgt.draw_tasks.append(gv.draw)
+		pgt.draw_tasks.append(pv.draw)
+		pgt.draw_tasks.append(sv.draw)
 
 
 	########################

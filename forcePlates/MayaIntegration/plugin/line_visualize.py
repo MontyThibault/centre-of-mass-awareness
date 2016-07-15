@@ -5,7 +5,7 @@ Utilities for interfacing pygame & the existing sampling data structure.
 """
 
 
-class AbstractPyGame(object):
+class PyGameInterface(object):
 
 	def draw(self, width, height, screen, pygame):
 		"""
@@ -18,8 +18,28 @@ class AbstractPyGame(object):
 
 
 
+class PointVisualizer(PyGameInterface):
 
-class SampleVisualizer(AbstractPyGame):
+	def __init__(self, point, grid_visualizer):
+		"""
+
+		@argument point - A 2-tuple or 2-list if you want mutability.
+
+		"""
+
+		self.point = point
+		self.gts = grid_visualizer.grid_to_screen
+
+
+	def draw(self, width, height, screen, pygame):
+
+		s = self.gts(self.point)
+
+		pygame.draw.circle(screen, (200, 128, 128), s, 7)
+
+
+
+class SampleVisualizer(PyGameInterface):
 
 	"""
 
@@ -120,7 +140,7 @@ def _generate_rescaler(old_min, old_max, new_min, new_max):
 	return f
 
 
-class GridVisualizer(AbstractPyGame):
+class GridVisualizer(PyGameInterface):
 
 	"""
 
