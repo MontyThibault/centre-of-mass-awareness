@@ -69,8 +69,7 @@ def test_drawing_tasks(restart_pygame):
 		pygame.draw.line(screen, (255, 0, 0), (0, 0), (w, h), 10)
 
 
-	with pgt.draw_tasks_lock:
-		pgt.draw_tasks.append(draw)
+	pgt.add_draw_task(draw)
 
 
 	time.sleep(0.1)

@@ -48,11 +48,9 @@ def test_feed_visualizers_to_pygame(restart_pygame):
 	sv = lv.SampleVisualizer(samples, gv)
 
 
-	with pgt.draw_tasks_lock:
-
-		pgt.draw_tasks.append(gv.draw)
-		pgt.draw_tasks.append(pv.draw)
-		pgt.draw_tasks.append(sv.draw)
+	pgt.add_draw_task(gv.draw)
+	pgt.add_draw_task(pv.draw)
+	pgt.add_draw_task(sv.draw)
 
 
 	time.sleep(0.1)

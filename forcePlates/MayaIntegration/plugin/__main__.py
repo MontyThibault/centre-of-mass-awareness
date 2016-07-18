@@ -14,14 +14,15 @@ from threads.calibration_program_thread import CalibrationProgramThread
 from threads.center_of_pressure_thread import CenterOfPressureThread
 from threads.pygame_thread import PyGameThread
 
-from DLL_wrappers.LabProUSB import LabProUSB
-
 import maya_utils as mu
 import maya_socket_connection as msc
 
 from forceplates_main import init_forceplates, spin_fpt, send_program
 
 import line_visualize as lv
+
+import pygame_interaction
+import maya_interaction
 
 
 def main():
@@ -48,8 +49,6 @@ def main():
 	spin_fpt(fp)
 	
 
-
-
 	# Generator
 
 	grid = Grid(44.5, 53, 6, 7)
@@ -69,28 +68,8 @@ def main():
 	########################
 
 	mt = MainThread()
-
 	mt.tasks.add(feed_forces(fp))
-
 	mt.start() 
-
-
-	########################
-
-	pgt = PyGameThread()
-	pgt.start()
-
-	gv = lv.GridVisualizer(grid)
-	pv = lv.PointVisualizer(copt.center_of_pressure, gv)
-	sv = lv.SampleVisualizer(generator.samples, gv)
-
-
-	with pgt.draw_tasks_lock:
-
-		pgt.draw_tasks.append(gv.draw)
-		pgt.draw_tasks.append(pv.draw)
-		pgt.draw_tasks.append(sv.draw)
-
 
 	########################
 
@@ -101,33 +80,32 @@ def main():
 
 	kpt.fps = mt.fps
 
-	kpt.seconds_per_point = .02
-	kpt.seconds_between_points = .01
+	kpt.seconds_per_point = 2
+	kpt.seconds_between_points = 1
+
+
+	########################
+
+	pgt = PyGameThread()
+	pgt.start()
+
+	gv = lv.GridVisualizer(grid)
+	cp_v = lv.PointVisualizer(copt.center_of_pressure, gv)
+	sv = lv.SampleVisualizer(generator.samples, gv)
+
+	pgt.add_draw_task(gv.draw)
+	pgt.add_draw_task(cp_v.draw)
+	pgt.add_draw_task(sv.draw)
+
+	pygame_interaction.bind_listeners(kpt, pgt, gv)
 
 
 	#####################
 
-	msc.call_func(mu.createLocatorTransformPair, 'sampling_marker')
+	maya_interaction.create_sampling_locator()
+	maya_interaction.bind_listeners(kpt)
 
-
-	def f(currently_sampling):
-
-		p = kpt.generator.grid.currentPoint
-
-
-		if currently_sampling:
-
-			print "Sampling started at %s" % str(p)
-			
-		elif not currently_sampling:
-
-			print "Sampling stopped. Next point is %s" % str(p)		
-
-		msc.call_func(mu.moveObject, [p[0], 0, p[1]], 'sampling_marker')
-
-
-	kpt._currently_sampling.add_listener(f)
-
+	
 
 
 	###################

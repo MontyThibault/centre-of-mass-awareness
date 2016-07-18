@@ -20,7 +20,7 @@ class PyGameInterface(object):
 
 class PointVisualizer(PyGameInterface):
 
-	def __init__(self, point, grid_visualizer):
+	def __init__(self, point, grid_visualizer, color = (200, 128, 128)):
 		"""
 
 		@argument point - A 2-tuple or 2-list if you want mutability.
@@ -30,12 +30,14 @@ class PointVisualizer(PyGameInterface):
 		self.point = point
 		self.gts = grid_visualizer.grid_to_screen
 
+		self.color = color
+
 
 	def draw(self, width, height, screen, pygame):
 
 		s = self.gts(self.point)
 
-		pygame.draw.circle(screen, (200, 128, 128), s, 7)
+		pygame.draw.circle(screen, self.color, s, 7)
 
 
 
@@ -49,8 +51,8 @@ class SampleVisualizer(PyGameInterface):
 	"""
 
 
-	LINE_THICKNESS_MIN = 10
-	LINE_THICKNESS_MAX = 20000
+	LINE_THICKNESS_MIN = 1
+	LINE_THICKNESS_MAX = 10
 
 
 	def __init__(self, samples, grid_visualizer):
@@ -61,7 +63,7 @@ class SampleVisualizer(PyGameInterface):
 			samples, self.LINE_THICKNESS_MIN, self.LINE_THICKNESS_MAX)
 
 		self.gts = grid_visualizer.grid_to_screen
-	
+
 
 	def draw(self, width, height, screen, pygame):
 		
@@ -70,6 +72,9 @@ class SampleVisualizer(PyGameInterface):
 			origin = self.gts(sample[0])
 			destination = self.gts(sample[1])
 			force = self.rescaler(sample[2])
+
+
+			# TODO: implement absolute force in addition to relative force
 
 			pygame.draw.line(screen, (0, 0, 0), origin, destination, 1)
 

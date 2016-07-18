@@ -29,7 +29,6 @@ class CalibrationProgramThread(KillableThread):
 
 		self.verbose = False
 
-
 	def loop(self):
 
 		if not self.dead:

@@ -3,6 +3,7 @@ import pygame
 import traceback
 import sys
 
+from plugin.observable import Observable
 from Queue import Queue
 
 
@@ -13,7 +14,7 @@ def _exception_wrapper(f):
 	def g(*args, **kwargs):
 
 		try:
-
+			
 			f(*args, **kwargs)
 
 		except Exception as e:
@@ -49,8 +50,10 @@ class PyGameThread(threading.Thread):
 
 		self.pygame_lock = threading.Lock()
 
-		self.draw_tasks_lock = threading.Lock()
-		self.draw_tasks = []
+		self._draw_tasks_lock = threading.Lock()
+		self._draw_tasks = []
+
+		self.keypress = Observable()
 
 
 	def kill(self):
@@ -59,6 +62,12 @@ class PyGameThread(threading.Thread):
 
 			self.dead = True
 			pygame.quit()
+
+
+	def add_draw_task(self, t):
+
+		with self._draw_tasks_lock:
+			self._draw_tasks.append(t)
 
 
 	@_exception_wrapper
@@ -81,6 +90,9 @@ class PyGameThread(threading.Thread):
 				if self.dead:
 					return
 
+
+				# Weird error
+
 				self.loop()
 
 
@@ -99,7 +111,11 @@ class PyGameThread(threading.Thread):
 
 			elif event.type == pygame.VIDEORESIZE:
 
-				self.screen = pygame.display.set_mode(event.dict['size'],self.options)
+				self.screen = pygame.display.set_mode(event.dict['size'], self.options)
+
+			elif event.type == pygame.KEYDOWN:
+
+				self.keypress.set(event.key)
 
 
 		self.screen.fill((255, 255, 255))
@@ -110,8 +126,8 @@ class PyGameThread(threading.Thread):
 
 		# Do some drawing
 
-		with self.draw_tasks_lock:
-			for task in self.draw_tasks:
+		with self._draw_tasks_lock:
+			for task in self._draw_tasks:
 				task(width, height, self.screen, pygame)
 
 

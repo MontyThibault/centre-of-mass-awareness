@@ -57,11 +57,8 @@ def test_take_samples_from_force_plates(pygame_thread):
 	gv = lv.GridVisualizer(grid)
 	sv = lv.SampleVisualizer(generator.samples, gv)
 
-
-	with pgt.draw_tasks_lock:
-
-		pgt.draw_tasks.append(gv.draw)
-		pgt.draw_tasks.append(sv.draw)
+	pgt.add_draw_task(gv.draw)
+	pgt.add_draw_task(sv.draw)
 
 
 

@@ -1,5 +1,9 @@
 import math
 
+
+# TODO: decouple the grid representation from the iterator state
+# (throw out the iterator all-together & just use points())
+
 class Grid(object):
 	""" Represents a rectangular grid of points with iterable capabilities.
 
@@ -68,6 +72,9 @@ class Grid(object):
 
 	@staticmethod
 	def linspace(from_, to, segments):
+
+		if segments == 1:
+			return [from_, to]
 
 		step = float(to - from_) / (segments - 1)
 
@@ -197,10 +204,11 @@ class Grid(object):
 
 		self.hasMorePoints = True
 
-		for w in range(self.w_seg + 1):
-			for l in range(self.l_seg + 1):
+		ps = self.points()
 
-				if w == self.w_seg and l == self.l_seg:
-					self.hasMorePoints = False
+		for p in ps:
 
-				yield self._fromIntegerForm((w, l))
+			if p == (self.l, self.w):
+				self.hasMorePoints = False
+
+			yield p

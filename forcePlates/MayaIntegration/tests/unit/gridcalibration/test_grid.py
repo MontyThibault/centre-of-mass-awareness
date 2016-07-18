@@ -10,7 +10,7 @@ class GridTest(unittest.TestCase):
 		assert x.currentPoint == (-10, -10)
 		assert x.hasMorePoints == True
 
-		for _ in range(10):
+		for _ in range(9):
 			x.next()
 
 		assert x.currentPoint == (-10, 10)
