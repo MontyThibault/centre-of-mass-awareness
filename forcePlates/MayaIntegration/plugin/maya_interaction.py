@@ -1,6 +1,7 @@
 """
 
-This module is the bridge between the calibration program thread and Maya.
+This module is the bridge between the calibration program thread, the force plates, 
+and Maya.
 
 """
 
@@ -19,7 +20,7 @@ def create_sampling_locator():
 	msc.call_func(mu.createLocatorTransformPair, 'sampling_marker')
 
 
-def _move_locator_maya(currently_sampling, current_point):
+def _move_sampling_locator_maya(currently_sampling, current_point):
 	"""
 
 	Move the Maya sampling marker to the current sampling location on
@@ -55,6 +56,17 @@ def _print_sampling_status(currently_sampling, current_point):
 		print "Sampling stopped. Next point is %s" % str(p)	
 
 
+def _update_forces(forces_after_calibration):
+	"""
+
+	This is called on when the LabPro recieved a new measurement; we want to update
+	Maya's marker sizes, the interpolation of the center marker, etc.
+
+	"""
+
+	msc.call_func(mu.move_markers, forces_after_calibration)
+
+
 def _create_current_point_obj(kpt):
 	"""
 
@@ -82,7 +94,7 @@ def _update_current_point_obj(l, grid):
 	l[1] = p[1]
 
 
-def bind_listeners(kpt):
+def bind_listeners(kpt, fpt):
 	"""
 
 	Bind all the above to the calibration program thread (kpt) through listeners on
@@ -93,9 +105,14 @@ def bind_listeners(kpt):
 	l = _create_current_point_obj(kpt)
 
 
-	move_locator_callable = lambda cs: _move_locator_maya(cs, l)
+	# Sampling locator relocation
+
+	move_locator_callable = lambda cs: _move_sampling_locator_maya(cs, l)
 	kpt._currently_sampling.add_listener(move_locator_callable)
 
+
+
+	# Sampling printouts
 
 	if PRINT_IN_MAYA_TERMINAL:
 
@@ -109,3 +126,8 @@ def bind_listeners(kpt):
 		shell_callable = lambda cs: _print_sampling_status(cs, l)
 
 		kpt._currently_sampling.add_listener(shell_callable)
+
+
+	# Force updates
+
+	fpt.fp.forces_after_calibration.add_listener(_update_forces)

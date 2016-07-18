@@ -94,12 +94,19 @@ def test_integrate_grid_calibrate():
 
 
 
+
+def _instance(cls):
+	return cls()
+
+
 class MockForcePlates(object):
 
-	@property
-	def forces_after_calibration(self):
+	@_instance
+	class forces_after_calibration(object):
 
-		return [random.random() for i in range(4)]
+		def get(self):
+
+			return [random.random() for i in range(4)]
 	
 
 def random_point():

@@ -41,8 +41,10 @@ class CenterOfPressureThread(KillableThread):
 
 
 	def loop(self):
+
+		fac = self.fp.forces_after_calibration.get()
 		
-		zipped = zip(self.grid.corners(), self.fp.forces_after_calibration)
+		zipped = zip(self.grid.corners(), fac)
 
 		center = self._weightedSum(zipped)
 

@@ -3,18 +3,20 @@ from ctypes import *
 import threading
 import os
 
-import DLL_wrappers.LabProUSB_utils as lpuu
+from observable import Observable
+
 from plugin.threads.killable_thread import KillableThread
 
 from plugin.DLL_wrappers.LabProUSB import LabProUSB
-
+import DLL_wrappers.LabProUSB_utils as lpuu
 
 
 class ForcePlates(object):
 
 	def __init__(self):
-		self.forces = [0, 0, 0, 0]
-		self.forces_after_calibration = [0, 0, 0, 0]
+
+		self.forces = Observable([0, 0, 0, 0])
+		self.forces_after_calibration = Observable([0, 0, 0, 0])
 
 		self.calibrations = False
 
@@ -70,10 +72,12 @@ class ForcePlates(object):
 
 		if data is not None:
 
-			self.forces = data[:4]
+			self.forces.set(data[:4])
 
 			if self.calibrations:
-				self.forces_after_calibration = self.forces_with_calibs()
+
+				fac = self.forces_with_calibs()
+				self.forces_after_calibration.set(fac)
 				
 
 	def forces_with_calibs(self):
@@ -83,7 +87,9 @@ class ForcePlates(object):
 
 		"""
 
-		return [self.calibrations[i].process(self.forces[i])
+		f = self.forces.get()
+
+		return [self.calibrations[i].process(f[i])
 				for i in range(4)]
 
 
@@ -141,6 +147,3 @@ class ForcePlatesThread(KillableThread):
 
 	def loop(self):
 		self.fp.update(LabProUSB)
-
-
-

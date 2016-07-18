@@ -1,3 +1,4 @@
 {
-  "tests/integration/test_pygame_thread.py::test_spin_up_and_kill_pygame_thread": true
+  "tests/integration/test_pygame_thread.py::test_drawing_tasks": true, 
+  "tests/integration/test_pygame_thread.py::test_exception_handler": true
 }

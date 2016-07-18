@@ -74,7 +74,7 @@ class Generator(object):
 
 		"""
 
-		f = self.fp.forces_after_calibration
+		f = self.fp.forces_after_calibration.get()
 
 		# Note
 		# Sample = (source_point, measured_point, total_forces)

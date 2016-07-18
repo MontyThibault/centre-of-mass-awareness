@@ -68,13 +68,21 @@ class MockGrid(object):
 		]
 
 
+
+def _instance(cls):
+	return cls()
+
 class MockForcePlate(object):
 	
 	def __init__(self):
 
 		self._center = (0, 0)
-		self.forces_after_calibration = [1, 1, 1, 1]
 
+	@_instance
+	class forces_after_calibration(object):
+
+		def get(self):
+			return [1, 1, 1, 1]
 
 	def center(self):
 

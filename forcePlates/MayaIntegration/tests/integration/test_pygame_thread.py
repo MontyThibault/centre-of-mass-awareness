@@ -28,8 +28,6 @@ def test_spin_up_and_kill_pygame_thread(restart_pygame):
 	pgt = PyGameThread()
 	pgt.start()
 
-	time.sleep(0.1)
-
 	pgt.kill()
 	pgt.join()
 
@@ -55,7 +53,6 @@ def test_exception_handler(restart_pygame, monkeypatch):
 
 	with pytest.raises(ArbitraryError):
 		pgt.query_exceptions()
-
 
 
 def test_drawing_tasks(restart_pygame):

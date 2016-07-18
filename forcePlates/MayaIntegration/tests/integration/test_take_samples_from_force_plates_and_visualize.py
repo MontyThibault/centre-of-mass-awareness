@@ -1,4 +1,5 @@
-from plugin.forceplates_main import init_forceplates, spin_fpt, send_program
+from plugin.forceplates_main import init_forceplates, send_program
+from plugin.forceplates import ForcePlatesThread
 from plugin.threads.killable_thread import KillableThread
 
 from plugin.DLL_wrappers.LabProUSB import LabProUSB
@@ -35,7 +36,9 @@ def test_take_samples_from_force_plates(pygame_thread):
 
 	fp = init_forceplates()
 	send_program(fp)
-	spin_fpt(fp)
+
+	fpt = ForcePlatesThread(fp)
+	fpt.start()
 
 
 	# Start generator

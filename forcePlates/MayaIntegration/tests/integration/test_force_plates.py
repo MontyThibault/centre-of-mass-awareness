@@ -3,7 +3,8 @@ from plugin.DLL_wrappers.LabProUSB import LabProUSB
 from plugin.calibration.affine import Affine
 from plugin.main_thread import MainThread
 
-from plugin.forceplates_main import init_forceplates, spin_fpt, send_program
+from plugin.forceplates_main import init_forceplates, send_program
+from plugin.forceplates import ForcePlatesThread
 
 import time
 import pytest
@@ -20,7 +21,9 @@ def test_labpro_returns_non_zero_forces_then_dies(kill_threads_after):
 
 	fp = init_forceplates()
 	send_program(fp)
-	spin_fpt(fp)
+	
+	fpt = ForcePlatesThread(fp)
+	fpt.start()
 
 
 	max_waiting_time = 6 # seconds
@@ -29,7 +32,7 @@ def test_labpro_returns_non_zero_forces_then_dies(kill_threads_after):
 
 	# Wait until we get real force measurements
 
-	while sum(fp.forces) == 0:
+	while sum(fp.forces.get()) == 0:
 
 		if time.time() - initial_time > max_waiting_time:
 
@@ -47,12 +50,12 @@ def test_labpro_returns_non_zero_forces_then_dies(kill_threads_after):
 	initial_time = time.time()
 
 
-	previous_forces = fp.forces
+	previous_forces = fp.forces.get()
 
 
 	# While there is no change in forces from one frame to the next
 
-	while sum([a - b for a, b in zip(previous_forces, fp.forces)]) != 0:
+	while sum([a - b for a, b in zip(previous_forces, fp.forces.get())]) != 0:
 
 
 		previous_forces = fp.forces
@@ -72,4 +75,6 @@ def test_main(kill_threads_after):
 
 	fp = init_forceplates()
 	send_program(fp)
-	spin_fpt(fp)
+
+	fpt = ForcePlatesThread(fp)
+	fpt.start()

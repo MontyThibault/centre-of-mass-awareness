@@ -37,6 +37,11 @@ class PointVisualizer(PyGameInterface):
 
 		s = self.gts(self.point)
 
+		# import pytest
+		# pytest.set_trace()
+
+		# print screen, self.color, s, 7
+
 		pygame.draw.circle(screen, self.color, s, 7)
 
 

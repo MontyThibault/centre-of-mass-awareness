@@ -12,12 +12,6 @@ def init_forceplates():
 	return fp
 
 
-def spin_fpt(fp):
-
-	fpt = ForcePlatesThread(fp)
-	fpt.start()
-
-
 def send_program(fp):
 
 	fp.init_labpro(LabProUSB)

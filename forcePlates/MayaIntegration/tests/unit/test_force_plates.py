@@ -15,14 +15,15 @@ class TestForcePlates(unittest.TestCase):
 		self.lp.mockString = "{ 4, 3, 2, 1 }"
 		self.fp.update(self.lp)
 
-		assert self.fp.forces == [4, 3, 2, 1]
+		assert self.fp.forces.get() == [4, 3, 2, 1]
 
 
 	def test_get_calibrations(self):
 
-		self.fp.update(self.lp)
 		self.fp.init_calibs(MockAffine)
-		assert self.fp.forces_with_calibs() == [2, 3, 4, 5]
+		self.fp.update(self.lp)
+		
+		assert self.fp.forces_after_calibration.get() == [2, 3, 4, 5]
 
 
 	def test_try_calibs_without_injecting_first(self):

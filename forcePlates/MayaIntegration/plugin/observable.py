@@ -17,9 +17,9 @@ class Observable(object):
 
 	"""
 
-	def __init__(self):
+	def __init__(self, val = None):
 
-		self._val = None
+		self._val = val
 		self.listeners = set()
 
 

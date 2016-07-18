@@ -17,7 +17,8 @@ from threads.pygame_thread import PyGameThread
 import maya_utils as mu
 import maya_socket_connection as msc
 
-from forceplates_main import init_forceplates, spin_fpt, send_program
+from forceplates import ForcePlatesThread
+from forceplates_main import init_forceplates, send_program
 
 import line_visualize as lv
 
@@ -43,10 +44,14 @@ def main():
 	if 'fp' not in d:
 		d['fp'] = init_forceplates()
 
+	d['fp'] = init_forceplates()
+
 	fp = d['fp']
 
 	send_program(fp)
-	spin_fpt(fp)
+	
+	fpt = ForcePlatesThread(fp)
+	fpt.start()
 	
 
 	# Generator
@@ -57,19 +62,18 @@ def main():
 
 	########################
 
+
+	# Kill this thread
+
 	copt = CenterOfPressureThread(fp, grid)
 	copt.start()
 
 	########################
 
+	# Kill this thread
+
 	st = SamplingThread(generator)
 	st.start()
-
-	########################
-
-	mt = MainThread()
-	mt.tasks.add(feed_forces(fp))
-	mt.start() 
 
 	########################
 
@@ -103,7 +107,7 @@ def main():
 	#####################
 
 	maya_interaction.create_sampling_locator()
-	maya_interaction.bind_listeners(kpt)
+	maya_interaction.bind_listeners(kpt, fpt)
 
 	
 
@@ -172,16 +176,6 @@ def main():
 
 	c = ConsoleThread(l)
 	c.start()
-
-
-
-
-def feed_forces(fp):
-
-	def f():
-		msc.call_func(mu.move_markers, fp.forces_after_calibration)
-
-	return f
 
 
 if __name__ == '__main__':
