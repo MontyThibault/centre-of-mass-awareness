@@ -20,6 +20,9 @@ import maya_socket_connection as msc
 from forceplates import ForcePlatesThread
 from forceplates_main import init_forceplates, send_program
 
+
+from center_of_pressure import CenterOfPressure
+
 import line_visualize as lv
 
 import pygame_interaction
@@ -63,10 +66,9 @@ def main():
 	########################
 
 
-	# Kill this thread
+	cop = CenterOfPressure(grid)
+	cop.bind_listeners(fp)
 
-	copt = CenterOfPressureThread(fp, grid)
-	copt.start()
 
 	########################
 
@@ -80,9 +82,8 @@ def main():
 	# !! NO TESTS !!
 
 	kpt = CalibrationProgramThread(generator)
-	# kpt.start()
 
-	kpt.fps = mt.fps
+	kpt.fps = 10
 
 	kpt.seconds_per_point = 2
 	kpt.seconds_between_points = 1
@@ -94,7 +95,7 @@ def main():
 	pgt.start()
 
 	gv = lv.GridVisualizer(grid)
-	cp_v = lv.PointVisualizer(copt.center_of_pressure, gv)
+	cp_v = lv.PointVisualizer(cop.center, gv)
 	sv = lv.SampleVisualizer(generator.samples, gv)
 
 	pgt.add_draw_task(gv.draw)
