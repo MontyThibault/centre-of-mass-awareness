@@ -9,7 +9,7 @@ class TestGenerator(unittest.TestCase):
 		self.mg = MockGrid()
 		self.mfp = MockForcePlate()
 
-		self.g = Generator(self.mg, self.mfp)
+		self.g = Generator(self.mg)
 
 
 	def test_weighted_average_single(self):
@@ -47,7 +47,7 @@ class TestGenerator(unittest.TestCase):
 
 	def test_take_sample(self):
 
-		self.g.take_sample()
+		self.g.take_sample(self.mfp.forces_after_calibration.get())
 
 		assert self.g.samples[0] == ((-10, -10), (0, 0), 4)
 

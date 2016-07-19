@@ -21,7 +21,8 @@ def test_integrate_grid_calibrate():
 
 	# Generate sampling data from a random process
 
-	gen = Generator(grid, MockForcePlates())
+	gen = Generator(grid)
+	fp = MockForcePlates()
 
 
 	# Take 100 samples per grid point
@@ -29,7 +30,7 @@ def test_integrate_grid_calibrate():
 	while grid.hasMorePoints:
 
 		for _ in range(100):
-			gen.take_sample()
+			gen.take_sample(fp.forces_after_calibration.get())
 
 		grid.next()
 

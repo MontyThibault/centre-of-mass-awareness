@@ -76,6 +76,8 @@ class SampleVisualizer(PyGameInterface):
 
 			# TODO: implement absolute force in addition to relative force
 
+			print origin, destination
+
 			pygame.draw.line(screen, (0, 0, 0), origin, destination, 1)
 
 

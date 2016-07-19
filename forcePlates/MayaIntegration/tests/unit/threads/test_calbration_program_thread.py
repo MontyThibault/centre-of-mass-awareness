@@ -4,7 +4,9 @@ from plugin.threads.calibration_program_thread import CalibrationProgramThread
 def test_calibration_program_without_running_thread():
 
 	gen = MockGenerator()
-	cpt = CalibrationProgramThread(gen)
+	fp = MockForcePlates()
+	
+	cpt = CalibrationProgramThread(gen, fp)
 
 	cpt.fps = 1
 
@@ -53,8 +55,6 @@ def test_calibration_program_without_running_thread():
 
 	assert not cpt._currently_sampling.get()
 
-	assert len(cpt.generator.samples) == 55
-
 
 
 class MockGenerator(object):
@@ -82,3 +82,25 @@ class MockGrid(object):
 	def next(self):
 
 		return (0, 0)
+
+
+
+def _instance(cls):
+	return cls()
+
+
+class MockForcePlates(object):
+
+	@_instance
+	class forces_after_calibration(object):
+
+		def get(self):
+
+			return [random.random() for i in range(4)]
+
+
+		def add_listener(self, f):
+			pass
+
+		def remove_listener(self, f):
+			pass

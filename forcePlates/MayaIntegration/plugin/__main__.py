@@ -69,7 +69,7 @@ def main():
 	########################
 
 	grid = Grid(44.5, 53, 6, 7)
-	generator = Generator(grid, fp)
+	generator = Generator(grid)
 
 
 	########################
@@ -90,7 +90,7 @@ def main():
 
 	# !! NO TESTS !!
 
-	kpt = CalibrationProgramThread(generator)
+	kpt = CalibrationProgramThread(fp, generator)
 
 	kpt.fps = 10
 

@@ -8,10 +8,9 @@ class Generator(object):
 
 	"""
 
-	def __init__(self, grid, forceplates):
+	def __init__(self, grid):
 
 		self.grid = grid
-		self.fp = forceplates
 
 		self.samples = []
 
@@ -50,20 +49,6 @@ class Generator(object):
 
 	def _center(self, forces):
 		"""
-		
-		@argument forces - the forceplate force array
-
-		"""
-		
-		zipped = zip(self.grid.corners(), forces)
-		return self._weightedAverage(zipped)
-
-
-	def take_sample(self):
-		"""
-	
-		Takes and stores a single sample from the force plate.
-
 		Ex.
 
 		>>> corners = [(0, 0), (0, 1)]
@@ -73,8 +58,19 @@ class Generator(object):
 		(0, 0.5)
 
 		"""
+		
+		zipped = zip(self.grid.corners(), forces)
+		return self._weightedAverage(zipped)
 
-		f = self.fp.forces_after_calibration.get()
+
+	def take_sample(self, forces_after_calibration):
+		"""
+
+		Takes and stores a single sample from the force plate.
+
+		"""
+
+		f = forces_after_calibration
 
 		# Note
 		# Sample = (source_point, measured_point, total_forces)
@@ -84,20 +80,20 @@ class Generator(object):
 
 
 
-class SamplingThread(KillableThread):
-	"""
+# class SamplingThread(KillableThread):
+# 	"""
 
-	Periodically take samples with a generator.
+# 	Periodically take samples with a generator.
 
-	"""
+# 	"""
 
-	def __init__(self, gen):
-		KillableThread.__init__(self)
+# 	def __init__(self, gen):
+# 		KillableThread.__init__(self)
 
-		self.fps = 5
-		self.gen = gen
+# 		self.fps = 5
+# 		self.gen = gen
 
 
-	def loop(self):
+# 	def loop(self):
 		
-		self.gen.take_sample()
+# 		self.gen.take_sample()

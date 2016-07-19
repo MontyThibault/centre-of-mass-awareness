@@ -10,8 +10,10 @@ class CalibrationProgramThread(KillableThread):
 
 	"""
 
-	def __init__(self, generator):
+	def __init__(self, generator, fp):
 		KillableThread.__init__(self)
+
+		self.fp = fp
 
 		self.fps = 10
 		self.generator = generator
@@ -27,7 +29,7 @@ class CalibrationProgramThread(KillableThread):
 		self._time_when_sampling_started = 0
 		self._time_when_sampling_stopped = 0
 
-		self.verbose = False
+
 
 	def loop(self):
 
@@ -36,10 +38,7 @@ class CalibrationProgramThread(KillableThread):
 			self._current_time += 1.0 / self.fps
 
 
-
 		if self._currently_sampling.get():
-
-			self.generator.take_sample()
 
 			
 			# Stop sampling after a certain time
@@ -47,6 +46,11 @@ class CalibrationProgramThread(KillableThread):
 			twss = self._time_when_sampling_started
 
 			if self._current_time - twss > self.seconds_per_point:
+
+
+				# Disable sampling
+
+				self.fp.forces_after_calibration.remove_listener(self.generator.take_sample)
 
 				if not self.generator.grid.hasMorePoints:
 
@@ -64,6 +68,11 @@ class CalibrationProgramThread(KillableThread):
 			twss = self._time_when_sampling_stopped
 
 			if self._current_time - twss > self.seconds_between_points:
+
+
+				# Enable sampling
+
+				self.fp.forces_after_calibration.add_listener(self.generator.take_sample)
 
 				self._time_when_sampling_started = self._current_time
 				self._currently_sampling.set(True)

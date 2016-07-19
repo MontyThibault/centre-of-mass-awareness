@@ -5,7 +5,7 @@ from plugin.threads.killable_thread import KillableThread
 from plugin.DLL_wrappers.LabProUSB import LabProUSB
 
 from plugin.gridcalibration.grid import Grid
-from plugin.gridcalibration.generator import Generator, SamplingThread
+from plugin.gridcalibration.generator import Generator
 
 from plugin.threads.pygame_thread import PyGameThread
 import plugin.line_visualize as lv
@@ -44,10 +44,10 @@ def test_take_samples_from_force_plates(pygame_thread):
 	# Start generator
 
 	grid = Grid(10, 10, 20, 20)
-	generator = Generator(grid, fp)
+	generator = Generator(grid)
 
-	st = SamplingThread(generator)
-	st.start()
+	# st = SamplingThread(generator)
+	# st.start()
 
 
 	# TODO: remove duplication with this and test_pygame_grid_visualize()
