@@ -18,14 +18,6 @@ class TestForcePlates(unittest.TestCase):
 		assert self.fp.forces.get() == [4, 3, 2, 1]
 
 
-	def test_get_calibrations(self):
-
-		self.fp.init_calibs(MockAffine)
-		self.fp.update(self.lp)
-		
-		assert self.fp.forces_after_calibration.get() == [2, 3, 4, 5]
-
-
 	def test_try_calibs_without_injecting_first(self):
 
 		with self.assertRaises(Exception):
@@ -46,16 +38,6 @@ class TestForcePlates(unittest.TestCase):
 		assert self.lp.recentString.value == b's{B}\n'
 		
 
-class MockAffine(object):
-
-	def process(self, x):
-		return x + 1
-
-	def setZero(self, x):
-		pass
-
-	def setOne(self, x):
-		pass
 
 
 class MockLabProUSB(object):

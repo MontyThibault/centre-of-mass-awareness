@@ -7,7 +7,7 @@ from plugin.calibration.affine import Affine
 def init_forceplates():
 
 	fp = ForcePlates()
-	fp.init_calibs(Affine)
+	fp.init_calibs()
 
 	return fp
 
