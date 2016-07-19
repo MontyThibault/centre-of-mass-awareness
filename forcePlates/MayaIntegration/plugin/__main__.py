@@ -1,7 +1,7 @@
 import os
 
 from gridcalibration.grid import Grid
-from gridcalibration.generator import Generator, SamplingThread
+from gridcalibration.generator import Generator
 from gridcalibration.reducer import Reducer
 from gridcalibration.sampler import Sampler
 from gridcalibration.processor import Processor
@@ -90,11 +90,11 @@ def main():
 
 	# !! NO TESTS !!
 
-	kpt = CalibrationProgramThread(fp, generator)
+	kpt = CalibrationProgramThread(generator, fp)
 
 	kpt.fps = 10
 
-	kpt.seconds_per_point = 2
+	kpt.seconds_per_point = 200
 	kpt.seconds_between_points = 1
 
 
