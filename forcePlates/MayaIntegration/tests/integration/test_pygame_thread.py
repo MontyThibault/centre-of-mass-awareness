@@ -7,6 +7,8 @@ import pytest
 def restart_pygame():
 
 	import pygame
+	
+	pygame.init()
 	pygame.quit()
 
 
@@ -29,6 +31,9 @@ def test_spin_up_and_kill_pygame_thread(restart_pygame):
 	pgt.start()
 
 	pgt.kill()
+
+	time.sleep(0.1)
+
 	pgt.join()
 
 	pgt.query_exceptions()

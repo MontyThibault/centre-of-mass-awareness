@@ -1,4 +1,1 @@
-{
-  "tests/integration/test_pygame_thread.py::test_drawing_tasks": true, 
-  "tests/integration/test_pygame_thread.py::test_exception_handler": true
-}
+{}

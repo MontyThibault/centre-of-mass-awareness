@@ -90,9 +90,6 @@ class PyGameThread(threading.Thread):
 				if self.dead:
 					return
 
-
-				# Weird error
-
 				self.loop()
 
 
