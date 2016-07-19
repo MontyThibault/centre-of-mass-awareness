@@ -1,4 +1,4 @@
-from plugin.center_of_pressure import CenterOfPressure
+from plugin.center_of_pressure import CenterOfPressure, MIN, MAX
 import pytest
 
 
@@ -15,6 +15,16 @@ def test_center_of_pressure_on_update():
 
 	assert cop.center == [-1, -1]
 
+
+def test_center_of_pressure_limits():
+
+	cop = CenterOfPressure(MockGrid())
+
+
+	cop.center = [MIN - 10, MAX + 10]
+	cop.limits()
+
+	assert cop.center == [MIN, MAX]
 
 
 class MockGrid(object):

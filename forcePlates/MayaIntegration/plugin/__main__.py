@@ -17,8 +17,8 @@ from threads.pygame_thread import PyGameThread
 import maya_utils as mu
 import maya_socket_connection as msc
 
-from forceplates import ForcePlatesThread
-from forceplates_main import init_forceplates, send_program
+from forceplates import ForcePlates, ForcePlatesThread
+from forceplates_main import send_program
 
 
 from center_of_pressure import CenterOfPressure
@@ -37,6 +37,7 @@ def main():
 
 	d = pst.objs
 
+	# del d['fp']
 
 	#######################
 	# Force plates
@@ -44,20 +45,28 @@ def main():
 	# !! NO TESTS !!
 	# (how?)
 
-	if 'fp' not in d:
-		d['fp'] = init_forceplates()
 
-	d['fp'] = init_forceplates()
+	fp = ForcePlates()
 
-	fp = d['fp']
+	if 'fp_calibs' not in d:
+
+		fp.init_calibs()
+		d['fp_calibs'] = fp.calibrations
+
+	else:
+
+		fp.calibrations = d['fp_calibs']
 
 	send_program(fp)
 	
+
+
+
 	fpt = ForcePlatesThread(fp)
 	fpt.start()
 	
 
-	# Generator
+	########################
 
 	grid = Grid(44.5, 53, 6, 7)
 	generator = Generator(grid, fp)
@@ -74,8 +83,8 @@ def main():
 
 	# Kill this thread
 
-	st = SamplingThread(generator)
-	st.start()
+	# st = SamplingThread(generator)
+	# st.start()
 
 	########################
 
@@ -115,11 +124,8 @@ def main():
 
 	###################
 
-	# Load samples
-	# 
-	#
-	# How to test?
-	# How to test MAIN program?
+	# Console
+
 
 	def reduce():
 
@@ -156,7 +162,7 @@ def main():
 
 	def kill():
 
-		d['fp'] = fp
+		d['fp_calibs'] = fp.calibrations
 
 		KT.killAll()
 		pgt.kill()

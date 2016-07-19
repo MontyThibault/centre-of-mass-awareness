@@ -10,6 +10,8 @@ from plugin.threads.killable_thread import KillableThread
 from plugin.DLL_wrappers.LabProUSB import LabProUSB
 import DLL_wrappers.LabProUSB_utils as lpuu
 
+from plugin.calibration.affine import Affine
+
 
 class ForcePlates(object):
 
@@ -21,7 +23,7 @@ class ForcePlates(object):
 		self.calibrations = False
 
 
-	def init_calibs(self, Calibration):
+	def init_calibs(self):
 		""" 
 
 		This method is used to inject the calibration dependency.
@@ -35,7 +37,7 @@ class ForcePlates(object):
 
 		"""
 
-		self.calibrations = [Calibration() 
+		self.calibrations = [Affine() 
 			for i in range(4)]
 
 

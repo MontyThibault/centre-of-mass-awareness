@@ -1,3 +1,5 @@
+MIN = -1000
+MAX = 1000
 
 
 class CenterOfPressure(object):
@@ -27,6 +29,25 @@ class CenterOfPressure(object):
 
 		self.center[0] = center[0]
 		self.center[1] = center[1]
+
+		self.limits()
+
+
+	def limits(self):
+
+		if self.center[0] < MIN:
+			self.center[0] = MIN
+
+		elif self.center[0] > MAX:
+			self.center[0] = MAX
+
+
+		if self.center[1] < MIN:
+			self.center[1] = MIN
+
+		elif self.center[1] > MAX:
+			self.center[1] = MAX
+
 
 
 	@staticmethod
