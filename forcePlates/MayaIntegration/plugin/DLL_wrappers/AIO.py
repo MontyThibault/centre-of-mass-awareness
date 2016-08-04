@@ -16,10 +16,10 @@ class aio(object):
 	_raw = cdll.LoadLibrary('CAIO.dll')
 
 	def __getattr__(self, key):
-		if key in consts:
+		if key in _consts:
 
 			# For constants (defined below)
-			return consts[key]
+			return _consts[key]
 		else:
 
 			# For functions
@@ -74,6 +74,8 @@ class AIODevice(object):
 	aio = aio
 
 	def __init__(self, name = b"AIO000"):
+		# See alternate AIO names in Windows device manager
+
 		self.deviceName = c_char_p(name)
 		self.deviceID = c_short()
 
@@ -100,7 +102,7 @@ class AIODevice(object):
 
 
 
-consts = {
+_consts = {
 
 	# # ----------------------------------------------------------------------------------------------
 	# # 	External Control Signal																				
