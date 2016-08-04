@@ -22,6 +22,7 @@ from forceplates_main import send_program
 
 
 from center_of_pressure import CenterOfPressure
+from com_recorder import COMRecorder
 
 import line_visualize as lv
 
@@ -78,6 +79,9 @@ def main():
 	cop = CenterOfPressure(grid)
 	cop.bind_listeners(fp)
 
+	comrc = COMRecorder(cop)
+	comrc.bind_listeners(fp)
+
 
 	########################
 
@@ -106,10 +110,12 @@ def main():
 	gv = lv.GridVisualizer(grid)
 	cp_v = lv.PointVisualizer(cop.center, gv)
 	sv = lv.SampleVisualizer(generator.samples, gv)
+	crv = lv.COMRecorderVisualizer(comrc, gv)
 
 	pgt.add_draw_task(gv.draw)
 	pgt.add_draw_task(cp_v.draw)
 	pgt.add_draw_task(sv.draw)
+	pgt.add_draw_task(crv.draw)
 
 	pygame_interaction.bind_listeners(kpt, pgt, gv)
 

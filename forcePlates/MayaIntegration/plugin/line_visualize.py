@@ -4,6 +4,8 @@ Utilities for interfacing pygame & the existing sampling data structure.
 
 """
 
+import time
+
 
 class PyGameInterface(object):
 
@@ -79,6 +81,54 @@ class SampleVisualizer(PyGameInterface):
 			print origin, destination
 
 			pygame.draw.line(screen, (0, 0, 0), origin, destination, 1)
+
+
+
+class COMRecorderVisualizer(PyGameInterface):
+
+	"""
+
+	Visualizes chains of sample points (not to be confused with the above calibration
+	samples)
+
+	"""
+
+	def __init__(self, comrc, gv):
+
+		self.comrc = comrc
+		self.gv = gv
+
+
+	def draw(self, width, height, screen, pygame):
+
+		last = None
+		now = time.time()
+
+		for sample, time_ in self.comrc.samples:
+
+			sample = self.gv.grid_to_screen(sample)
+
+			if last != None:
+
+				time_diff = now - time_
+
+
+				# Reciprocal of number of seconds until lines completely fade
+
+				fade_factor = 0.5
+
+
+				color = time_diff * (fade_factor * 255)
+				color = int(color)
+
+				color_tuple = (color, color, color)
+
+				if color < 255:
+
+					pygame.draw.line(screen, color_tuple, last, sample, 1)
+
+
+			last = sample
 
 
 
