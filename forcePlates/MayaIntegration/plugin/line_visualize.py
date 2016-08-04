@@ -123,7 +123,7 @@ class COMRecorderVisualizer(PyGameInterface):
 
 				color_tuple = (color, color, color)
 
-				if color < 255:
+				if 0 <= color < 255:
 
 					pygame.draw.line(screen, color_tuple, last, sample, 1)
 

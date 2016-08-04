@@ -13,6 +13,7 @@ from threads.persistence_sync_thread import PersistenceSyncThread
 from threads.calibration_program_thread import CalibrationProgramThread
 from threads.center_of_pressure_thread import CenterOfPressureThread
 from threads.pygame_thread import PyGameThread
+from threads.sixaxis_thread import SixAxisThread
 
 import maya_utils as mu
 import maya_socket_connection as msc
@@ -20,6 +21,7 @@ import maya_socket_connection as msc
 from forceplates import ForcePlates, ForcePlatesThread
 from forceplates_main import send_program
 
+from sixaxis.sixaxis import SixAxis
 
 from center_of_pressure import CenterOfPressure
 from com_recorder import COMRecorder
@@ -62,10 +64,15 @@ def main():
 	
 
 
+	# TODO: isolate ForcePlates & SixAxis behavior
 
 	fpt = ForcePlatesThread(fp)
 	fpt.start()
 	
+
+	sat = SixAxisThread()
+	sat.start()
+
 
 	########################
 
@@ -76,8 +83,13 @@ def main():
 	########################
 
 
-	cop = CenterOfPressure(grid)
-	cop.bind_listeners(fp)
+	# Refactor this to forcePlates class
+
+	# cop = CenterOfPressure(grid)
+	# cop.bind_listeners(fp)
+
+
+	cop = sat.M5237.centre_of_pressure
 
 	comrc = COMRecorder(cop)
 	comrc.bind_listeners(fp)
@@ -85,14 +97,19 @@ def main():
 
 	########################
 
-	# Kill this thread
+	pgt = PyGameThread()
+	pgt.start()
 
-	# st = SamplingThread(generator)
-	# st.start()
+	gv = lv.GridVisualizer(grid)
+	cp_v = lv.PointVisualizer(cop, gv)
+	crv = lv.COMRecorderVisualizer(comrc, gv)
 
-	########################
+	pgt.add_draw_task(gv.draw)
+	pgt.add_draw_task(cp_v.draw)
+	pgt.add_draw_task(crv.draw)
 
-	# !! NO TESTS !!
+	
+
 
 	kpt = CalibrationProgramThread(generator, fp)
 
@@ -102,20 +119,9 @@ def main():
 	kpt.seconds_between_points = 1
 
 
-	########################
 
-	pgt = PyGameThread()
-	pgt.start()
-
-	gv = lv.GridVisualizer(grid)
-	cp_v = lv.PointVisualizer(cop.center, gv)
 	sv = lv.SampleVisualizer(generator.samples, gv)
-	crv = lv.COMRecorderVisualizer(comrc, gv)
-
-	pgt.add_draw_task(gv.draw)
-	pgt.add_draw_task(cp_v.draw)
 	pgt.add_draw_task(sv.draw)
-	pgt.add_draw_task(crv.draw)
 
 	pygame_interaction.bind_listeners(kpt, pgt, gv)
 

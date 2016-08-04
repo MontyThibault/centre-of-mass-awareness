@@ -1,10 +1,22 @@
-from plugin.DLL_wrappers.AIO import *
-from plugin.sixaxis.sixaxis import SixAxis
 
-device = AIODevice(b'AIO000')
+
+device = AIODevice(b'AIO001')
+
+# See Contec API-PAC(W32) CAIO reference manual
 
 device.Init()
-device.AioSetAiRangeAll(aio.PM10)
+
+device.AioSetAiInputMethod(c_short(0))
+device.AioSetAiRangeAll(aio.PM25)
 
 
-sa = SixAxis(device, [6, 7, 8, 9, 10, 11])
+
+
+
+import time
+
+while True:
+
+	sa.update()
+	print [round(m, 3) for m in sa.mac]
+	time.sleep(1.0 / 60)

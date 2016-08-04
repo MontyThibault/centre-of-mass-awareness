@@ -21,6 +21,6 @@ class COMRecorder(object):
 
 	def on_update(self, fac):
 
-		cop = (self.cop.center[0], self.cop.center[1])
+		cop = (self.cop[0], self.cop[1])
 
 		self.samples.append((cop, time.time()))
