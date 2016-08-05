@@ -104,7 +104,11 @@ class COMRecorderVisualizer(PyGameInterface):
 		last = None
 		now = time.time()
 
-		for sample, time_ in self.comrc.samples:
+
+		self.comrc.sample_lock.acquire()
+
+
+		for sample, time_ in self.comrc.drawable_samples:
 
 			sample = self.gv.grid_to_screen(sample)
 
@@ -129,6 +133,9 @@ class COMRecorderVisualizer(PyGameInterface):
 
 
 			last = sample
+
+
+		self.comrc.sample_lock.release()
 
 
 

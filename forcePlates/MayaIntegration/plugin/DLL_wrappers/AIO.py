@@ -6,11 +6,15 @@ def instance(cls):
 
 @instance
 class aio(object):
-	""" This class overrides the default attribute lookup of the aio DLL library
+	""" 
+
+	This class overrides the default attribute lookup of the aio DLL library
 	in to implement automated error catching for all functions, assuming the 
 	common interface is a zero-valued return. 
 
-	Alternatively, the original functions can still be called via `aio._raw.f()"""
+	Alternatively, the original functions can still be called via `aio._raw.f()
+
+	"""
 
 	# Should be on system path if device drivers were installed properly
 	_raw = cdll.LoadLibrary('CAIO.dll')
@@ -34,8 +38,11 @@ class _ErrorWrapper(object):
 
 	By default, the imported library from cdll.LoadLibrary('CAIO.dll') returns
 	functons whose return values are certain error codes. This class is an abstraction
-	over that interface such that the error codes are looked up automatically and printed
-	to the console. Despite this, there is no exception raised... so beware!
+	over that interface such that the error codes are looked up automatically and raised.
+	
+	Ex. 
+	>>> aio.AioInit()
+	AIOError: <wrong arguments!>
 
 	"""
 

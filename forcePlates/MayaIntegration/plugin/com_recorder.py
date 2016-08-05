@@ -1,3 +1,5 @@
+from collections import deque
+from threading import Lock
 import time
 
 
@@ -11,6 +13,10 @@ class COMRecorder(object):
 	def __init__(self, cop):
 
 		self.samples = []
+		self.drawable_samples = deque([], 120)
+
+		self.sample_lock = Lock()
+
 		self.cop = cop
 
 
@@ -22,5 +28,12 @@ class COMRecorder(object):
 	def on_update(self, fac):
 
 		cop = (self.cop[0], self.cop[1])
+		t = (cop, time.time())
 
-		self.samples.append((cop, time.time()))
+
+		# Protects against mutation during iteration errors with the PyGame thread
+		
+		with self.sample_lock:
+
+			self.samples.append(t)
+			self.drawable_samples.appendleft(t)

@@ -39,6 +39,7 @@ class PyGameThread(threading.Thread):
 		threading.Thread.__init__(self)
 
 		self.dead = False
+		self.fps = 60
 
 
 		# This lock is necessary so that we do not close the pygame display while

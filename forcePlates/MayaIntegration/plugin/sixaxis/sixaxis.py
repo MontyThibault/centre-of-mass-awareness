@@ -1,12 +1,27 @@
 from ctypes import *
 
 
+# Middle set of jumpers on the AMTI MSA-6 board
+
 GAIN = 4000
+
+
+# Top set of jumpers on the AMTI MSA-6 board
+
 EXCITATION_VOLTAGE = 10
+
+
+# Sourced from orange AMTI reference manuals
 
 SENSITIVITY_TERMS = {
 
 	'M5237': [0.67887, 0.68076, 0.16426, 38.72479, 38.66569, 27.58195]
+
+}
+
+AXIS_ORIGIN = {
+	
+	'M5237': [-0.1659, -0.00759, -50.2849]
 
 }
 
@@ -15,7 +30,7 @@ class SixAxis(object):
 	def __init__(self, device, channels):
 		""" 
 
-		Maps a single six-axis sensor to a Maya transform 
+		One single six-axis sensor.
 
 		Device: An instance of PAIO.AIODevice()
 		Channels: The channel indicies for the sensor in the following order:
@@ -32,9 +47,7 @@ class SixAxis(object):
 		# Good Python list for public interface
 		self.measurements = [0, 0, 0, 0, 0, 0]
 
-
-		# mac = measurements after calibration
-		self.mac = [0, 0, 0, 0, 0, 0]
+		self.zeroes = [0, 0, 0, 0, 0, 0]
 
 		self.centre_of_pressure = [0, 0]
 
@@ -59,16 +72,25 @@ class SixAxis(object):
 			self.measurements[i] = val
 
 
+	def _update_centre_of_pressure(self):
+
+		zipped = zip(self.measurements, self.zeroes)
+
+		after_zeroing = [m - z for m, z in zipped] 
+		
+		
+		after_calibration = []
+		
+		for i, x in enumerate(after_zeroing):
+
 			# Calibration equation defined on page 10 of "Single Element 
 			# Multi-Component Transducer" instructions, model MC2.5A-1K-6278.
 
-			self.mac[i] = val / (EXCITATION_VOLTAGE * SENSITIVITY_TERMS['M5237'][i] * GAIN * 1e-6)
+			v = x / (EXCITATION_VOLTAGE * SENSITIVITY_TERMS['M5237'][i] * GAIN * 1e-6)
+			after_calibration.append(v)
 
 
-	def _update_centre_of_pressure(self):
-
-		_, _, F_z, M_x, M_y, _ = self.mac 
-
+		F_x, F_y, F_z, M_x, M_y, M_z = after_calibration
 
 		# Given that the force is straight downwards (might not be the case with dynamics)
 		# we arrive at these equations and rearrange them:
@@ -76,13 +98,17 @@ class SixAxis(object):
 		# M_x = F_z * y
 		# M_y = F_z * x
 
-		try: 
 
-			print M_y, F_z
+		# print M_x, M_y, F_z
 
-			self.centre_of_pressure[0] = 100 * M_y / F_z
-			self.centre_of_pressure[1] = 100 * M_x / F_z
+		if F_z == 0:
+			return
 
-		except ZeroDivisionError:
+		self.centre_of_pressure[0] = 100 * M_y / F_z
+		self.centre_of_pressure[1] = 100 * M_x / F_z
 
-			pass
+
+	def set_zero(self):
+
+		for i in range(6):
+			self.zeroes[i] = self.measurements[i]

@@ -10,7 +10,7 @@ class SixAxisThread(KillableThread):
 	def __init__(self):
 		KillableThread.__init__(self)
 
-		self.fps = 24
+		self.fps = 60
 
 
 		device = AIODevice(b'AIO001')
@@ -22,7 +22,11 @@ class SixAxisThread(KillableThread):
 		self.M5237 = SixAxis(device, [6, 7, 8, 9, 10, 11])
 
 
+		self.M5237.update()
+		self.M5237.set_zero()
+
+
 
 	def loop(self):
-
+		
 		self.M5237.update()
