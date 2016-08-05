@@ -10,25 +10,25 @@ class COMRecorder(object):
 
 	"""
 
-	def __init__(self, cop):
+	def __init__(self, sensor):
 
 		self.samples = []
 		self.drawable_samples = deque([], 200)
 
 		self.sample_lock = Lock()
 
-		self.cop = cop
+		self.sensor = sensor
 
 
 	def bind_listeners(self):
 
-		self.cop.add_listener(self.on_update)
+		self.sensor.centre_of_pressure.add_listener(self.on_update)
 
 
 	def on_update(self, cop):
 
 		cop_tup = (cop[0], cop[1])
-		tup = (cop_tup, time.time())
+		tup = (cop_tup, self.sensor.total_force ,time.time())
 
 
 		# Protects against mutation during iteration errors with the PyGame thread

@@ -10,11 +10,11 @@ class SixAxisWorld(object):
 	"""
 
 
-	def __init__(self, sensor, mat = [[1, 0], [0, 1]]):
+	def __init__(self, sensor, mat = [[1, 0, 0], [0, 1, 0], [0, 0, 1]]):
 		"""
 
-		@argument mat - A 4x4 matrix to transform the vector [x; y] into world coordinates.
-		The matrix [[1, 0], [0, 1]] corresponds to the identity.
+		@argument mat - A 3x3 matrix to transform the vector [x; y; 1] into world coordinates.
+		The matrix [[1, 0, 0], [0, 1, 0], [0, 0, 1]] corresponds to the identity.
 
 		"""
 
@@ -22,6 +22,7 @@ class SixAxisWorld(object):
 
 		self.mat = mat
 
+		self.total_force = 0
 		self.centre_of_pressure = Observable([0, 0])
 
 		sensor.centre_of_pressure.add_listener(self.on_update)
@@ -34,10 +35,17 @@ class SixAxisWorld(object):
 
 		"""
 
+		self.total_force = self.sensor.total_force
+
+		cop3 = 1
+
 		new_cop = (
 
-			cop[0] * self.mat[0][0] + cop[1] * self.mat[0][1],
-			cop[0] * self.mat[1][0] + cop[1] * self.mat[1][1]
+
+			cop[0] * self.mat[0][0] + cop[1] * self.mat[0][1] + cop3 * self.mat[0][2],
+			cop[0] * self.mat[1][0] + cop[1] * self.mat[1][1] + cop3 * self.mat[1][2],
+
+			self.mat[2][2]
 
 		)
 
@@ -47,3 +55,9 @@ class SixAxisWorld(object):
 		l[1] = new_cop[1]
 
 		self.centre_of_pressure.notify_all()
+
+
+	def set_position(self, x, y):
+
+		self.mat[0][2] = x
+		self.mat[1][2] = y

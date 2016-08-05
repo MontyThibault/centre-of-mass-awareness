@@ -108,7 +108,7 @@ class COMRecorderVisualizer(PyGameInterface):
 		self.comrc.sample_lock.acquire()
 
 
-		for sample, time_ in self.comrc.drawable_samples:
+		for sample, total_force, time_ in self.comrc.drawable_samples:
 
 			sample = self.gv.grid_to_screen(sample)
 
@@ -119,10 +119,19 @@ class COMRecorderVisualizer(PyGameInterface):
 
 				# Reciprocal of number of seconds until lines completely fade
 
-				fade_factor = 1
+				fade_rate = 1
 
 
-				color = time_diff * (fade_factor * 255)
+				# This many newtons until color is fully bright
+
+				full_weight = 350
+
+				force_factor = total_force / full_weight
+				force_factor = max(0, min(1, force_factor))
+
+
+				color = (time_diff * fade_rate) + (1 - force_factor)
+				color *= 255
 				color = int(color)
 
 				color_tuple = (color, color, color)

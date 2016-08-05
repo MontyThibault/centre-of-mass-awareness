@@ -141,8 +141,8 @@ class SixAxis(object):
 
 		cop = self.centre_of_pressure.get()
 
-		cop[0] = 100 * M_y / F_z
-		cop[1] = 100 * M_x / F_z
+		cop[0] = 600 * M_y / F_z
+		cop[1] = 600 * M_x / F_z
 
 		self.centre_of_pressure.notify_all()
 

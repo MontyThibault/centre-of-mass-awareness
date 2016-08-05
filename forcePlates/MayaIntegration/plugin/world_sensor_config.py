@@ -25,14 +25,14 @@ class WorldSensorConfiguration(object):
 		device0.Init()
 
 		device0.AioSetAiInputMethod(c_short(0))
-		device0.AioSetAiRangeAll(aio.PM10)
+		device0.AioSetAiRangeAll(aio.PM25)
 
 
 		device1 = AIODevice(b'AIO001')
 		device1.Init()
 
 		device1.AioSetAiInputMethod(c_short(0))
-		device1.AioSetAiRangeAll(aio.PM10)
+		device1.AioSetAiRangeAll(aio.PM25)
 
 
 		self.M5238 = SixAxis(device0, [6, 7, 8, 9, 10, 11], 'M5238')
@@ -46,11 +46,14 @@ class WorldSensorConfiguration(object):
 
 		self.world_sensors = [SixAxisWorld(s) for s in self.sensors]
 
-
-		self.cop = Observable([0, 0])
+		
 
 
 		###
+
+		self.total_force = 0
+		self.centre_of_pressure = Observable([0, 0])
+
 
 		for s in self.sensors:
 
@@ -66,4 +69,38 @@ class WorldSensorConfiguration(object):
 			s.update()
 
 
-		# Weighted sum of self.cop...
+
+		# Weighted sum of world coordinates of sensors
+
+		accumulator = [0, 0]
+		force_accum = 0
+
+		for w in self.world_sensors:
+
+			l = w.centre_of_pressure.get()
+			f = w.sensor.total_force
+
+			accumulator[0] += l[0] * f
+			accumulator[1] += l[1] * f
+
+			force_accum += f
+
+
+		self.total_force = force_accum
+
+
+		# Division by zero
+
+		if force_accum == 0:
+			return
+
+
+		accumulator[0] /= force_accum
+		accumulator[1] /= force_accum
+
+
+		cop = self.centre_of_pressure.get()
+		cop[0] = accumulator[0]
+		cop[1] = accumulator[1]
+
+		self.centre_of_pressure.notify_all()

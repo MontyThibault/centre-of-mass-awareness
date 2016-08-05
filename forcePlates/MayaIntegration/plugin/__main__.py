@@ -15,11 +15,13 @@ from threads.center_of_pressure_thread import CenterOfPressureThread
 from threads.pygame_thread import PyGameThread
 from threads.sixaxis_thread import SixAxisThread
 
-import maya_utils as mu
-import maya_socket_connection as msc
+# import maya_utils as mu
+# import maya_socket_connection as msc
 
 from forceplates import ForcePlates, ForcePlatesThread
 from forceplates_main import send_program
+
+from dynamic_color import DynamicColor
 
 from sixaxis.sixaxis import SixAxis
 
@@ -29,7 +31,8 @@ from com_recorder import COMRecorder
 import line_visualize as lv
 
 import pygame_interaction
-import maya_interaction
+
+# import maya_interaction
 
 
 def main():
@@ -103,20 +106,25 @@ def main():
 	pgt.add_draw_task(gv.draw)
 
 
-	for s in sat.world.world_sensors:
+	for sensor in sat.world.world_sensors + [sat.world]:
 
-		cop = s.centre_of_pressure
-
-		comrc = COMRecorder(cop)
+		comrc = COMRecorder(sensor)
 		comrc.bind_listeners()
 
 
-		cp_v = lv.PointVisualizer(cop.get(), gv)
+		base_color = (255, 0, 0)
+		if sensor == sat.world:
+			base_color = (0, 255, 0)
+
+		color_list = DynamicColor(sensor, base_color).color
+
+		cp_v = lv.PointVisualizer(sensor.centre_of_pressure.get(), gv, color_list)
+
+
 		crv = lv.COMRecorderVisualizer(comrc, gv)
 
 		pgt.add_draw_task(cp_v.draw)
 		pgt.add_draw_task(crv.draw)
-
 
 
 
