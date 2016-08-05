@@ -1,33 +1,46 @@
+from plugin.observable import Observable
 from ctypes import *
 
 
 # Middle set of jumpers on the AMTI MSA-6 board
 
-GAIN = 4000
+GAIN = 1000
 
 
 # Top set of jumpers on the AMTI MSA-6 board
 
-EXCITATION_VOLTAGE = 10
+EXCITATION_VOLTAGE = 5
 
 
 # Sourced from orange AMTI reference manuals
 
 SENSITIVITY_TERMS = {
-
-	'M5237': [0.67887, 0.68076, 0.16426, 38.72479, 38.66569, 27.58195]
+	
+	'M5119': [0.67622, 0.67497, 0.16651, 38.93765, 37.99575, 28.19990],
+	'M5170': [0.35517, 0.35401, 0.08807, 20.54487, 20.45965, 13.74638],
+	'M5237': [0.67887, 0.68076, 0.16426, 38.72479, 38.66569, 27.58195],
+	'M5238': [0.33738, 0.33820, 0.08474, 19.75560, 19.83606, 13.16477],
+	'M5239': [0.34821, 0.34677, 0.08705, 20.45356, 20.43072, 13.53383],
+	'M5240': [0.34302, 0.34242, 0.08554, 20.18649, 20.12639, 13.68040]
 
 }
 
 AXIS_ORIGIN = {
 	
-	'M5237': [-0.1659, -0.00759, -50.2849]
+	# in mm
+
+	'M5119': [-0.09745, 0.693442, 38.32484],
+	'M5170': [0.118819, 0.342403, 29.35282],
+	'M5237': [-0.1659, -0.00759, -50.2849],
+	'M5238': [-0.4428, -0.0631, -29.2569],
+	'M5239': [-0.0630, -0.2750, -29.1772],
+	'M5240': [-0.2998, -0.3227, -29.2305]
 
 }
 
 
 class SixAxis(object):
-	def __init__(self, device, channels):
+	def __init__(self, device, channels, code):
 		""" 
 
 		One single six-axis sensor.
@@ -40,6 +53,7 @@ class SixAxis(object):
 
 		self.device = device
 		self.channels = channels
+		self.code = code
 
 		# Dirty ctypes list for device interface
 		self._measurements_c = (c_float * 6)()
@@ -49,7 +63,7 @@ class SixAxis(object):
 
 		self.zeroes = [0, 0, 0, 0, 0, 0]
 
-		self.centre_of_pressure = [0, 0]
+		self.centre_of_pressure = Observable([0, 0])
 
 
 	def update(self):
@@ -86,7 +100,7 @@ class SixAxis(object):
 			# Calibration equation defined on page 10 of "Single Element 
 			# Multi-Component Transducer" instructions, model MC2.5A-1K-6278.
 
-			v = x / (EXCITATION_VOLTAGE * SENSITIVITY_TERMS['M5237'][i] * GAIN * 1e-6)
+			v = x / (EXCITATION_VOLTAGE * SENSITIVITY_TERMS[self.code][i] * GAIN * 1e-6)
 			after_calibration.append(v)
 
 
@@ -99,13 +113,18 @@ class SixAxis(object):
 		# M_y = F_z * x
 
 
-		# print M_x, M_y, F_z
+		print M_x, M_y, F_z
 
 		if F_z == 0:
 			return
 
-		self.centre_of_pressure[0] = 100 * M_y / F_z
-		self.centre_of_pressure[1] = 100 * M_x / F_z
+
+		cop = self.centre_of_pressure.get()
+
+		cop[0] = 100 * M_y / F_z
+		cop[1] = 100 * M_x / F_z
+
+		self.centre_of_pressure.notify_all()
 
 
 	def set_zero(self):

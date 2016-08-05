@@ -89,10 +89,7 @@ def main():
 	# cop.bind_listeners(fp)
 
 
-	cop = sat.M5237.centre_of_pressure
-
-	comrc = COMRecorder(cop)
-	comrc.bind_listeners(fp)
+	
 
 
 	########################
@@ -101,14 +98,26 @@ def main():
 	pgt.start()
 
 	gv = lv.GridVisualizer(grid)
-	cp_v = lv.PointVisualizer(cop, gv)
-	crv = lv.COMRecorderVisualizer(comrc, gv)
+	
 
 	pgt.add_draw_task(gv.draw)
-	pgt.add_draw_task(cp_v.draw)
-	pgt.add_draw_task(crv.draw)
 
-	
+
+	for s in sat.all_sensors:
+
+		cop = s.centre_of_pressure
+
+		comrc = COMRecorder(cop)
+		comrc.bind_listeners()
+
+
+		cp_v = lv.PointVisualizer(cop.get(), gv)
+		crv = lv.COMRecorderVisualizer(comrc, gv)
+
+		pgt.add_draw_task(cp_v.draw)
+		pgt.add_draw_task(crv.draw)
+
+
 
 
 	kpt = CalibrationProgramThread(generator, fp)

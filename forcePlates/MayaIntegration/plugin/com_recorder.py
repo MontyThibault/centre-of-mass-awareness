@@ -13,27 +13,27 @@ class COMRecorder(object):
 	def __init__(self, cop):
 
 		self.samples = []
-		self.drawable_samples = deque([], 120)
+		self.drawable_samples = deque([], 240)
 
 		self.sample_lock = Lock()
 
 		self.cop = cop
 
 
-	def bind_listeners(self, fp):
+	def bind_listeners(self):
 
-		fp.forces_after_calibration.add_listener(self.on_update)
+		self.cop.add_listener(self.on_update)
 
 
-	def on_update(self, fac):
+	def on_update(self, cop):
 
-		cop = (self.cop[0], self.cop[1])
-		t = (cop, time.time())
+		cop_tup = (cop[0], cop[1])
+		tup = (cop_tup, time.time())
 
 
 		# Protects against mutation during iteration errors with the PyGame thread
-		
+
 		with self.sample_lock:
 
-			self.samples.append(t)
-			self.drawable_samples.appendleft(t)
+			self.samples.append(tup)
+			self.drawable_samples.append(tup)

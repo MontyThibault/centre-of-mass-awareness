@@ -119,7 +119,7 @@ class COMRecorderVisualizer(PyGameInterface):
 
 				# Reciprocal of number of seconds until lines completely fade
 
-				fade_factor = 0.5
+				fade_factor = 1
 
 
 				color = time_diff * (fade_factor * 255)
