@@ -35,10 +35,10 @@ import maya_interaction
 def main():
 
 
-	pst = PersistenceSyncThread(os.path.dirname(__file__) + '/.sync.pickle')
-	pst.start()
+	# pst = PersistenceSyncThread(os.path.dirname(__file__) + '/.sync.pickle')
+	# pst.start()
 
-	d = pst.objs
+	# d = pst.objs
 
 	# del d['fp']
 
@@ -49,25 +49,25 @@ def main():
 	# (how?)
 
 
-	fp = ForcePlates()
+	# fp = ForcePlates()
 
-	if 'fp_calibs' not in d:
+	# if 'fp_calibs' not in d:
 
-		fp.init_calibs()
-		d['fp_calibs'] = fp.calibrations
+	# 	fp.init_calibs()
+	# 	d['fp_calibs'] = fp.calibrations
 
-	else:
+	# else:
 
-		fp.calibrations = d['fp_calibs']
+	# 	fp.calibrations = d['fp_calibs']
 
-	send_program(fp)
+	# send_program(fp)
 	
 
 
 	# TODO: isolate ForcePlates & SixAxis behavior
 
-	fpt = ForcePlatesThread(fp)
-	fpt.start()
+	# fpt = ForcePlatesThread(fp)
+	# fpt.start()
 	
 
 	sat = SixAxisThread()
@@ -77,7 +77,7 @@ def main():
 	########################
 
 	grid = Grid(44.5, 53, 6, 7)
-	generator = Generator(grid)
+	# generator = Generator(grid)
 
 
 	########################
@@ -103,7 +103,7 @@ def main():
 	pgt.add_draw_task(gv.draw)
 
 
-	for s in sat.all_sensors:
+	for s in sat.world.world_sensors:
 
 		cop = s.centre_of_pressure
 
@@ -120,25 +120,25 @@ def main():
 
 
 
-	kpt = CalibrationProgramThread(generator, fp)
+	# kpt = CalibrationProgramThread(generator, fp)
 
-	kpt.fps = 10
+	# kpt.fps = 10
 
-	kpt.seconds_per_point = 200
-	kpt.seconds_between_points = 1
+	# kpt.seconds_per_point = 200
+	# kpt.seconds_between_points = 1
 
 
 
-	sv = lv.SampleVisualizer(generator.samples, gv)
-	pgt.add_draw_task(sv.draw)
+	# sv = lv.SampleVisualizer(generator.samples, gv)
+	# pgt.add_draw_task(sv.draw)
 
-	pygame_interaction.bind_listeners(kpt, pgt, gv)
+	# pygame_interaction.bind_listeners(kpt, pgt, gv)
 
 
 	#####################
 
-	maya_interaction.create_sampling_locator()
-	maya_interaction.bind_listeners(kpt, fpt)
+	# maya_interaction.create_sampling_locator()
+	# maya_interaction.bind_listeners(kpt, fpt)
 
 	
 
@@ -148,29 +148,29 @@ def main():
 	# Console
 
 
-	def reduce():
+	# def reduce():
 
-		s = d['s']
-		reducer = Reducer()
+	# 	s = d['s']
+	# 	reducer = Reducer()
 	
-		ps = reducer.partitionBySource(s)
+	# 	ps = reducer.partitionBySource(s)
 
 
-		for i, p in enumerate(ps):
-			ps[i] = reducer.reduce(p, 0.1)
+	# 	for i, p in enumerate(ps):
+	# 		ps[i] = reducer.reduce(p, 0.1)
 
-		merged = reducer.merge(ps)
-		d['s'] = reducer.filter_min_max(merged, 0.1, 9999)
+	# 	merged = reducer.merge(ps)
+	# 	d['s'] = reducer.filter_min_max(merged, 0.1, 9999)
 
 
 
-	def sample_and_process(p):
-		""" p = ((x, y), w) """
+	# def sample_and_process(p):
+	# 	""" p = ((x, y), w) """
 
-		sampler = Sampler(d['s'])
-		processor = Processor(sampler.closest, grid)
+	# 	sampler = Sampler(d['s'])
+	# 	processor = Processor(sampler.closest, grid)
 
-		return processor.process(*p)
+	# 	return processor.process(*p)
 
 
 
@@ -183,7 +183,7 @@ def main():
 
 	def kill():
 
-		d['fp_calibs'] = fp.calibrations
+		# d['fp_calibs'] = fp.calibrations
 
 		KT.killAll()
 		pgt.kill()
@@ -193,8 +193,8 @@ def main():
 		quit()
 
 
-	saz = fp.set_all_zero
-	fpc = fp.calibrations
+	# saz = fp.set_all_zero
+	# fpc = fp.calibrations
 
 	####################################
 	# Begin interactive console

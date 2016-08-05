@@ -1,0 +1,49 @@
+from plugin.observable import Observable
+
+
+class SixAxisWorld(object):
+	"""
+
+	Keeps track of a single real-world position and orientation of a sensor and
+	its coordinate system.
+
+	"""
+
+
+	def __init__(self, sensor, mat = [[1, 0], [0, 1]]):
+		"""
+
+		@argument mat - A 4x4 matrix to transform the vector [x; y] into world coordinates.
+		The matrix [[1, 0], [0, 1]] corresponds to the identity.
+
+		"""
+
+		self.sensor = sensor
+
+		self.mat = mat
+
+		self.centre_of_pressure = Observable([0, 0])
+
+		sensor.centre_of_pressure.add_listener(self.on_update)
+
+
+	def on_update(self, cop):
+		"""
+
+		On update of underlying sensor, apply transformations, then set own cop.
+
+		"""
+
+		new_cop = (
+
+			cop[0] * self.mat[0][0] + cop[1] * self.mat[0][1],
+			cop[0] * self.mat[1][0] + cop[1] * self.mat[1][1]
+
+		)
+
+
+		l = self.centre_of_pressure.get()
+		l[0] = new_cop[0]
+		l[1] = new_cop[1]
+
+		self.centre_of_pressure.notify_all()

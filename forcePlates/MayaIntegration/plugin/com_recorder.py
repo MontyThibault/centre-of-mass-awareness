@@ -13,7 +13,7 @@ class COMRecorder(object):
 	def __init__(self, cop):
 
 		self.samples = []
-		self.drawable_samples = deque([], 240)
+		self.drawable_samples = deque([], 200)
 
 		self.sample_lock = Lock()
 

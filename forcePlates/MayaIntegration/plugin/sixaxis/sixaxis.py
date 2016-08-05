@@ -63,13 +63,33 @@ class SixAxis(object):
 
 		self.zeroes = [0, 0, 0, 0, 0, 0]
 
+
+		# It is always assumed that total_force is updated alongside centre_of_pressure,
+		# and that it is ready to go whenever the observer is notified.
+
+		self.total_force = 0
 		self.centre_of_pressure = Observable([0, 0])
 
 
 	def update(self):
 
+		old_measurement = self.measurements[:]
+
 		self._update_measurements()
-		self._update_centre_of_pressure()
+
+
+		for old, new in zip(old_measurement, self.measurements):
+
+
+			# Only update everything if there was a change
+
+			if old != new:
+				
+				self._update_centre_of_pressure()
+				return
+
+		print "skipped"
+		
 
 
 	def _update_measurements(self):
@@ -113,11 +133,11 @@ class SixAxis(object):
 		# M_y = F_z * x
 
 
-		print M_x, M_y, F_z
+		self.total_force = F_z
+
 
 		if F_z == 0:
 			return
-
 
 		cop = self.centre_of_pressure.get()
 
