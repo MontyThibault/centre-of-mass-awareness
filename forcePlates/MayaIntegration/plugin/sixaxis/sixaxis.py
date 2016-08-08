@@ -9,6 +9,7 @@ GAIN = 1000
 
 # Top set of jumpers on the AMTI MSA-6 board
 
+
 EXCITATION_VOLTAGE = 5
 
 
@@ -141,8 +142,11 @@ class SixAxis(object):
 
 		cop = self.centre_of_pressure.get()
 
-		cop[0] = 600 * M_y / F_z
-		cop[1] = 600 * M_x / F_z
+
+		scale = 0.5
+
+		cop[0] = scale * M_y / F_z
+		cop[1] = scale * M_x / F_z
 
 		self.centre_of_pressure.notify_all()
 

@@ -21,18 +21,6 @@ class WorldSensorConfiguration(object):
 		### Hard-coded configuration follows
 
 
-
-		# Distance between two adjacent sensors on the same plate (m)
-
-		sensor_diff = 7.68e-2
-
-
-		# Distance between plates (m)
-
-		stance_width = 15e-2
-
-
-
 		device0 = AIODevice(b'AIO000')
 		device0.Init()
 
@@ -53,12 +41,65 @@ class WorldSensorConfiguration(object):
 		self.M5240 = SixAxis(device0, [18, 19, 20, 21, 22, 23], 'M5240')
 
 
-		self.sensors = [self.M5238, self.M5239, self.M5170, self.M5240]
+		self.sensors = [self.M5239, self.M5170, self.M5240, self.M5238]
 
-
-		self.world_sensors = [SixAxisWorld(s) for s in self.sensors]
+		self.world_sensors = [SixAxisWorld(s, 'z') for s in self.sensors]
 
 		
+		## The order of self.sensors/self.world_sensors is defined as follows:
+		##
+		## (Top-down view)
+		##
+		##      0        2
+		##  ______      ______
+		## |    X |    | X    |
+		## |    | |    | |    |
+		## |___ X |    | X __ |
+		##
+		##      1        3
+		##
+		## 	      Coords:
+		##
+		## 	       ---> +X
+		## 	       |
+		## 	       |
+		## 	       V
+		## 	       +Y
+
+
+		# Distance between two adjacent sensors on the same plate (m)
+
+		sensor_diff = 7.68e-2
+
+
+		# Distance between plates (m)
+
+		stance_width = 15e-2
+
+
+		self.world_sensors[0].set_x(-stance_width / 2)
+		self.world_sensors[1].set_x(-stance_width / 2)
+		self.world_sensors[2].set_x(stance_width / 2)
+		self.world_sensors[3].set_x(stance_width / 2)
+
+		self.world_sensors[0].set_y(-sensor_diff / 2)
+		self.world_sensors[1].set_y(sensor_diff / 2)
+		self.world_sensors[2].set_y(-sensor_diff / 2)
+		self.world_sensors[3].set_y(sensor_diff / 2)
+
+
+		self.world_sensors[0].mat[1][0] = -1 
+		self.world_sensors[0].mat[0][1] = 1
+
+		self.world_sensors[1].mat[1][0] = -1
+		self.world_sensors[1].mat[0][1] = -1
+
+		self.world_sensors[2].mat[1][0] = 1
+		self.world_sensors[2].mat[0][1] = 1
+
+		self.world_sensors[3].mat[1][0] = 1
+		self.world_sensors[3].mat[0][1] = 1
+
 
 
 		###

@@ -79,7 +79,7 @@ def main():
 
 	########################
 
-	grid = Grid(44.5, 53, 6, 7)
+	grid = Grid(0.15, 0.15, 6, 6)
 	# generator = Generator(grid)
 
 
@@ -106,19 +106,24 @@ def main():
 	pgt.add_draw_task(gv.draw)
 
 
-	for sensor in sat.world.world_sensors + [sat.world]:
+	for w_sensor in sat.world.world_sensors + [sat.world]:
 
-		comrc = COMRecorder(sensor)
+		comrc = COMRecorder(w_sensor)
 		comrc.bind_listeners()
 
 
 		base_color = (255, 0, 0)
-		if sensor == sat.world:
+		if w_sensor == sat.world:
 			base_color = (0, 255, 0)
 
-		color_list = DynamicColor(sensor, base_color).color
+		# Highlighting
 
-		cp_v = lv.PointVisualizer(sensor.centre_of_pressure.get(), gv, color_list)
+		# elif w_sensor.sensor == sat.world.M5170:
+		# 	base_color = (0, 0, 255)
+
+		color_list = DynamicColor(w_sensor, base_color).color
+
+		cp_v = lv.PointVisualizer(w_sensor.centre_of_pressure.get(), gv, color_list)
 
 
 		crv = lv.COMRecorderVisualizer(comrc, gv)
