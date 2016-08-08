@@ -21,6 +21,18 @@ class WorldSensorConfiguration(object):
 		### Hard-coded configuration follows
 
 
+
+		# Distance between two adjacent sensors on the same plate (m)
+
+		sensor_diff = 7.68e-2
+
+
+		# Distance between plates (m)
+
+		stance_width = 15e-2
+
+
+
 		device0 = AIODevice(b'AIO000')
 		device0.Init()
 
@@ -35,9 +47,9 @@ class WorldSensorConfiguration(object):
 		device1.AioSetAiRangeAll(aio.PM25)
 
 
+		self.M5170 = SixAxis(device0, [0, 1, 2, 3, 4, 5], 'M5170')
 		self.M5238 = SixAxis(device0, [6, 7, 8, 9, 10, 11], 'M5238')
 		self.M5239 = SixAxis(device0, [12, 13, 14, 15, 16, 17], 'M5239')
-		self.M5170 = SixAxis(device0, [0, 1, 2, 3, 4, 5], 'M5170')
 		self.M5240 = SixAxis(device0, [18, 19, 20, 21, 22, 23], 'M5240')
 
 

@@ -26,10 +26,13 @@ class DynamicColor(object):
 
 		full_weight = 350
 
-		tf = tf / full_weight
+		tf_rel = tf / full_weight
+		tf_rel = min(1, max(0, tf_rel)) # Contrain to [0, 1]
+
+		tf_rel = 1 - tf_rel
+
 
 		for i in range(3):
 
-			self.color[i] = 255 - (self.base_color[i] * tf)
+			self.color[i] = (255 - self.base_color[i]) * tf_rel + self.base_color[i]
 			self.color[i] = int(self.color[i])
-			self.color[i] = min(255, max(0, self.color[i]))
