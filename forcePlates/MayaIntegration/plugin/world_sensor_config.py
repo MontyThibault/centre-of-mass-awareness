@@ -18,7 +18,7 @@ class WorldSensorConfiguration(object):
 	def __init__(self):
 		
 
-		### Hard-coded configuration follows
+		### Hard-coded, set-up-specific configuration follows
 
 
 		device0 = AIODevice(b'AIO000')
@@ -44,6 +44,7 @@ class WorldSensorConfiguration(object):
 		self.sensors = [self.M5239, self.M5170, self.M5240, self.M5238]
 
 		self.world_sensors = [SixAxisWorld(s, 'z') for s in self.sensors]
+
 
 		
 		## The order of self.sensors/self.world_sensors is defined as follows:
@@ -99,7 +100,6 @@ class WorldSensorConfiguration(object):
 
 		self.world_sensors[3].mat[1][0] = 1
 		self.world_sensors[3].mat[0][1] = 1
-
 
 
 		###
