@@ -148,8 +148,53 @@ class COMRecorderVisualizer(PyGameInterface):
 
 
 
-def _generate_color_spectrum():
-	pass
+class WorldConfigurationVisualizer(PyGameInterface):
+	"""
+
+	Draws the outlines and origins of the sensors for visualization.
+
+	"""
+
+	def __init__(self, world_config, gv):
+
+		self.world_config = world_config
+		self.gv = gv
+
+
+	def draw(self, width, height, screen, pygame):
+
+		for w_sensor in self.world_config.world_sensors:
+
+
+			x = w_sensor.mat[0][2]
+			y = w_sensor.mat[1][2]
+
+			# width/length of the sensor plate for a ray eminating from the origin to 
+			# one of the flat sides
+
+			wl = self.world_config.sensor_diff / 2
+
+			lines = [
+				([-1, -1], [-1, 1]),
+				([-1, 1], [1, 1]),
+				([1, 1], [1, -1]),
+				([1, -1], [-1, -1])
+			]
+
+			for i, (begin, end) in enumerate(lines):
+
+				begin = (x + (wl * begin[0]), y + (wl * begin[1]))
+				end = (x + (wl * end[0]), y + (wl * end[1]))
+
+				begin = self.gv.grid_to_screen(begin)
+				end = self.gv.grid_to_screen(end)
+
+				pygame.draw.line(screen, (0, 0, 0), begin, end, 1)
+
+
+			pos = self.gv.grid_to_screen((x, y))
+			pygame.draw.circle(screen, (0, 0, 0), pos, 10, 1)
+
 
 
 def _generate_min_max_normalizer(samples, new_min, new_max):
@@ -248,7 +293,7 @@ class GridVisualizer(PyGameInterface):
 
 			s = self.grid_to_screen(point)
 
-			pygame.draw.circle(screen, (128, 128, 128), s, 5)
+			# pygame.draw.circle(screen, (128, 128, 128), s, 5)
 
 
 	def screen_to_grid(self, point):

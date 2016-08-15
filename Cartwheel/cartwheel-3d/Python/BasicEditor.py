@@ -8,7 +8,7 @@ Basic controller editor
 import sys
 sys.path += ['.']
 
-import wx, App, math
+import wx, App
 
 movieResolution = (1280,720)
 movieSetup = False # True if we want a movie

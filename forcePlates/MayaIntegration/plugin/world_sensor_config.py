@@ -70,23 +70,23 @@ class WorldSensorConfiguration(object):
 
 		# Distance between two adjacent sensors on the same plate (m)
 
-		sensor_diff = 7.68e-2
+		self.sensor_diff = 7.68e-2
 
 
 		# Distance between plates (m)
 
-		stance_width = 15e-2
+		self.stance_width = 15e-2
 
 
-		self.world_sensors[0].set_x(-stance_width / 2)
-		self.world_sensors[1].set_x(-stance_width / 2)
-		self.world_sensors[2].set_x(stance_width / 2)
-		self.world_sensors[3].set_x(stance_width / 2)
+		self.world_sensors[0].set_x(-self.stance_width / 2)
+		self.world_sensors[1].set_x(-self.stance_width / 2)
+		self.world_sensors[2].set_x(self.stance_width / 2)
+		self.world_sensors[3].set_x(self.stance_width / 2)
 
-		self.world_sensors[0].set_y(-sensor_diff / 2)
-		self.world_sensors[1].set_y(sensor_diff / 2)
-		self.world_sensors[2].set_y(-sensor_diff / 2)
-		self.world_sensors[3].set_y(sensor_diff / 2)
+		self.world_sensors[0].set_y(-self.sensor_diff / 2)
+		self.world_sensors[1].set_y(self.sensor_diff / 2)
+		self.world_sensors[2].set_y(-self.sensor_diff / 2)
+		self.world_sensors[3].set_y(self.sensor_diff / 2)
 
 
 		self.world_sensors[0].mat[1][0] = -1 
