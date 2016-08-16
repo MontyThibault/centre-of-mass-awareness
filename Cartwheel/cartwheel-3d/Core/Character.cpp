@@ -2,18 +2,16 @@
 #include <Utils/Utils.h>
 #include <stdio.h>
 
-
 /**
 	the constructor
 */
 Character::Character() : ArticulatedFigure() {
-	this->COMController = CentreOfMass((ArticulatedFigure*) this);
 }
 
 /**
 	the destructor
 */
-Character::~Character(void) {
+Character::~Character(void){
 	//nothing to do. We'll let whoever created the world deal with freeing it up
 }
 
@@ -247,74 +245,36 @@ void Character::getReverseStanceState(ReducedCharacterStateArray* state){
 	This method is used to compute the center of mass of the articulated figure.
 */
 Vector3d Character::getCOM(){
+	Vector3d COM = Vector3d(root->getCMPosition()) * root->getMass();
+	double curMass = root->getMass();
+	double totalMass = curMass;
+	for (uint i=0; i <joints.size(); i++){
+		curMass = joints[i]->child->getMass();
+		totalMass += curMass;
+		COM.addScaledVector(joints[i]->child->getCMPosition() , curMass);
+	}
 
-	// We must reverse the error in the perceived vs. the real centre of mass,
-	// otherwise the character corrects in the wrong direction.
+	COM /= totalMass;
 
-	// An more straight-foreward implementation just for understanding sake would be
-	// return this->COMController.getCOME();
-
-	Vector3d real = this->COMController.getCOM();
-	Vector3d diff = this->COMController.getCOME() - real;
-	return real - diff;
+	return COM;
 }
 
 /**
 	This method is used to compute the velocity of the center of mass of the articulated figure.
 */
 Vector3d Character::getCOMVelocity(){
-	return this->COMController.getCOMVelocity();
-}
+	Vector3d COMVel = Vector3d(root->getCMVelocity()) * root->getMass();
+	double curMass = root->getMass();
+	double totalMass = curMass;
+	for (uint i=0; i <joints.size(); i++){
+		curMass = joints[i]->child->getMass();
+		totalMass += curMass;
+		COMVel.addScaledVector(joints[i]->child->getCMVelocity() , curMass);
+	}
 
-void Character::drawRealCOM(int flags) {
-	if(!(flags & SHOW_CENTER_OF_MASS))
-		return;
+	COMVel /= totalMass;
 
-	Vector3d COM = this->COMController.getCOM();
-
-	glPushMatrix();
-
-	glDisable(GL_DEPTH_TEST);
-	glColor3ub(255, 0, 0);
-
-	GLUtils::drawSphere(COM, 0.04, 11);
-
-	glEnable(GL_DEPTH_TEST);
-	
-	glPopMatrix();
-}
-
-void Character::drawPerceivedCOM(int flags) {
-	if(!(flags & SHOW_CENTER_OF_MASS)) 
-		return;
-
-	glPushMatrix();
-
-	glDisable(GL_DEPTH_TEST);
-	
-
-	// Draw point cloud
-
-	// glEnable(GL_BLEND); - Already enabled
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	
-	const int samples = 200;
-	glColor4ub(230, 0, 172, (int) ceil(255.0 / samples) * 12.5);
-	
-	this->COMController.stepDraw(samples);
-
-	// Draw COM
-
-	glColor3ub(128, 0, 0);
-
-	Vector3d COM = this->COMController.getCOME();
-
-	GLUtils::drawSphere(COM, 0.025, 11);
-
-
-	glEnable(GL_DEPTH_TEST);
-	
-	glPopMatrix();
+	return COMVel;
 }
 
 /**
