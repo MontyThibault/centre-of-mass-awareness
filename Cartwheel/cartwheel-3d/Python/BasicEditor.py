@@ -8,7 +8,7 @@ Basic controller editor
 import sys
 sys.path += ['.']
 
-import wx, App
+import wx, App, math
 
 movieResolution = (1280,720)
 movieSetup = False # True if we want a movie
@@ -26,7 +26,7 @@ if movieSetup:
         showConsole = False
 
 
-app = App.SNMApp("Style Editor", size = size, glCanvasSize=glCanvasSize, showConsole = showConsole, dt=1/1000.0, fps=60)
+app = App.SNMApp("Style Editor", size = size, glCanvasSize=glCanvasSize, showConsole = showConsole)
 
 import UI, Utils, GLUtils, Physics, Core, MathLib, PyUtils
 from App import InstantChar, KeyframeEditor

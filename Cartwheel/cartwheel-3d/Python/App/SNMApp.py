@@ -12,9 +12,6 @@ from Curve import Curve
 from SnapshotTree import SnapshotBranch 
 from MathLib import Vector3d, Point3d
 
-from ArmaProcess import ArmaProcess
-
-
 def _printout( text ):
     """Private. Redirect the passed text to stdout."""
     sys.stdout.write(text)
@@ -127,14 +124,6 @@ class SNMApp(wx.App):
         self._showCenterOfMass = True
         
         self._COMErrorScale = 0.03
-        
-        self._timeAtStart = time.time() * 1000
-        
-        
-        params = [3.75162180e-04, 1.70361201e+00, -7.30441228e-01, -6.22795336e-01, 3.05330848e-01]
-        fps = 100
-        
-        self._armaProcess = ArmaProcess(params[0], params[1:3], params[3:5], fps)
             
     #
     # Private methods
@@ -177,15 +166,13 @@ class SNMApp(wx.App):
             self._glCanvas.endShadows()    
             
         if len(self._characters) > 0:
+            
+            self.updateCOMError()
+            
             self.COMPanel.update()
             
-            # self._characters[0].COMController.step()
-
-            # self._characters[0].drawRealCOM(flags)
-            # self._characters[0].drawPerceivedCOM(flags)
-            
-            self.setCOMX(self._armaProcess.generate_frame())
-
+            self._characters[0].drawRealCOM(flags)
+            self._characters[0].drawPercievedCOM(flags)
 
     def postDraw(self):
         """Perform some operation once the entire OpenGL window has been drawn"""
@@ -219,7 +206,7 @@ class SNMApp(wx.App):
             currPhi = controller.getPhase()
         
     def updateCOMError(self):
-        sins = [0.3, 1, 2, 3, 0.5, 1.3, 1.8, 3.4, 0.4, 0.811, 1.5, 3.04]
+        sins = [0.3, 1, 2, 3, 0.5, 1.3, 1.8, 3.4, 0.4, 0.8, 1.5, 3.04]
         t = time.time()
         
         # Map each sin weight to the reciprocal of the frequency
@@ -235,7 +222,6 @@ class SNMApp(wx.App):
         self.setCOMY(y)
         self.setCOMZ(z)
         
-        
     def discreteSinusoids(self, sins, t):
         accumulator = 0
         for sin, weight in sins:
@@ -244,7 +230,6 @@ class SNMApp(wx.App):
             accumulator += math.sin((t * sin) * (2 * math.pi)) * weight
             
         return accumulator
-        
         
     def simulationStep(self):
         """Performs a single simulation step"""
@@ -564,39 +549,32 @@ class SNMApp(wx.App):
         self._snapshotTree = SnapshotBranch()    
         
     def setCOMX(self, val):
-    
         if len(self._characters) > 0:
-           self._characters[0].COMController.COMOffset.x = val
+            self._characters[0].COM_offset.x = val
     
     def getCOMX(self):
         if len(self._characters) > 0:
-            
-            controller = self._characters[0].COMController
-            return controller.getCOME().x - controller.getCOM().x
+            return self._characters[0].COM_offset.x
         else:
             return 0
         
     def setCOMY(self, val):
-        
         if len(self._characters) > 0:
-           self._characters[0].COMController.COMOffset.y = val
+            self._characters[0].COM_offset.y = val
     
     def getCOMY(self):
         if len(self._characters) > 0:
-            controller = self._characters[0].COMController
-            return controller.getCOME().y - controller.getCOM().y
+            return self._characters[0].COM_offset.y
         else:
             return 0
         
     def setCOMZ(self, val):
-
         if len(self._characters) > 0:
-           self._characters[0].COMController.COMOffset.z = val
+            self._characters[0].COM_offset.z = val
     
     def getCOMZ(self):
         if len(self._characters) > 0:
-            controller = self._characters[0].COMController
-            return controller.getCOME().z - controller.getCOM().z
+            return self._characters[0].COM_offset.z
         else:
             return 0
         
