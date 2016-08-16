@@ -1,1 +1,4 @@
-{}
+{
+  "tests/integration/test_maya_socket_connection.py::test_maya_correct_scene_loaded": true, 
+  "tests/integration/test_pygame_thread.py::test_spin_up_and_kill_pygame_thread": true
+}

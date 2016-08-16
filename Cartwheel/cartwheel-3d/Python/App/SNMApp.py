@@ -12,9 +12,6 @@ from Curve import Curve
 from SnapshotTree import SnapshotBranch 
 from MathLib import Vector3d, Point3d
 
-from ArmaProcess import ArmaProcess
-
-
 def _printout( text ):
     """Private. Redirect the passed text to stdout."""
     sys.stdout.write(text)
@@ -129,9 +126,6 @@ class SNMApp(wx.App):
         self._COMErrorScale = 0.03
         
         self._timeAtStart = time.time() * 1000
-        
-        
-        self._armaProcess = ArmaProcess(0, [-0.6, -0.7, -0.3], [-0.1, -0.2, -0.35])
             
     #
     # Private methods
@@ -181,7 +175,6 @@ class SNMApp(wx.App):
             self._characters[0].drawRealCOM(flags)
             self._characters[0].drawPerceivedCOM(flags)
 
-
     def postDraw(self):
         """Perform some operation once the entire OpenGL window has been drawn"""
         if self._captureScreenShots:
@@ -230,7 +223,6 @@ class SNMApp(wx.App):
         self.setCOMY(y)
         self.setCOMZ(z)
         
-        
     def discreteSinusoids(self, sins, t):
         accumulator = 0
         for sin, weight in sins:
@@ -239,7 +231,6 @@ class SNMApp(wx.App):
             accumulator += math.sin((t * sin) * (2 * math.pi)) * weight
             
         return accumulator
-        
         
     def simulationStep(self):
         """Performs a single simulation step"""
@@ -292,9 +283,6 @@ class SNMApp(wx.App):
                 phi = controller.getPhase()
                 if self._printStepReport:
                     print "step: %3.5f %3.5f %3.5f. Vel: %3.5f %3.5f %3.5f  phi = %f" % ( step.x, step.y, step.z, v.x, v.y, v.z, phi)
-                    
-                    
-        print(self._armaProcess.generate())
 
         
     

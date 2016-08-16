@@ -71,15 +71,12 @@ def main():
 		color_list = DynamicColor(w_sensor, base_color).color
 
 		cp_v = lv.PointVisualizer(w_sensor.centre_of_pressure.get(), gv, color_list)
-		crv = lv.COMRecorderVisualizer(comrc, gv)
 
+
+		crv = lv.COMRecorderVisualizer(comrc, gv)
 
 		pgt.add_draw_task(cp_v.draw)
 		pgt.add_draw_task(crv.draw)
-
-
-	wv = lv.WorldConfigurationVisualizer(sat.world, gv)
-	pgt.add_draw_task(wv.draw)
 
 
 
