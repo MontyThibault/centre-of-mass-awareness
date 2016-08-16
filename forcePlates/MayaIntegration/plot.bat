@@ -1,1 +1,1 @@
-python plot/main.py "data/franco"
+python plot/main.py "data/one_foot"

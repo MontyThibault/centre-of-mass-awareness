@@ -2,11 +2,15 @@ from collections import deque
 import matplotlib.pyplot as plt
 import numpy as np
 
-def convolution_filter(samples, n):
+def convolution_filter(samples, n, FPS):
 
 	x = []
 	y = []
 	z = []
+
+	curvature = []
+	speed = []
+
 
 	convolution = deque([], n)
 
@@ -36,16 +40,73 @@ def convolution_filter(samples, n):
 			accum[2] += c[1] / len(convolution)
 
 
-		# Disable convolution
+		# To disable convolution
+
 		# accum[0] = s[0][0]
 		# accum[1] = s[0][1]
 		# accum[2] = s[1]
+
+
+		# Add point
 
 		x.append(accum[0])
 		y.append(accum[1])
 		z.append(accum[2])
 
-	return x, y, z
+
+		# Add speed
+
+		if len(x) == 1:
+
+			speed.append(None)
+
+		else:
+
+			length = (((x[-1] - x[-2]) ** 2) + 
+				((y[-1] - y[-2]) ** 2)) ** 0.5
+
+			speed.append(length * FPS)
+
+
+
+
+
+
+	return x, y, z, speed, curvature
+
+
+
+# Use plt.hist instead
+
+# def bar_graph(samples, num_buckets):
+# 
+# 
+# # 	buckets = [0 for _ in range(num_buckets)]
+# 
+# # 	max_ = float(max(samples))
+# 
+# 
+# # 	for sample in samples:
+# 
+# # 		sample_bucket = int((sample / max_) * num_buckets)
+# 
+# # 		# Avoid overflowing for the max value
+# # 		if sample_bucket == num_buckets:
+# # 			sample_bucket -= 1
+# 
+# # 		buckets[sample_bucket] += 1
+# 
+# 
+# # 	indicies = [(float(i) / num_buckets) * max_ for i in range(num_buckets)]
+# # 	width = (1.0 / num_buckets) * max_
+# 
+# # 	plt.bar(indicies, buckets, width)
+# 
+# # 	plt.title('Centre of Pressure Velocity')
+# # 	plt.xlabel('Centre of Pressure Velocity (m/s)')
+# # 	plt.ylabel('Relative Frequency')
+# 
+# # 	plt.show()
 
 
 
@@ -83,4 +144,10 @@ def colored_line(x, y, z=None, linewidth=1, MAP='jet'):
 	cm = plt.get_cmap(MAP)
 	ax.pcolormesh(xs, ys, zs, shading='gouraud', cmap=cm)
 	plt.axis('scaled')
+
+
+	plt.title('Location of Centre of Pressure')
+	plt.xlabel('X Position (m)')
+	plt.ylabel('Y Position (m)')
+
 	plt.show()
