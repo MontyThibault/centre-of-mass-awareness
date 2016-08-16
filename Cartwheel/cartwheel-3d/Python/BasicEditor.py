@@ -8,7 +8,7 @@ Basic controller editor
 import sys
 sys.path += ['.']
 
-import wx, App, math
+import wx, App
 
 movieResolution = (1280,720)
 movieSetup = False # True if we want a movie
@@ -45,6 +45,9 @@ if not movieSetup:
     controllerSnapshotToolSet._toolSet.setOpen(False)
     controllerTreeToolSet = UI.ToolSets.ControllerTree(toolPanel)
     controllerTreeToolSet._toolSet.setOpen(False)
+
+
+app.COMPanel = UI.ToolSets.CoMSliders(toolPanel)
 
 glCanvas = app.getGLCanvas()
 glCanvas.addGLUITool( UI.GLUITools.CurveEditorCollection )

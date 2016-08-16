@@ -10,6 +10,7 @@
 %{
 #include "SimGlobals.h"
 #include "Character.h"
+#include "CentreOfMass.h"
 #include "BalanceFeedback.h"
 #include "SimBiConState.h"
 #include "Controller.h"
@@ -41,6 +42,7 @@
 %apply SWIGTYPE *DISOWN { RigidBody* rigidBody_disown };
 %apply SWIGTYPE *DISOWN { ArticulatedFigure* articulatedFigure_disown };
 %apply SWIGTYPE *DISOWN { Character* character_disown };
+%apply SWIGTYPE *DISOWN { CentreOfMass* centreOfMass_disown };
 %apply SWIGTYPE *DISOWN { SimBiController* controller_disown };
 %apply SWIGTYPE *DISOWN { TrajectoryComponent* trajComp_disown };
 %apply SWIGTYPE *DISOWN { ExternalForce* extForce_disown };
@@ -54,6 +56,7 @@
 %import "../MathLib/MathLib.i"
 %include "SimGlobals.h"
 %include "Character.h"
+%include "CentreOfMass.h"
 %include "BalanceFeedback.h"
 %include "SimBiConState.h"
 %include "Controller.h"
@@ -72,6 +75,7 @@
 #define CORE_CAST_TO( className ) CORE_DECLSPEC inline className* castTo##className(void* obj) { return (className*)obj; }
 
 CORE_CAST_TO( Character )
+CORE_CAST_TO( CentreOfMass )
 CORE_CAST_TO( Controller )
 CORE_CAST_TO( PoseController )
 CORE_CAST_TO( SimBiController )

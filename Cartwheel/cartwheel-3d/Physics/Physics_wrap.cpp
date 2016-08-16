@@ -14958,6 +14958,7 @@ SWIG_init(void) {
   SWIG_Python_SetConstant(d, "SHOW_FRICTION_PARTICLES",SWIG_From_int(static_cast< int >(0x0080)));
   SWIG_Python_SetConstant(d, "SHOW_ABSTRACT_VIEW",SWIG_From_int(static_cast< int >(0x0100)));
   SWIG_Python_SetConstant(d, "SHOW_ABSTRACT_VIEW_SKELETON",SWIG_From_int(static_cast< int >(0x0200)));
+  SWIG_Python_SetConstant(d, "SHOW_CENTER_OF_MASS",SWIG_From_int(static_cast< int >(0x0400)));
 #if PY_VERSION_HEX >= 0x03000000
   return m;
 #else

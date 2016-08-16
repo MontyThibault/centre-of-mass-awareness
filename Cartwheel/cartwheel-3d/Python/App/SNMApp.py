@@ -12,6 +12,9 @@ from Curve import Curve
 from SnapshotTree import SnapshotBranch 
 from MathLib import Vector3d, Point3d
 
+from ArmaProcess import ArmaProcess
+
+
 def _printout( text ):
     """Private. Redirect the passed text to stdout."""
     sys.stdout.write(text)
@@ -105,28 +108,79 @@ class SNMApp(wx.App):
         self._animationObservable = PyUtils.Observable()
         self._cameraObservable = PyUtils.Observable()
         self._optionsObservable = PyUtils.Observable()
+        
+        self._COMObservable = PyUtils.Observable()
+        
         self._curveList = ObservableList()
         self._snapshotTree = SnapshotBranch()
+        
+        
+        self._showAbstractView = False
+        self._showAbstractViewSkeleton = False
+        self._showBodyFrame = False
+        self._showCDPrimitives = False
+        self._showColors = False
+        self._showFrictionParticles = False
+        self._showJoints = False
+        self._showMesh = True
+        self._showMinBDGSphere = False
+        self._showCenterOfMass = True
+        
+        self._COMErrorScale = 0.03
+        
+        self._timeAtStart = time.time() * 1000
+        
+        
+        self._armaProcess = ArmaProcess(0, [-0.6, -0.7, -0.3], [-0.1, -0.2, -0.35])
             
     #
     # Private methods
+    
         
     def draw(self):
         """Draw the content of the world"""
         world = Physics.world()
-                    
+        
+        flags = 0
+        if self._showAbstractView: 
+            flags = flags | Physics.SHOW_ABSTRACT_VIEW
+        if self._showAbstractViewSkeleton:
+            flags = flags | Physics.SHOW_ABSTRACT_VIEW_SKELETON
+        if self._showBodyFrame:
+            flags = flags | Physics.SHOW_BODY_FRAME
+        if self._showCDPrimitives:
+            flags = flags | Physics.SHOW_CD_PRIMITIVES
+        if self._showColors:
+            flags = flags | Physics.SHOW_COLOURS
+        if self._showFrictionParticles:
+            flags = flags | Physics.SHOW_FRICTION_PARTICLES
+        if self._showJoints:
+            flags = flags | Physics.SHOW_JOINTS
+        if self._showMesh:
+            flags = flags | Physics.SHOW_MESH
+        if self._showMinBDGSphere:
+            flags = flags | Physics.SHOW_MIN_BDG_SPHERE
+        if self._showCenterOfMass:
+            flags = flags | Physics.SHOW_CENTER_OF_MASS
+        
         glEnable(GL_LIGHTING)
-        if self._drawCollisionVolumes:
-            world.drawRBs(Physics.SHOW_MESH|Physics.SHOW_CD_PRIMITIVES)
-        else:
-            world.drawRBs(Physics.SHOW_MESH|Physics.SHOW_COLOURS)            
-#        world.drawRBs(Physics.SHOW_MESH|Physics.SHOW_CD_PRIMITIVES)
+        world.drawRBs(flags)
+        
         glDisable(GL_LIGHTING);
     
         if self._drawShadows:
             self._glCanvas.beginShadows()
             world.drawRBs(Physics.SHOW_MESH)
             self._glCanvas.endShadows()    
+            
+        if len(self._characters) > 0:
+            self.COMPanel.update()
+            
+            self._characters[0].COMController.step()
+            
+            self._characters[0].drawRealCOM(flags)
+            self._characters[0].drawPerceivedCOM(flags)
+
 
     def postDraw(self):
         """Perform some operation once the entire OpenGL window has been drawn"""
@@ -158,6 +212,34 @@ class SNMApp(wx.App):
         while currPhi > initialPhi :
             self.simulationStep()
             currPhi = controller.getPhase()
+        
+    def updateCOMError(self):
+        sins = [0.3, 1, 2, 3, 0.5, 1.3, 1.8, 3.4, 0.4, 0.811, 1.5, 3.04]
+        t = time.time()
+        
+        # Map each sin weight to the reciprocal of the frequency
+        sins = map(lambda x: (x, 1/x), sins)
+        
+        x = self.discreteSinusoids(sins[:4], t)
+        y = self.discreteSinusoids(sins[4:8], t + 1021.34353)
+        z = self.discreteSinusoids(sins[8:], t + 543.4346)
+        
+        (x, y, z) = map(lambda x: x * self._COMErrorScale, (x, y, z))
+        
+        self.setCOMX(x)
+        self.setCOMY(y)
+        self.setCOMZ(z)
+        
+        
+    def discreteSinusoids(self, sins, t):
+        accumulator = 0
+        for sin, weight in sins:
+            # Here, sin is interpreted as `t-times` per second
+            # And t is the number of seconds
+            accumulator += math.sin((t * sin) * (2 * math.pi)) * weight
+            
+        return accumulator
+        
         
     def simulationStep(self):
         """Performs a single simulation step"""
@@ -210,6 +292,9 @@ class SNMApp(wx.App):
                 phi = controller.getPhase()
                 if self._printStepReport:
                     print "step: %3.5f %3.5f %3.5f. Vel: %3.5f %3.5f %3.5f  phi = %f" % ( step.x, step.y, step.z, v.x, v.y, v.z, phi)
+                    
+                    
+        print(self._armaProcess.generate())
 
         
     
@@ -317,6 +402,26 @@ class SNMApp(wx.App):
     def getKinematicMotion(self):
         """Does the application animate only kinematic motion?"""
         return self._kinematicMotion
+    
+    def setOption(self, option):
+        """ Generates a function for setting an attribute of this class instance. """
+        
+        def callable_(value):
+
+            if value != getattr(self, option):
+                setattr(self, option, value)
+                self._optionsObservable.notifyObservers()
+            
+        return callable_
+    
+    
+    def getOption(self, option):
+        """ Generates a function for getting an attribute of this class instance. """
+        
+        def callable_():
+            return getattr(self, option)
+        
+        return callable_
     
     def captureScreenShots(self, capture):
         """Indicates whether the application should capture a screenshot at every frame."""
@@ -455,6 +560,47 @@ class SNMApp(wx.App):
     def deleteAllSnapshots(self):
         """Delete all the snapshots of the world."""
         self._snapshotTree = SnapshotBranch()    
+        
+    def setCOMX(self, val):
+        pass
+    
+        # if len(self._characters) > 0:
+        #    self._characters[0].COMController.COMOffset.x = val
+    
+    def getCOMX(self):
+        if len(self._characters) > 0:
+            
+            controller = self._characters[0].COMController
+            return controller.getCOME().x - controller.getCOM().x
+        else:
+            return 0
+        
+    def setCOMY(self, val):
+        pass 
+        
+        # if len(self._characters) > 0:
+        #    self._characters[0].COMController.COMOffset.y = val
+    
+    def getCOMY(self):
+        if len(self._characters) > 0:
+            controller = self._characters[0].COMController
+            return controller.getCOME().y - controller.getCOM().y
+        else:
+            return 0
+        
+    def setCOMZ(self, val):
+        pass
+    
+        # if len(self._characters) > 0:
+        #    self._characters[0].COMController.COMOffset.z = val
+    
+    def getCOMZ(self):
+        if len(self._characters) > 0:
+            controller = self._characters[0].COMController
+            return controller.getCOME().z - controller.getCOM().z
+        else:
+            return 0
+        
     #
     # For observers
     #    
@@ -487,5 +633,12 @@ class SNMApp(wx.App):
     
     def deleteOptionsObserver(self, observer):
         self._optionsObservable.deleteObserver(observer)
+        
+    def addCOMObserver(self, observer):
+        self._COMObservable.addObserver(observer)
+    
+    def deleteCOMObserver(self, observer):
+        self._COMObservable.deleteObserver(observer)
+        
         
     

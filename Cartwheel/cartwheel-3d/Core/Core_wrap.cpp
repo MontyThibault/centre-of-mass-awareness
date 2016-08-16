@@ -3169,52 +3169,54 @@ namespace Swig {
 #define SWIGTYPE_p_BalanceFeedback swig_types[2]
 #define SWIGTYPE_p_BallInSocketJoint swig_types[3]
 #define SWIGTYPE_p_BehaviourController swig_types[4]
-#define SWIGTYPE_p_Character swig_types[5]
-#define SWIGTYPE_p_ControlParams swig_types[6]
-#define SWIGTYPE_p_Controller swig_types[7]
-#define SWIGTYPE_p_DoubleStanceFeedback swig_types[8]
-#define SWIGTYPE_p_DuckController swig_types[9]
-#define SWIGTYPE_p_ExternalForce swig_types[10]
-#define SWIGTYPE_p_FILE swig_types[11]
-#define SWIGTYPE_p_GenericTrajectoryT_Point3d_t swig_types[12]
-#define SWIGTYPE_p_GenericTrajectoryT_Vector3d_t swig_types[13]
-#define SWIGTYPE_p_GenericTrajectoryT_double_t swig_types[14]
-#define SWIGTYPE_p_HingeJoint swig_types[15]
-#define SWIGTYPE_p_IKVMCController swig_types[16]
-#define SWIGTYPE_p_Joint swig_types[17]
-#define SWIGTYPE_p_LinearBalanceFeedback swig_types[18]
-#define SWIGTYPE_p_Observable swig_types[19]
-#define SWIGTYPE_p_Point3d swig_types[20]
-#define SWIGTYPE_p_PoseController swig_types[21]
-#define SWIGTYPE_p_Quaternion swig_types[22]
-#define SWIGTYPE_p_ReducedCharacterState swig_types[23]
-#define SWIGTYPE_p_ReducedCharacterStateArray swig_types[24]
-#define SWIGTYPE_p_RelevantJoint swig_types[25]
-#define SWIGTYPE_p_SimBiConState swig_types[26]
-#define SWIGTYPE_p_SimBiController swig_types[27]
-#define SWIGTYPE_p_SimBiControllerState swig_types[28]
-#define SWIGTYPE_p_SimGlobals swig_types[29]
-#define SWIGTYPE_p_StiffJoint swig_types[30]
-#define SWIGTYPE_p_Trajectory swig_types[31]
-#define SWIGTYPE_p_TrajectoryComponent swig_types[32]
-#define SWIGTYPE_p_TurnController swig_types[33]
-#define SWIGTYPE_p_TwoLinkIK swig_types[34]
-#define SWIGTYPE_p_UniversalJoint swig_types[35]
-#define SWIGTYPE_p_Vector3d swig_types[36]
-#define SWIGTYPE_p_World swig_types[37]
-#define SWIGTYPE_p_WorldOracle swig_types[38]
-#define SWIGTYPE_p_allocator_type swig_types[39]
-#define SWIGTYPE_p_char swig_types[40]
-#define SWIGTYPE_p_difference_type swig_types[41]
-#define SWIGTYPE_p_double swig_types[42]
-#define SWIGTYPE_p_size_type swig_types[43]
-#define SWIGTYPE_p_std__vectorT_ContactPoint_std__allocatorT_ContactPoint_t_t swig_types[44]
-#define SWIGTYPE_p_std__vectorT_TrajectoryComponent_p_std__allocatorT_TrajectoryComponent_p_t_t swig_types[45]
-#define SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t swig_types[46]
-#define SWIGTYPE_p_unsigned_int swig_types[47]
-#define SWIGTYPE_p_value_type swig_types[48]
-static swig_type_info *swig_types[50];
-static swig_module_info swig_module = {swig_types, 49, 0, 0, 0, 0};
+#define SWIGTYPE_p_CentreOfMass swig_types[5]
+#define SWIGTYPE_p_Character swig_types[6]
+#define SWIGTYPE_p_ControlParams swig_types[7]
+#define SWIGTYPE_p_Controller swig_types[8]
+#define SWIGTYPE_p_DoubleStanceFeedback swig_types[9]
+#define SWIGTYPE_p_DuckController swig_types[10]
+#define SWIGTYPE_p_ExternalForce swig_types[11]
+#define SWIGTYPE_p_FILE swig_types[12]
+#define SWIGTYPE_p_GenericTrajectoryT_Point3d_t swig_types[13]
+#define SWIGTYPE_p_GenericTrajectoryT_Vector3d_t swig_types[14]
+#define SWIGTYPE_p_GenericTrajectoryT_double_t swig_types[15]
+#define SWIGTYPE_p_HingeJoint swig_types[16]
+#define SWIGTYPE_p_IKVMCController swig_types[17]
+#define SWIGTYPE_p_Joint swig_types[18]
+#define SWIGTYPE_p_LinearBalanceFeedback swig_types[19]
+#define SWIGTYPE_p_Observable swig_types[20]
+#define SWIGTYPE_p_Point3d swig_types[21]
+#define SWIGTYPE_p_PoseController swig_types[22]
+#define SWIGTYPE_p_Quaternion swig_types[23]
+#define SWIGTYPE_p_ReducedCharacterState swig_types[24]
+#define SWIGTYPE_p_ReducedCharacterStateArray swig_types[25]
+#define SWIGTYPE_p_RelevantJoint swig_types[26]
+#define SWIGTYPE_p_RigidBodyError swig_types[27]
+#define SWIGTYPE_p_SimBiConState swig_types[28]
+#define SWIGTYPE_p_SimBiController swig_types[29]
+#define SWIGTYPE_p_SimBiControllerState swig_types[30]
+#define SWIGTYPE_p_SimGlobals swig_types[31]
+#define SWIGTYPE_p_StiffJoint swig_types[32]
+#define SWIGTYPE_p_Trajectory swig_types[33]
+#define SWIGTYPE_p_TrajectoryComponent swig_types[34]
+#define SWIGTYPE_p_TurnController swig_types[35]
+#define SWIGTYPE_p_TwoLinkIK swig_types[36]
+#define SWIGTYPE_p_UniversalJoint swig_types[37]
+#define SWIGTYPE_p_Vector3d swig_types[38]
+#define SWIGTYPE_p_World swig_types[39]
+#define SWIGTYPE_p_WorldOracle swig_types[40]
+#define SWIGTYPE_p_allocator_type swig_types[41]
+#define SWIGTYPE_p_char swig_types[42]
+#define SWIGTYPE_p_difference_type swig_types[43]
+#define SWIGTYPE_p_double swig_types[44]
+#define SWIGTYPE_p_size_type swig_types[45]
+#define SWIGTYPE_p_std__vectorT_ContactPoint_std__allocatorT_ContactPoint_t_t swig_types[46]
+#define SWIGTYPE_p_std__vectorT_TrajectoryComponent_p_std__allocatorT_TrajectoryComponent_p_t_t swig_types[47]
+#define SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t swig_types[48]
+#define SWIGTYPE_p_unsigned_int swig_types[49]
+#define SWIGTYPE_p_value_type swig_types[50]
+static swig_type_info *swig_types[52];
+static swig_module_info swig_module = {swig_types, 51, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -3316,6 +3318,7 @@ namespace swig {
 
 #include "SimGlobals.h"
 #include "Character.h"
+#include "CentreOfMass.h"
 #include "BalanceFeedback.h"
 #include "SimBiConState.h"
 #include "Controller.h"
@@ -4886,6 +4889,7 @@ SWIG_From_unsigned_SS_int  (unsigned int value)
 #define CORE_CAST_TO( className ) CORE_DECLSPEC inline className* castTo##className(void* obj) { return (className*)obj; }
 
 CORE_CAST_TO( Character )
+CORE_CAST_TO( CentreOfMass )
 CORE_CAST_TO( Controller )
 CORE_CAST_TO( PoseController )
 CORE_CAST_TO( SimBiController )
@@ -5543,6 +5547,58 @@ SWIGINTERN PyObject *_wrap_new_Character(PyObject *SWIGUNUSEDPARM(self), PyObjec
   if (!PyArg_ParseTuple(args,(char *)":new_Character")) SWIG_fail;
   result = (Character *)new Character();
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Character, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Character_COMController_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Character *arg1 = (Character *) 0 ;
+  CentreOfMass *arg2 = (CentreOfMass *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:Character_COMController_set",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Character, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Character_COMController_set" "', argument " "1"" of type '" "Character *""'"); 
+  }
+  arg1 = reinterpret_cast< Character * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_CentreOfMass, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Character_COMController_set" "', argument " "2"" of type '" "CentreOfMass *""'"); 
+  }
+  arg2 = reinterpret_cast< CentreOfMass * >(argp2);
+  if (arg1) (arg1)->COMController = *arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Character_COMController_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Character *arg1 = (Character *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  CentreOfMass *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Character_COMController_get",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Character, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Character_COMController_get" "', argument " "1"" of type '" "Character *""'"); 
+  }
+  arg1 = reinterpret_cast< Character * >(argp1);
+  result = (CentreOfMass *)& ((arg1)->COMController);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_CentreOfMass, 0 |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -6563,6 +6619,66 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_Character_drawRealCOM(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Character *arg1 = (Character *) 0 ;
+  int arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:Character_drawRealCOM",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Character, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Character_drawRealCOM" "', argument " "1"" of type '" "Character *""'"); 
+  }
+  arg1 = reinterpret_cast< Character * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Character_drawRealCOM" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  (arg1)->drawRealCOM(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Character_drawPerceivedCOM(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Character *arg1 = (Character *) 0 ;
+  int arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:Character_drawPerceivedCOM",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Character, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Character_drawPerceivedCOM" "', argument " "1"" of type '" "Character *""'"); 
+  }
+  arg1 = reinterpret_cast< Character * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Character_drawPerceivedCOM" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  (arg1)->drawPerceivedCOM(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *Character_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *obj;
   if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
@@ -7371,6 +7487,448 @@ SWIGINTERN PyObject *ReducedCharacterState_swigregister(PyObject *SWIGUNUSEDPARM
   PyObject *obj;
   if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
   SWIG_TypeNewClientData(SWIGTYPE_p_ReducedCharacterState, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *_wrap_new_RigidBodyError__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  RigidBodyError *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)":new_RigidBodyError")) SWIG_fail;
+  result = (RigidBodyError *)new RigidBodyError();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_RigidBodyError, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_RigidBodyError__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  ArticulatedRigidBody *arg1 = (ArticulatedRigidBody *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  RigidBodyError *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:new_RigidBodyError",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_ArticulatedRigidBody, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_RigidBodyError" "', argument " "1"" of type '" "ArticulatedRigidBody *""'"); 
+  }
+  arg1 = reinterpret_cast< ArticulatedRigidBody * >(argp1);
+  result = (RigidBodyError *)new RigidBodyError(arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_RigidBodyError, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_RigidBodyError(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[2];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 1); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 0) {
+    return _wrap_new_RigidBodyError__SWIG_0(self, args);
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_ArticulatedRigidBody, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_new_RigidBodyError__SWIG_1(self, args);
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'new_RigidBodyError'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    RigidBodyError()\n"
+    "    RigidBodyError(ArticulatedRigidBody *)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_RigidBodyError_arb_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  RigidBodyError *arg1 = (RigidBodyError *) 0 ;
+  ArticulatedRigidBody *arg2 = (ArticulatedRigidBody *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:RigidBodyError_arb_set",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_RigidBodyError, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RigidBodyError_arb_set" "', argument " "1"" of type '" "RigidBodyError *""'"); 
+  }
+  arg1 = reinterpret_cast< RigidBodyError * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_ArticulatedRigidBody, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "RigidBodyError_arb_set" "', argument " "2"" of type '" "ArticulatedRigidBody *""'"); 
+  }
+  arg2 = reinterpret_cast< ArticulatedRigidBody * >(argp2);
+  if (arg1) (arg1)->arb = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_RigidBodyError_arb_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  RigidBodyError *arg1 = (RigidBodyError *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ArticulatedRigidBody *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:RigidBodyError_arb_get",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_RigidBodyError, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RigidBodyError_arb_get" "', argument " "1"" of type '" "RigidBodyError *""'"); 
+  }
+  arg1 = reinterpret_cast< RigidBodyError * >(argp1);
+  result = (ArticulatedRigidBody *) ((arg1)->arb);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_ArticulatedRigidBody, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_RigidBodyError_getMassE(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  RigidBodyError *arg1 = (RigidBodyError *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:RigidBodyError_getMassE",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_RigidBodyError, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RigidBodyError_getMassE" "', argument " "1"" of type '" "RigidBodyError *""'"); 
+  }
+  arg1 = reinterpret_cast< RigidBodyError * >(argp1);
+  result = (double)(arg1)->getMassE();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_RigidBodyError_getCMPositionE(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  RigidBodyError *arg1 = (RigidBodyError *) 0 ;
+  Vector3d arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  Vector3d result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:RigidBodyError_getCMPositionE",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_RigidBodyError, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RigidBodyError_getCMPositionE" "', argument " "1"" of type '" "RigidBodyError *""'"); 
+  }
+  arg1 = reinterpret_cast< RigidBodyError * >(argp1);
+  {
+    res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_Vector3d,  0  | 0);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "RigidBodyError_getCMPositionE" "', argument " "2"" of type '" "Vector3d""'"); 
+    }  
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "RigidBodyError_getCMPositionE" "', argument " "2"" of type '" "Vector3d""'");
+    } else {
+      Vector3d * temp = reinterpret_cast< Vector3d * >(argp2);
+      arg2 = *temp;
+      if (SWIG_IsNewObj(res2)) delete temp;
+    }
+  }
+  result = (arg1)->getCMPositionE(arg2);
+  resultobj = SWIG_NewPointerObj((new Vector3d(static_cast< const Vector3d& >(result))), SWIGTYPE_p_Vector3d, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_RigidBodyError(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  RigidBodyError *arg1 = (RigidBodyError *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:delete_RigidBodyError",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_RigidBodyError, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_RigidBodyError" "', argument " "1"" of type '" "RigidBodyError *""'"); 
+  }
+  arg1 = reinterpret_cast< RigidBodyError * >(argp1);
+  delete arg1;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *RigidBodyError_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_RigidBodyError, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *_wrap_new_CentreOfMass__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  CentreOfMass *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)":new_CentreOfMass")) SWIG_fail;
+  result = (CentreOfMass *)new CentreOfMass();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_CentreOfMass, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_CentreOfMass__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  ArticulatedFigure *arg1 = (ArticulatedFigure *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  CentreOfMass *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:new_CentreOfMass",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_ArticulatedFigure, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_CentreOfMass" "', argument " "1"" of type '" "ArticulatedFigure *""'"); 
+  }
+  arg1 = reinterpret_cast< ArticulatedFigure * >(argp1);
+  result = (CentreOfMass *)new CentreOfMass(arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_CentreOfMass, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_CentreOfMass(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[2];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 1); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 0) {
+    return _wrap_new_CentreOfMass__SWIG_0(self, args);
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_ArticulatedFigure, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_new_CentreOfMass__SWIG_1(self, args);
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'new_CentreOfMass'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    CentreOfMass()\n"
+    "    CentreOfMass(ArticulatedFigure *)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_CentreOfMass(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  CentreOfMass *arg1 = (CentreOfMass *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:delete_CentreOfMass",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_CentreOfMass, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_CentreOfMass" "', argument " "1"" of type '" "CentreOfMass *""'"); 
+  }
+  arg1 = reinterpret_cast< CentreOfMass * >(argp1);
+  delete arg1;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_CentreOfMass_getCOM(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  CentreOfMass *arg1 = (CentreOfMass *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  Vector3d result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:CentreOfMass_getCOM",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_CentreOfMass, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CentreOfMass_getCOM" "', argument " "1"" of type '" "CentreOfMass *""'"); 
+  }
+  arg1 = reinterpret_cast< CentreOfMass * >(argp1);
+  result = (arg1)->getCOM();
+  resultobj = SWIG_NewPointerObj((new Vector3d(static_cast< const Vector3d& >(result))), SWIGTYPE_p_Vector3d, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_CentreOfMass_getCOMVelocity(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  CentreOfMass *arg1 = (CentreOfMass *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  Vector3d result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:CentreOfMass_getCOMVelocity",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_CentreOfMass, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CentreOfMass_getCOMVelocity" "', argument " "1"" of type '" "CentreOfMass *""'"); 
+  }
+  arg1 = reinterpret_cast< CentreOfMass * >(argp1);
+  result = (arg1)->getCOMVelocity();
+  resultobj = SWIG_NewPointerObj((new Vector3d(static_cast< const Vector3d& >(result))), SWIGTYPE_p_Vector3d, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_CentreOfMass_getCOME(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  CentreOfMass *arg1 = (CentreOfMass *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  Vector3d result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:CentreOfMass_getCOME",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_CentreOfMass, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CentreOfMass_getCOME" "', argument " "1"" of type '" "CentreOfMass *""'"); 
+  }
+  arg1 = reinterpret_cast< CentreOfMass * >(argp1);
+  result = (arg1)->getCOME();
+  resultobj = SWIG_NewPointerObj((new Vector3d(static_cast< const Vector3d& >(result))), SWIGTYPE_p_Vector3d, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_CentreOfMass_getCOMVelocityE(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  CentreOfMass *arg1 = (CentreOfMass *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  Vector3d result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:CentreOfMass_getCOMVelocityE",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_CentreOfMass, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CentreOfMass_getCOMVelocityE" "', argument " "1"" of type '" "CentreOfMass *""'"); 
+  }
+  arg1 = reinterpret_cast< CentreOfMass * >(argp1);
+  result = (arg1)->getCOMVelocityE();
+  resultobj = SWIG_NewPointerObj((new Vector3d(static_cast< const Vector3d& >(result))), SWIGTYPE_p_Vector3d, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_CentreOfMass_step(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  CentreOfMass *arg1 = (CentreOfMass *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:CentreOfMass_step",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_CentreOfMass, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CentreOfMass_step" "', argument " "1"" of type '" "CentreOfMass *""'"); 
+  }
+  arg1 = reinterpret_cast< CentreOfMass * >(argp1);
+  (arg1)->step();
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_CentreOfMass_stepDraw(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  CentreOfMass *arg1 = (CentreOfMass *) 0 ;
+  int arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:CentreOfMass_stepDraw",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_CentreOfMass, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CentreOfMass_stepDraw" "', argument " "1"" of type '" "CentreOfMass *""'"); 
+  }
+  arg1 = reinterpret_cast< CentreOfMass * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "CentreOfMass_stepDraw" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  (arg1)->stepDraw(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *CentreOfMass_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_CentreOfMass, SWIG_NewClientData(obj));
   return SWIG_Py_Void();
 }
 
@@ -21870,6 +22428,26 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_castToCentreOfMass(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  void *arg1 = (void *) 0 ;
+  int res1 ;
+  PyObject * obj0 = 0 ;
+  CentreOfMass *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:castToCentreOfMass",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0,SWIG_as_voidptrptr(&arg1), 0, 0);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "castToCentreOfMass" "', argument " "1"" of type '" "void *""'"); 
+  }
+  result = (CentreOfMass *)castToCentreOfMass(arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_CentreOfMass, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_castToController(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   void *arg1 = (void *) 0 ;
@@ -22128,6 +22706,8 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"delete_ReducedCharacterStateArray", _wrap_delete_ReducedCharacterStateArray, METH_VARARGS, NULL},
 	 { (char *)"ReducedCharacterStateArray_swigregister", ReducedCharacterStateArray_swigregister, METH_VARARGS, NULL},
 	 { (char *)"new_Character", _wrap_new_Character, METH_VARARGS, NULL},
+	 { (char *)"Character_COMController_set", _wrap_Character_COMController_set, METH_VARARGS, NULL},
+	 { (char *)"Character_COMController_get", _wrap_Character_COMController_get, METH_VARARGS, NULL},
 	 { (char *)"delete_Character", _wrap_delete_Character, METH_VARARGS, NULL},
 	 { (char *)"Character_getRelativeOrientation", _wrap_Character_getRelativeOrientation, METH_VARARGS, NULL},
 	 { (char *)"Character_getRelativeAngularVelocity", _wrap_Character_getRelativeAngularVelocity, METH_VARARGS, NULL},
@@ -22145,6 +22725,8 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Character_getReverseStanceState", _wrap_Character_getReverseStanceState, METH_VARARGS, NULL},
 	 { (char *)"Character_getCOM", _wrap_Character_getCOM, METH_VARARGS, NULL},
 	 { (char *)"Character_getCOMVelocity", _wrap_Character_getCOMVelocity, METH_VARARGS, NULL},
+	 { (char *)"Character_drawRealCOM", _wrap_Character_drawRealCOM, METH_VARARGS, NULL},
+	 { (char *)"Character_drawPerceivedCOM", _wrap_Character_drawPerceivedCOM, METH_VARARGS, NULL},
 	 { (char *)"Character_swigregister", Character_swigregister, METH_VARARGS, NULL},
 	 { (char *)"computeHeading", _wrap_computeHeading, METH_VARARGS, NULL},
 	 { (char *)"RelevantJoint_jIndex_set", _wrap_RelevantJoint_jIndex_set, METH_VARARGS, NULL},
@@ -22174,6 +22756,22 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"ReducedCharacterState_bigBird3d_computeDistanceTo", _wrap_ReducedCharacterState_bigBird3d_computeDistanceTo, METH_VARARGS, NULL},
 	 { (char *)"ReducedCharacterState_bip3dv2_computeDistanceTo", _wrap_ReducedCharacterState_bip3dv2_computeDistanceTo, METH_VARARGS, NULL},
 	 { (char *)"ReducedCharacterState_swigregister", ReducedCharacterState_swigregister, METH_VARARGS, NULL},
+	 { (char *)"new_RigidBodyError", _wrap_new_RigidBodyError, METH_VARARGS, NULL},
+	 { (char *)"RigidBodyError_arb_set", _wrap_RigidBodyError_arb_set, METH_VARARGS, NULL},
+	 { (char *)"RigidBodyError_arb_get", _wrap_RigidBodyError_arb_get, METH_VARARGS, NULL},
+	 { (char *)"RigidBodyError_getMassE", _wrap_RigidBodyError_getMassE, METH_VARARGS, NULL},
+	 { (char *)"RigidBodyError_getCMPositionE", _wrap_RigidBodyError_getCMPositionE, METH_VARARGS, NULL},
+	 { (char *)"delete_RigidBodyError", _wrap_delete_RigidBodyError, METH_VARARGS, NULL},
+	 { (char *)"RigidBodyError_swigregister", RigidBodyError_swigregister, METH_VARARGS, NULL},
+	 { (char *)"new_CentreOfMass", _wrap_new_CentreOfMass, METH_VARARGS, NULL},
+	 { (char *)"delete_CentreOfMass", _wrap_delete_CentreOfMass, METH_VARARGS, NULL},
+	 { (char *)"CentreOfMass_getCOM", _wrap_CentreOfMass_getCOM, METH_VARARGS, NULL},
+	 { (char *)"CentreOfMass_getCOMVelocity", _wrap_CentreOfMass_getCOMVelocity, METH_VARARGS, NULL},
+	 { (char *)"CentreOfMass_getCOME", _wrap_CentreOfMass_getCOME, METH_VARARGS, NULL},
+	 { (char *)"CentreOfMass_getCOMVelocityE", _wrap_CentreOfMass_getCOMVelocityE, METH_VARARGS, NULL},
+	 { (char *)"CentreOfMass_step", _wrap_CentreOfMass_step, METH_VARARGS, NULL},
+	 { (char *)"CentreOfMass_stepDraw", _wrap_CentreOfMass_stepDraw, METH_VARARGS, NULL},
+	 { (char *)"CentreOfMass_swigregister", CentreOfMass_swigregister, METH_VARARGS, NULL},
 	 { (char *)"delete_BalanceFeedback", _wrap_delete_BalanceFeedback, METH_VARARGS, NULL},
 	 { (char *)"BalanceFeedback_getFeedbackContribution", _wrap_BalanceFeedback_getFeedbackContribution, METH_VARARGS, NULL},
 	 { (char *)"BalanceFeedback_writeToFile", _wrap_BalanceFeedback_writeToFile, METH_VARARGS, NULL},
@@ -22619,6 +23217,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"TwoLinkIK_getIKOrientations", _wrap_TwoLinkIK_getIKOrientations, METH_VARARGS, NULL},
 	 { (char *)"TwoLinkIK_swigregister", TwoLinkIK_swigregister, METH_VARARGS, NULL},
 	 { (char *)"castToCharacter", _wrap_castToCharacter, METH_VARARGS, NULL},
+	 { (char *)"castToCentreOfMass", _wrap_castToCentreOfMass, METH_VARARGS, NULL},
 	 { (char *)"castToController", _wrap_castToController, METH_VARARGS, NULL},
 	 { (char *)"castToPoseController", _wrap_castToPoseController, METH_VARARGS, NULL},
 	 { (char *)"castToSimBiController", _wrap_castToSimBiController, METH_VARARGS, NULL},
@@ -22730,6 +23329,7 @@ static swig_type_info _swigt__p_ArticulatedFigure = {"_p_ArticulatedFigure", "Ar
 static swig_type_info _swigt__p_ArticulatedRigidBody = {"_p_ArticulatedRigidBody", "ArticulatedRigidBody *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_BalanceFeedback = {"_p_BalanceFeedback", "BalanceFeedback *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_BehaviourController = {"_p_BehaviourController", "BehaviourController *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_CentreOfMass = {"_p_CentreOfMass", "CentreOfMass *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Character = {"_p_Character", "Character *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_ControlParams = {"_p_ControlParams", "ControlParams *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Controller = {"_p_Controller", "Controller *", 0, 0, (void*)0, 0};
@@ -22754,6 +23354,7 @@ static swig_type_info _swigt__p_Quaternion = {"_p_Quaternion", "Quaternion *", 0
 static swig_type_info _swigt__p_ReducedCharacterState = {"_p_ReducedCharacterState", "ReducedCharacterState *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_ReducedCharacterStateArray = {"_p_ReducedCharacterStateArray", "ReducedCharacterStateArray *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_RelevantJoint = {"_p_RelevantJoint", "RelevantJoint *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_RigidBodyError = {"_p_RigidBodyError", "RigidBodyError *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_SimBiConState = {"_p_SimBiConState", "SimBiConState *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_SimBiController = {"_p_SimBiController", "SimBiController *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_SimBiControllerState = {"_p_SimBiControllerState", "SimBiControllerState *", 0, 0, (void*)0, 0};
@@ -22782,6 +23383,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_BalanceFeedback,
   &_swigt__p_BallInSocketJoint,
   &_swigt__p_BehaviourController,
+  &_swigt__p_CentreOfMass,
   &_swigt__p_Character,
   &_swigt__p_ControlParams,
   &_swigt__p_Controller,
@@ -22803,6 +23405,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_ReducedCharacterState,
   &_swigt__p_ReducedCharacterStateArray,
   &_swigt__p_RelevantJoint,
+  &_swigt__p_RigidBodyError,
   &_swigt__p_SimBiConState,
   &_swigt__p_SimBiController,
   &_swigt__p_SimBiControllerState,
@@ -22832,6 +23435,7 @@ static swig_cast_info _swigc__p_ArticulatedFigure[] = {  {&_swigt__p_Articulated
 static swig_cast_info _swigc__p_ArticulatedRigidBody[] = {  {&_swigt__p_ArticulatedRigidBody, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_BalanceFeedback[] = {  {&_swigt__p_BalanceFeedback, 0, 0, 0},  {&_swigt__p_LinearBalanceFeedback, _p_LinearBalanceFeedbackTo_p_BalanceFeedback, 0, 0},  {&_swigt__p_DoubleStanceFeedback, _p_DoubleStanceFeedbackTo_p_BalanceFeedback, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_BehaviourController[] = {  {&_swigt__p_BehaviourController, 0, 0, 0},  {&_swigt__p_TurnController, _p_TurnControllerTo_p_BehaviourController, 0, 0},  {&_swigt__p_DuckController, _p_DuckControllerTo_p_BehaviourController, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_CentreOfMass[] = {  {&_swigt__p_CentreOfMass, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Character[] = {  {&_swigt__p_Character, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ControlParams[] = {  {&_swigt__p_ControlParams, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Controller[] = {  {&_swigt__p_Controller, 0, 0, 0},  {&_swigt__p_PoseController, _p_PoseControllerTo_p_Controller, 0, 0},  {&_swigt__p_SimBiController, _p_SimBiControllerTo_p_Controller, 0, 0},  {&_swigt__p_IKVMCController, _p_IKVMCControllerTo_p_Controller, 0, 0},{0, 0, 0, 0}};
@@ -22856,6 +23460,7 @@ static swig_cast_info _swigc__p_Quaternion[] = {  {&_swigt__p_Quaternion, 0, 0, 
 static swig_cast_info _swigc__p_ReducedCharacterState[] = {  {&_swigt__p_ReducedCharacterState, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ReducedCharacterStateArray[] = {  {&_swigt__p_ReducedCharacterStateArray, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_RelevantJoint[] = {  {&_swigt__p_RelevantJoint, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_RigidBodyError[] = {  {&_swigt__p_RigidBodyError, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_SimBiConState[] = {  {&_swigt__p_SimBiConState, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_SimBiController[] = {  {&_swigt__p_SimBiController, 0, 0, 0},  {&_swigt__p_IKVMCController, _p_IKVMCControllerTo_p_SimBiController, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_SimBiControllerState[] = {  {&_swigt__p_SimBiControllerState, 0, 0, 0},{0, 0, 0, 0}};
@@ -22884,6 +23489,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_BalanceFeedback,
   _swigc__p_BallInSocketJoint,
   _swigc__p_BehaviourController,
+  _swigc__p_CentreOfMass,
   _swigc__p_Character,
   _swigc__p_ControlParams,
   _swigc__p_Controller,
@@ -22905,6 +23511,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_ReducedCharacterState,
   _swigc__p_ReducedCharacterStateArray,
   _swigc__p_RelevantJoint,
+  _swigc__p_RigidBodyError,
   _swigc__p_SimBiConState,
   _swigc__p_SimBiController,
   _swigc__p_SimBiControllerState,
