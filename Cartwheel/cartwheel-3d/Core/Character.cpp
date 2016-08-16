@@ -254,9 +254,13 @@ Vector3d Character::getCOM(){
 	// An more straight-foreward implementation just for understanding sake would be
 	// return this->COMController.getCOME();
 
+
 	Vector3d real = this->COMController.getCOM();
-	Vector3d diff = this->COMController.getCOME() - real;
-	return real - diff;
+	// Vector3d diff = this->COMController.getCOME() - real;
+
+	// return real - diff;
+
+	return real;
 }
 
 /**
@@ -295,6 +299,8 @@ void Character::drawPerceivedCOM(int flags) {
 
 	// Draw point cloud
 
+	/*
+
 	// glEnable(GL_BLEND); - Already enabled
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	
@@ -302,6 +308,8 @@ void Character::drawPerceivedCOM(int flags) {
 	glColor4ub(230, 0, 172, (int) ceil(255.0 / samples) * 12.5);
 	
 	this->COMController.stepDraw(samples);
+
+	*/
 
 	// Draw COM
 

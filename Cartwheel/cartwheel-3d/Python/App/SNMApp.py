@@ -131,7 +131,10 @@ class SNMApp(wx.App):
         self._timeAtStart = time.time() * 1000
         
         
-        self._armaProcess = ArmaProcess(0, [-0.6, -0.7, -0.3], [-0.1, -0.2, -0.35])
+        params = [3.75162180e-04, 1.70361201e+00, -7.30441228e-01, -6.22795336e-01, 3.05330848e-01]
+        fps = 100
+        
+        self._armaProcess = ArmaProcess(params[0], params[1:3], params[3:5], fps)
             
     #
     # Private methods
@@ -176,10 +179,12 @@ class SNMApp(wx.App):
         if len(self._characters) > 0:
             self.COMPanel.update()
             
-            self._characters[0].COMController.step()
+            # self._characters[0].COMController.step()
+
+            # self._characters[0].drawRealCOM(flags)
+            # self._characters[0].drawPerceivedCOM(flags)
             
-            self._characters[0].drawRealCOM(flags)
-            self._characters[0].drawPerceivedCOM(flags)
+            self.setCOMX(self._armaProcess.generate_frame())
 
 
     def postDraw(self):
@@ -292,9 +297,6 @@ class SNMApp(wx.App):
                 phi = controller.getPhase()
                 if self._printStepReport:
                     print "step: %3.5f %3.5f %3.5f. Vel: %3.5f %3.5f %3.5f  phi = %f" % ( step.x, step.y, step.z, v.x, v.y, v.z, phi)
-                    
-                    
-        print(self._armaProcess.generate())
 
         
     
@@ -562,10 +564,9 @@ class SNMApp(wx.App):
         self._snapshotTree = SnapshotBranch()    
         
     def setCOMX(self, val):
-        pass
     
-        # if len(self._characters) > 0:
-        #    self._characters[0].COMController.COMOffset.x = val
+        if len(self._characters) > 0:
+           self._characters[0].COMController.COMOffset.x = val
     
     def getCOMX(self):
         if len(self._characters) > 0:
@@ -576,10 +577,9 @@ class SNMApp(wx.App):
             return 0
         
     def setCOMY(self, val):
-        pass 
         
-        # if len(self._characters) > 0:
-        #    self._characters[0].COMController.COMOffset.y = val
+        if len(self._characters) > 0:
+           self._characters[0].COMController.COMOffset.y = val
     
     def getCOMY(self):
         if len(self._characters) > 0:
@@ -589,10 +589,9 @@ class SNMApp(wx.App):
             return 0
         
     def setCOMZ(self, val):
-        pass
-    
-        # if len(self._characters) > 0:
-        #    self._characters[0].COMController.COMOffset.z = val
+
+        if len(self._characters) > 0:
+           self._characters[0].COMController.COMOffset.z = val
     
     def getCOMZ(self):
         if len(self._characters) > 0:

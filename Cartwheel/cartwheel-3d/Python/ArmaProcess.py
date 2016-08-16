@@ -1,10 +1,18 @@
 from collections import deque
 from random import gauss
-
+from time import time
 
 class ArmaProcess(object):
     
-    def __init__(self, c, ar, ma):
+    def __init__(self, c, ar, ma, fps):
+        """
+        
+        c - Constant
+        ar - Autoregression coefficients
+        ma - Moving Average coefficients
+        fps - the framerate of the dataset on which the model was trained
+        
+        """
         
         self.c = c
         self.ar = ar
@@ -12,7 +20,9 @@ class ArmaProcess(object):
         
         self.past_val = deque([0] * len(ar), len(ar))
         self.past_rnd = deque([0] * len(ma), len(ma))
-
+        
+        self.fps = fps
+        self.last_time = time()
         
         
     def generate(self):
@@ -33,3 +43,25 @@ class ArmaProcess(object):
     def generate_n(self, n):
         
         return [self.generate() for _ in range(n)]
+    
+    
+    def generate_frame(self):
+        
+        now = time()
+        
+        num_seconds = now - self.last_time
+        num_samples = int(num_seconds * self.fps)
+        
+        
+        if num_samples == 0:
+            return 0
+        
+        
+        samples = self.generate_n(num_samples)
+        averaged_sample = sum(samples) / num_samples
+        
+        
+        self.last_time = now
+        return averaged_sample
+        
+        

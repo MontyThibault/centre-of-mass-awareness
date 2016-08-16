@@ -26,7 +26,7 @@ if movieSetup:
         showConsole = False
 
 
-app = App.SNMApp("Style Editor", size = size, glCanvasSize=glCanvasSize, showConsole = showConsole)
+app = App.SNMApp("Style Editor", size = size, glCanvasSize=glCanvasSize, showConsole = showConsole, dt=1/1000.0, fps=60)
 
 import UI, Utils, GLUtils, Physics, Core, MathLib, PyUtils
 from App import InstantChar, KeyframeEditor
