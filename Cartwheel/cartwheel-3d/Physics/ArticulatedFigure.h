@@ -18,7 +18,6 @@ class PHYSICS_DECLSPEC ArticulatedFigure : public Observable {
 friend class Character;
 friend class ODEWorld;
 friend class TestApp;
-friend class CentreOfMass;
 protected:
 	//we will keep track of the root of the articulated figure. Based on the outgoing joints we can access its, children, and so on
 	ArticulatedRigidBody* root;
