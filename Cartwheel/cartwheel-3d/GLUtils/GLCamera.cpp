@@ -8,7 +8,7 @@
 GLCamera::GLCamera(void){
 	//initialize to the identity quaternion
 	orientation = Quaternion(1, 0, 0, 0);
-	camDistance = -3.3;
+	camDistance = -4;
 	target = Point3d(0,0,0);
 	rotations = Vector3d(0,0,0);
 	autoOrbit = false;
