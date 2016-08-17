@@ -1,8 +1,8 @@
 # binaries/*
 controlShots/*
 screenShots/*
-*/Debug
-*/Release
+# */Debug
+# */Release
 *.pyc
 simbicon.ncb
 simbicon.suo
