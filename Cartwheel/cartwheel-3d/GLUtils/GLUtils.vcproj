@@ -146,7 +146,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="..\..\lib\Python26\libs\python26.lib opengl32.lib glu32.lib ..\..\lib\glew32.lib ..\..\lib\glut32.lib"
-				OutputFile="$(OutDir)\_$(ProjectName).pyd"
+				OutputFile="$(OutDir)\$(ProjectName).pyd"
 				LinkIncremental="1"
 				IgnoreDefaultLibraryNames="LIBCMT"
 				SubSystem="0"

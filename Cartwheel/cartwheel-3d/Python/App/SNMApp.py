@@ -12,6 +12,9 @@ from Curve import Curve
 from SnapshotTree import SnapshotBranch 
 from MathLib import Vector3d, Point3d
 
+from ArmaProcess import ArmaProcess
+
+
 def _printout( text ):
     """Private. Redirect the passed text to stdout."""
     sys.stdout.write(text)
@@ -123,7 +126,14 @@ class SNMApp(wx.App):
         self._showMinBDGSphere = False
         self._showCenterOfMass = True
         
-        self._COMErrorScale = 0.03
+        self._COMErrorScale = 0.01
+        
+        
+        params = [3.75162180e-04, 1.70361201e+00, -7.30441228e-01, -6.22795336e-01, 3.05330848e-01]
+        fps = 100
+        
+        self._armaX = ArmaProcess(params[0], params[1:3], params[3:5], fps)
+        self._armaY = ArmaProcess(params[0], params[1:3], params[3:5], fps)
             
     #
     # Private methods
@@ -206,22 +216,29 @@ class SNMApp(wx.App):
             currPhi = controller.getPhase()
         
     def updateCOMError(self):
-        sins = [0.3, 1, 2, 3, 0.5, 1.3, 1.8, 3.4, 0.4, 0.8, 1.5, 3.04]
-        t = time.time()
         
-        # Map each sin weight to the reciprocal of the frequency
-        sins = map(lambda x: (x, 1/x), sins)
+        # Apply ARMA process
         
-        x = self.discreteSinusoids(sins[:4], t)
-        y = self.discreteSinusoids(sins[4:8], t + 1021.34353)
-        z = self.discreteSinusoids(sins[8:], t + 543.4346)
+        self.setCOMX(self._armaX.generate_frame() * 0.004)
+        self.setCOMZ(self._armaY.generate_frame() * 0.004)
         
-        (x, y, z) = map(lambda x: x * self._COMErrorScale, (x, y, z))
         
-        self.setCOMX(x)
-        self.setCOMY(y)
-        self.setCOMZ(z)
-        
+#         sins = [0.3, 1, 2, 3, 0.5, 1.3, 1.8, 3.4, 0.4, 0.8, 1.5, 3.04]
+#         t = time.time()
+#         
+#         # Map each sin weight to the reciprocal of the frequency
+#         sins = map(lambda x: (x, 1/x), sins)
+#         
+#         x = self.discreteSinusoids(sins[:4], t)
+#         y = self.discreteSinusoids(sins[4:8], t + 1021.34353)
+#         z = self.discreteSinusoids(sins[8:], t + 543.4346)
+#         
+#         (x, y, z) = map(lambda x: x * self._COMErrorScale, (x, y, z))
+#         
+#         self.setCOMX(x)
+#         self.setCOMY(y)
+#         self.setCOMZ(z)
+#         
     def discreteSinusoids(self, sins, t):
         accumulator = 0
         for sin, weight in sins:
