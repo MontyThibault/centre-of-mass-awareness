@@ -11,7 +11,7 @@ sys.path += ['.']
 import wx, App, math
 
 movieResolution = (1280,720)
-movieSetup = False # True if we want a movie
+movieSetup = True # True if we want a movie
 glMovie = False    # True if we're only interested in recording the GL canvas
                    # False if we want a "screen cast"
 
@@ -64,7 +64,10 @@ character = instantChar.create()
 #controller = PyUtils.load( "Characters.BipV3.Controllers.CartoonySneak", character )
 #controller = PyUtils.load( "Characters.BipV3.Controllers.ZeroWalk", character )
 
-controller = PyUtils.load( "Characters.BipV3.Controllers.HappyWalk", character )
+# This shows off the balance controller well
+controller = PyUtils.load( "Characters.BipV3.Controllers.WireWalk", character )
+
+#controller = PyUtils.load( "Characters.BipV3.Controllers.emps", character )
 #controller = PyUtils.load( "Characters.BipV3.Controllers.run_21-57_0-38_0-10", character )
 #controller = PyUtils.load( "Characters.BipV3.Controllers.FastWalk_3-7_0-53", character )
 #controller = PyUtils.load( "Characters.BipV3.Controllers.EditableWalking", character )

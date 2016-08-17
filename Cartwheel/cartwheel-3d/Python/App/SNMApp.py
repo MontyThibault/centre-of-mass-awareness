@@ -219,9 +219,10 @@ class SNMApp(wx.App):
         
         # Apply ARMA process
         
-        self.setCOMX(self._armaX.generate_frame() * 0.004)
-        self.setCOMZ(self._armaY.generate_frame() * 0.004)
+        # self.setCOMX(self._armaX.generate_frame() * 0.004)
+        # self.setCOMZ(self._armaY.generate_frame() * 0.004)
         
+        pass
         
 #         sins = [0.3, 1, 2, 3, 0.5, 1.3, 1.8, 3.4, 0.4, 0.8, 1.5, 3.04]
 #         t = time.time()
