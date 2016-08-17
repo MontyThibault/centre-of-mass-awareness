@@ -1,10 +1,3 @@
-# Cartwheel/cartwheel-3d/binaries/*
-Cartwheel/cartwheel-3d/controlShots/*
-Cartwheel/cartwheel-3d/screenShots/*
-Cartwheel/cartwheel-3d/*/Debug
-Cartwheel/cartwheel-3d/simbicon.ncb
-Cartwheel/cartwheel-3d/simbicon.suo
-Cartwheel/cartwheel-3d/*.vcproj.*.user
 
 *.svn
 *.vs
@@ -12,7 +5,7 @@ Cartwheel/cartwheel-3d/*.vcproj.*.user
 *.sdf
 *.*.sw*
 __pycache__
-*.pyc
+# *.pyc
 *.log
 *.tlog
 
