@@ -9,5 +9,12 @@ __pycache__
 *.log
 *.tlog
 
+*/Debug
+*/Release
+
+simbicon.ncb
+simbicon.suo
+*.vcproj.*.user
+
 related
 Wall
