@@ -65,7 +65,7 @@ character = instantChar.create()
 #controller = PyUtils.load( "Characters.BipV3.Controllers.ZeroWalk", character )
 
 # This shows off the balance controller well
-controller = PyUtils.load( "Characters.BipV3.Controllers.WireWalk", character )
+controller = PyUtils.load( "Characters.BipV3.Controllers.jerome2", character )
 
 #controller = PyUtils.load( "Characters.BipV3.Controllers.emps", character )
 #controller = PyUtils.load( "Characters.BipV3.Controllers.run_21-57_0-38_0-10", character )

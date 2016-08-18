@@ -95,6 +95,10 @@ class PyGameThread(threading.Thread):
 			self.screen = pygame.display.set_mode((500, 500), self.options)
 			clock = pygame.time.Clock()
 
+			pygame.display.set_caption('Six-Axis Force Sensors - Weighted Centre of Pressure')
+
+			s = pygame.Surface((32, 32))			
+			pygame.display.set_icon(s)
 
 		while True:
 

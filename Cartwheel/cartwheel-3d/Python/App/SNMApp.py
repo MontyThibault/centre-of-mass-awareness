@@ -134,6 +134,14 @@ class SNMApp(wx.App):
         params = [3.75162180e-04, 1.70361201e+00, -7.30441228e-01, -6.22795336e-01, 3.05330848e-01]
         fps = 100
         
+        # params = [0, 0, 0, 0, 0]
+        
+        # fps = 100.0
+        # model_order = (50, 50)
+        # params = [0.00019815056771797725, 1.9687785869242351, -0.9709165752219967, -0.565841931234043, 0.3226849680645409]
+
+
+        
         self._armaX = ArmaProcess(params[0], params[1:3], params[3:5], fps)
         self._armaY = ArmaProcess(params[0], params[1:3], params[3:5], fps)
         self._armaZ = ArmaProcess(params[0], params[1:3], params[3:5], fps)
@@ -222,9 +230,9 @@ class SNMApp(wx.App):
         
         # Apply ARMA process
         
-        self.setCOMX(self._armaX.generate_frame() * 0.004)
-        self.setCOMY(self._armaY.generate_frame() * 0.001)
-        self.setCOMZ(self._armaZ.generate_frame() * 0.004)
+        self.setCOMX(self._armaX.generate_frame() * 0.004 * 0)
+        self.setCOMY(self._armaY.generate_frame() * 0.001 * 0)
+        self.setCOMZ(self._armaZ.generate_frame() * 0.004 * 0)
         
 #         sins = [0.3, 1, 2, 3, 0.5, 1.3, 1.8, 3.4, 0.4, 0.8, 1.5, 3.04]
 #         t = time.time()
