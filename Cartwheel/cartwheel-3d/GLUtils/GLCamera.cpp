@@ -2,7 +2,7 @@
 #include "GLCamera.h"
 #include <include/GLheaders.h>
 
-#define ORBIT_RAD_PER_SEC 1.0
+#define ORBIT_RAD_PER_SEC 1.6
 
 
 GLCamera::GLCamera(void){

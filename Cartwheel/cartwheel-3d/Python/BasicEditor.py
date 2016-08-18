@@ -11,7 +11,7 @@ sys.path += ['.']
 import wx, App, math
 
 movieResolution = (1280,720)
-movieSetup = True # True if we want a movie
+movieSetup = False # True if we want a movie
 glMovie = False    # True if we're only interested in recording the GL canvas
                    # False if we want a "screen cast"
 
@@ -26,7 +26,7 @@ if movieSetup:
         showConsole = False
 
 
-app = App.SNMApp("Style Editor", size = size, glCanvasSize=glCanvasSize, showConsole = showConsole)
+app = App.SNMApp("Style Editor", size = size, glCanvasSize=glCanvasSize, showConsole = showConsole, fps=24)
 
 import UI, Utils, GLUtils, Physics, Core, MathLib, PyUtils
 from App import InstantChar, KeyframeEditor

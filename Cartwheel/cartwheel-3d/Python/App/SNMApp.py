@@ -78,6 +78,8 @@ class SNMApp(wx.App):
         self._glCanvas.setPrintLoad(True)
         self._glCanvas.setCameraTargetFunction( self.cameraTargetFunction )
         
+        self._glCanvas.setDrawGround(False)
+        
         # Get the tool panel
         self._toolPanel = self._frame.getToolPanel()
         
@@ -134,6 +136,7 @@ class SNMApp(wx.App):
         
         self._armaX = ArmaProcess(params[0], params[1:3], params[3:5], fps)
         self._armaY = ArmaProcess(params[0], params[1:3], params[3:5], fps)
+        self._armaZ = ArmaProcess(params[0], params[1:3], params[3:5], fps)
             
     #
     # Private methods
@@ -219,10 +222,9 @@ class SNMApp(wx.App):
         
         # Apply ARMA process
         
-        # self.setCOMX(self._armaX.generate_frame() * 0.004)
-        # self.setCOMZ(self._armaY.generate_frame() * 0.004)
-        
-        pass
+        self.setCOMX(self._armaX.generate_frame() * 0.004)
+        self.setCOMY(self._armaY.generate_frame() * 0.001)
+        self.setCOMZ(self._armaZ.generate_frame() * 0.004)
         
 #         sins = [0.3, 1, 2, 3, 0.5, 1.3, 1.8, 3.4, 0.4, 0.8, 1.5, 3.04]
 #         t = time.time()
