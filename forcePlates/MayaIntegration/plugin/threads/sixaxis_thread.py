@@ -1,3 +1,17 @@
+
+##  Centre of Pressure Uncertainty for Virtual Character Control
+##  McGill Computer Graphics Lab
+## 
+##  Released under the MIT license. This code is free to be modified
+##  and distributed.
+## 
+##  Author: Monty Thibault, montythibault@gmail.com
+##  Last Updated: Aug 18, 2016
+
+## ------------------------------------------------------------------------
+
+
+
 from killable_thread import KillableThread
 
 from plugin.world_sensor_config import WorldSensorConfiguration
