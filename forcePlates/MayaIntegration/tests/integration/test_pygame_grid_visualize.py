@@ -1,3 +1,17 @@
+
+##  Centre of Pressure Uncertainty for Virtual Character Control
+##  McGill Computer Graphics Lab
+## 
+##  Released under the MIT license. This code is free to be modified
+##  and distributed.
+## 
+##  Author: Monty Thibault, montythibault@gmail.com
+##  Last Updated: Aug 18, 2016
+
+## ------------------------------------------------------------------------
+
+
+
 from plugin.threads.pygame_thread import PyGameThread
 import plugin.line_visualize as lv
 from plugin.gridcalibration.grid import Grid
