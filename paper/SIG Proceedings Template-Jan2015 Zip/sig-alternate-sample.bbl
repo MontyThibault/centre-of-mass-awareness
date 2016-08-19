@@ -1,0 +1,32 @@
+\begin{thebibliography}{1}
+
+\bibitem{Macchietto:2009:MCB:1531326.1531386}
+Adriano Macchietto, Victor Zordan, and Christian~R. Shelton.
+\newblock Momentum control for balance.
+\newblock {\em ACM Trans. Graph.}, 28(3):80:1--80:8, July 2009.
+
+\bibitem{Azad2016}
+Morteza Azad and Roy Featherstone.
+\newblock Angular momentum based balance controller for an under-actuated
+  planar robot.
+\newblock {\em Autonomous Robots}, 40(1):93--107, 2016.
+
+\bibitem{Wieber2006}
+P.~b.~Wieber.
+\newblock Trajectory free linear model predictive control for stable walking in
+  the presence of strong perturbations.
+\newblock In {\em 2006 6th IEEE-RAS International Conference on Humanoid
+  Robots}, pages 137--142, Dec 2006.
+
+\bibitem{PrattDilworth1997}
+J.~Pratt, P.~Dilworth, and G.~Pratt.
+\newblock Virtual model control of a bipedal walking robot.
+\newblock In {\em Robotics and Automation, 1997. Proceedings., 1997 IEEE
+  International Conference on}, volume~1, pages 193--198 vol.1, Apr 1997.
+
+\bibitem{2010-TOG-gbwc}
+Stelian Coros, Philippe Beaudoin, and Michiel van~de Panne.
+\newblock Generalized biped walking control.
+\newblock {\em ACM Transctions on Graphics}, 29(4):Article 130, 2010.
+
+\end{thebibliography}
