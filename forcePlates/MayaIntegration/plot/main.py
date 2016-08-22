@@ -6,7 +6,7 @@
 ##  and distributed.
 ## 
 ##  Author: Monty Thibault, montythibault@gmail.com
-##  Last Updated: Aug 18, 2016
+##  Last Updated: Aug 19, 2016
 
 ## ------------------------------------------------------------------------
 
@@ -29,9 +29,10 @@ import matplotlib as mpl
 import matplotlib.mlab as mlab
 from mpl_toolkits.mplot3d import Axes3D
 
-
 import statsmodels.api as sm
+import statsmodels.graphics
 
+import random
 import code
 
 
@@ -49,59 +50,62 @@ def main(filename):
 	x = x - np.mean(x)
 	y = y - np.mean(y)
 
-	# colored_line(x, y, z, linewidth = .0001)
 
 
-	xy = zip(x, y)
+	# (Autoregression order, moving average order) as per the statsmodels ArmaProcess
+	# documentation.
+	model_order = (2, 2)
 
 
-	# Turning radius? (curvature)
-	# Speed?
-
-	# Variance & covariance
-
-	# Fourier
-
-	# etc.
+	fit = ARMA_train(x, model_order, FPS)
+	ARMA_save(FPS, model_order, fit, filename)
 
 
 
-	# code.InteractiveConsole(locals()).interact()
+def fft_projection_figure(x, y):
+
+	code.InteractiveConsole(locals()).interact()
 
 
-	# fig = plt.figure()
-	# ax = fig.gca(projection='3d')
+	fig = plt.figure()
+	ax = fig.gca(projection='3d')
 
-	# # ax.plot(x, y, indicies)
-	# ax.plot(fft[:, 0], fft[:, 1], indicies)
+	# ax.plot(x, y, indicies)
+	ax.plot(fft[:, 0], fft[:, 1], indicies)
 
-	# plt.show()
+	plt.show()
 
 
 
-	# n, bins, patches = plt.hist(speed[1:], 100, normed = True)
+def speed_histogram(speed):
 
-	# plt.title('Centre of Pressure Velocity')
-	# plt.xlabel('Centre of Pressure Velocity (m/s)')
-	# plt.ylabel('Relative Frequency')
+	n, bins, patches = plt.hist(speed[1:], 100, normed = True)
 
-	# plt.grid(True)
+	plt.title('Centre of Pressure Velocity')
+	plt.xlabel('Centre of Pressure Velocity (m/s)')
+	plt.ylabel('Relative Frequency')
 
-	# plt.show()
+	plt.grid(True)
 
+	plt.show()
+
+
+
+def ARMA_train(x, model_order, FPS):
 
 	indicies = [i / float(FPS) for i in range(len(x))]
 
 
 	# Fit the process to an ARMA model
 
-	# (Autoregression order, moving average order) as per the statsmodels ArmaProcess
-	# documentation.
-	model_order = (50, 50)
-
 	model = sm.tsa.ARMA(x, model_order)
-	fit = model.fit([-1] * 101)
+	fit = model.fit()
 
+
+	return fit
+
+
+def ARMA_recreate(x, fit):
 
 	# Recreate the ARMA process
 
@@ -125,10 +129,12 @@ def main(filename):
 	plt.xlabel('Time (s)')
 	plt.ylabel('Position (m)')
 
-	# plt.show()
+	plt.show()
 
 
-	print(fit.params)
+
+def ARMA_save(FPS, model_order, fit, filename):
+
 
 	with open('data/ArmaModels/' + os.path.basename(filename) + '.py', 'w') as f:
 
@@ -144,55 +150,6 @@ def main(filename):
 		f.write(contents)
 
 
-
-	# print(results.summary())
-
-	# print(results.params)
-
-	# results.plot()
-	# plt.show()
-	
-
-
-
-
-
-
-	# [X, Y] = np.meshgrid(2 * np.pi * np.arange(200) / 12,
-	#                      2 * np.pi * np.arange(200) / 34)
-
-	# S = np.sin(x) + np.cos(y)
-	# FS = np.fft.fftn(zip(x, y))
-
-	# plt.imshow(np.log(np.abs(np.fft.fftshift(FS))**2))
-
-	# plt.show()
-
-
-
-	# data = np.random.rand(4,4)
-	# fig, ax = plt.subplots()
-	# heatmap = ax.pcolor(data, cmap=plt.cm.Blues)
-
-	# plt.show()
-
-
-
-	# f_xy = np.fft.fftn(xy)
-
-	# plt.imshow(np.log(np.abs(np.fft.fftshift(f_xy))**2))
-	# plt.show()
-
-
-
-
-
-	# ax = plt.subplot(111, projection = 'polar')
-	# ax.plot(theta, r, color = 'r', linewidth = 3)
-
-	# ax.grid(True)
-
-	# plt.show()
 
 
 

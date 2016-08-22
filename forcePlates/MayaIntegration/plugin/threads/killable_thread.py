@@ -6,7 +6,7 @@
 ##  and distributed.
 ## 
 ##  Author: Monty Thibault, montythibault@gmail.com
-##  Last Updated: Aug 18, 2016
+##  Last Updated: Aug 19, 2016
 
 ## ------------------------------------------------------------------------
 

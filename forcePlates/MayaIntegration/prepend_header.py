@@ -22,6 +22,9 @@ header = """
 
 folders = ['plugin', 'tests', 'plot']
 
+lines = 0
+
+
 for folder in folders:
 
 	for root, dirs, files in os.walk(folder):
@@ -39,6 +42,8 @@ for folder in folders:
 
 					contents = f.read()
 
+					lines += len(contents.split('\n'))
+
 
 
 				# Remove old header if it's there
@@ -54,4 +59,5 @@ for folder in folders:
 
 					f.write(header + cs)
 					
-					
+
+print '%s lines total.' % lines
