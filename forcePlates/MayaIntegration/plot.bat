@@ -1,1 +1,0 @@
-python plot/main.py "data/standing_Monty_15cm"

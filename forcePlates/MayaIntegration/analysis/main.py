@@ -156,13 +156,18 @@ def main(filename):
 	# Note: attempt exog with 2d matrix
 
 	samples, exog = SampleSet.generate_training_set([s0, s5, s15, s30, s40])
-	samples, exog = SampleSet.generate_training_set([s0, s40])
+	# samples, exog = SampleSet.generate_training_set([s0, s40])
 
 
 	x = map(lambda s: s[0][0], samples)
 	y = map(lambda s: s[0][1], samples)
 	xy = zip(x, y)
 
+
+
+	# Exogenous variables: crappy
+	# Method 2: linearly interpolate params?
+	
 
 
 	# s30.samples = samples
@@ -175,15 +180,11 @@ def main(filename):
 
 	# (Autoregression order, moving average order) as per the statsmodels ArmaProcess
 	# documentation.
-	model_order = (4, 4, 4)
+	model_order = (4, 4, 1)
 
 
 	fit = ARMA_train(x, exog, model_order)
 	# ARMA_save(FPS, model_order, fit, filename)
-
-
-
-	# exog = [0.4 for _ in exog]
 
 	ARMA_recreate(x, fit, exog, 100)
 
@@ -237,11 +238,15 @@ def ARMA_recreate(x, fit, exog, FPS):
 
 	# Recreate the ARMA process
 
-	# process = sm.tsa.ArmaProcess.from_estimation(fit)
-	# fake_x = process.generate_samples(len(x))
+	process = sm.tsa.ArmaProcess.from_estimation(fit)
+	forecast = process.generate_sample(len(x))
 
 
-	forecast, strerr, conf_int = fit.forecast(len(x), exog)
+	code.InteractiveConsole(locals()).interact()
+
+
+	# forecast = 
+	# forecast, strerr, conf_int = fit.forecast(len(x), exog)
 
 
 	r = max(x) / max(forecast)
