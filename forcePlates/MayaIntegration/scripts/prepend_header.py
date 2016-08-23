@@ -20,7 +20,7 @@ header = """
 """ % datetime.datetime.now().strftime('%b %d, %Y')
 
 
-folders = ['plugin', 'tests', 'plot']
+folders = ['plugin', 'tests', 'analysis']
 
 lines = 0
 
