@@ -16,15 +16,13 @@ from collections import deque
 import matplotlib.pyplot as plt
 import numpy as np
 
-def convolution_filter(samples, n, FPS):
+def convolution_filter(samples, n):
 
 	x = []
 	y = []
 	z = []
 
-	curvature = []
-	speed = []
-
+	new_samples = []
 
 	convolution = deque([], n)
 
@@ -63,30 +61,14 @@ def convolution_filter(samples, n, FPS):
 
 		# Add point
 
-		x.append(accum[0])
-		y.append(accum[1])
-		z.append(accum[2])
+		x = accum[0]
+		y = accum[1]
+		z = accum[2]
+
+		new_samples.append(((x, y), z))
 
 
-		# Add speed
-
-		if len(x) == 1:
-
-			speed.append(None)
-
-		else:
-
-			length = (((x[-1] - x[-2]) ** 2) + 
-				((y[-1] - y[-2]) ** 2)) ** 0.5
-
-			speed.append(length * FPS)
-
-
-
-
-
-
-	return x, y, z, speed, curvature
+	return new_samples
 
 
 
