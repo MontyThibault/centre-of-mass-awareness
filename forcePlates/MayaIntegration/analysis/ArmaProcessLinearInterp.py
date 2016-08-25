@@ -12,11 +12,11 @@
 
 
 
-import stastsmodels.api as sm
+import statsmodels.api as sm
 
 
 
-class ArmaProcessLinearInterp(sm.tsa.ArmaProcess):
+class ArmaProcessLinearInterp(object):
 	"""
 
 	The cheif concern of this class is to provide a method to linearly interpolate
@@ -34,4 +34,35 @@ class ArmaProcessLinearInterp(sm.tsa.ArmaProcess):
 		super(self).__init__(*args, **kwargs)
 
 
+		self.sample_sets = []
+
+		# sm.tsa.ArmaResult({ maparams, arparams })
 		
+
+
+
+
+		
+	def generate_sample(self, exogs, **kwargs):
+		"""
+
+		Mimicks statsmodels' ArmaProcess.generate_sample(n) except we pass an array 
+		of exogs instead of an integer.
+
+		"""
+
+		samples = []
+
+
+		# Take exog to be one-dimensional for now 
+
+		for exog in exogs:
+
+			pass
+			
+			# self.process.
+
+
+
+		return super(self).generate_sample(len(exog), **kwargs)
+

@@ -11,10 +11,25 @@
 ## ------------------------------------------------------------------------
 
 
+import pytest
 
 from ArmaProcessLinearInterp import ArmaProcessLinearInterp
 
 
+
 def test_init():
 
-	ArmaProcessLinearInterp
+	pass
+
+	# apli = ArmaProcessLinearInterp()
+
+	# apli.models.append(zero_fit)
+
+
+
+	# apli.models.append(zero_fit)
+
+
+	# samples = apli.generate_sample(10, exog)
+
+	# assert samples

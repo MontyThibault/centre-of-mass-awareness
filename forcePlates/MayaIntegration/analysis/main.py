@@ -39,6 +39,9 @@ import code
 
 class SampleSet(object):
 
+	model_order = (2, 2)
+	
+
 	def __init__(self, filename):
 
 		with open(filename, 'rb') as f:
@@ -46,10 +49,9 @@ class SampleSet(object):
 
 
 		self.FPS = 100.0
+		self.stance_width = 0.0
 
-		# Sample exogenous parameter
-
-		self.stance_width = 0
+		self.fit = None
 
 
 	def convolve(self, n):
@@ -89,6 +91,52 @@ class SampleSet(object):
 		xy = map(lambda s: (s[0][0], s[0][1]), self.samples)
 
 		plt.plot(xy)
+		plt.show()
+
+
+	def fit(self):
+
+		# Fit the process to an ARMA model
+
+		model = sm.tsa.ARMA(self.samples, self.model_order)
+		self.fit = model.fit()
+
+
+
+	def recreate(self):
+
+		x = map(lambda s: s[0][0], self.samples)
+		y = map(lambda s: s[0][1], self.samples)
+		xy = zip(x, y)
+
+
+
+		indicies = [float(i) / FPS for i in range(len(x))]
+
+		# Recreate the ARMA process
+
+		process = sm.tsa.ArmaProcess.from_estimation(fit)
+		forecast = process.generate_sample(len(x))
+
+
+		# forecast = 
+		# forecast, strerr, conf_int = fit.forecast(len(x), exog)
+
+
+		r = max(x) / max(forecast)
+		forecast = [m * r for m in forecast]
+
+
+		gt, = plt.plot(indicies, x, 'b', label = 'Ground Truth')
+		fsm, = plt.plot(indicies, forecast, 'r', label = 'Fitted Stochastic Model')
+
+		plt.legend(handles = [gt, fsm])
+
+		plt.title('Centre of Pressure along Single Axis')
+
+		plt.xlabel('Time (s)')
+		plt.ylabel('Position (m)')
+
 		plt.show()
 
 
@@ -240,9 +288,6 @@ def ARMA_recreate(x, fit, exog, FPS):
 
 	process = sm.tsa.ArmaProcess.from_estimation(fit)
 	forecast = process.generate_sample(len(x))
-
-
-	code.InteractiveConsole(locals()).interact()
 
 
 	# forecast = 
