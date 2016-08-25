@@ -16,7 +16,7 @@ class DynamicArmaProcess(sm.tsa.ArmaProcess):
 	"""
 
 
-	# Original statsmodels source
+	# Original statsmodels source, unmodified for reference
 	# http://statsmodels.sourceforge.net/devel/_modules/statsmodels/tsa/arima_process.html#ArmaProcess
 
 	def generate_sample(self, nsample=100, scale=1., distrvs=None, axis=0,
@@ -115,7 +115,7 @@ class DynamicArmaProcess(sm.tsa.ArmaProcess):
 
 
 			# Let AR polynomial equal a[1]*y[n-1] + ... + a[N]*y[n-N]
-			# thus ma_polynomial = past_rvs (dot) self.ma
+			# thus ar_polynomial = past_val (dot) self.ar[1:]
 
 			ar_polynomial = [a * y for a, y in zip(past_val, self.ar[1:])]
 			ar_term = sum(ar_polynomial)
@@ -126,3 +126,54 @@ class DynamicArmaProcess(sm.tsa.ArmaProcess):
 
 
 			yield yn
+
+
+
+	def generate_sample_dynamic(self, nsample=100, scale=1., distrvs=None, 
+			ma=None, ar=None):
+		"""
+
+		This method mostly mimicks the interface of self.generate_sample(), minus
+		the bells and whistles.
+
+		@argument ma - an array of length `nsample` where is element is values to be
+			substituted into self.ma during the run.
+		@argument ar - ditto for self.ar
+
+
+		"""
+
+		if ma == None or ar == None:
+
+			raise ValueError("MA or AR must be specified in generate_sample_dynamic.")
+
+		if len(ma) != nsample or len(ar) != nsample:
+
+			raise ValueError("Length of MA and AR do not match nsample.")
+
+		if len(ma[0]) != len(self.ma) or len(ar[0]) != len(self.ar):
+
+			# Since the sizes of the deques in generator are static, we must have it
+			# the size of self.ma and self.ar match.
+
+			raise ValueError("MA and/or AR do not match existing sizes.")
+
+
+
+		gen = self.sample_generator(scale = scale, distrvs = distrvs)
+		out = []
+
+
+		for current_ma, current_ar in zip(ma, ar):
+
+			for i in range(len(current_ma)):
+				self.ma[i] = current_ma[i]
+
+			for i in range(len(current_ar)):
+				self.ar[i] = current_ar[i]
+
+
+			out.append(gen.next())
+
+
+		return out
