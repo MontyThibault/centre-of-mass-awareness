@@ -6,7 +6,7 @@
 ##  and distributed.
 ## 
 ##  Author: Monty Thibault, montythibault@gmail.com
-##  Last Updated: Aug 23, 2016
+##  Last Updated: Aug 26, 2016
 
 ## ------------------------------------------------------------------------
 
@@ -40,8 +40,8 @@ from SampleSet import SampleSet
 def main():
 
 	s0 = SampleSet('data/standing_Monty_0cm')
-	# s0.stance_width = 0.0
-	# s0.trim(192, 3911)
+	s0.stance_width = 0.0
+	s0.trim(192, 3911)
 
 
 	s5 = SampleSet('data/standing_Monty_5cm')
