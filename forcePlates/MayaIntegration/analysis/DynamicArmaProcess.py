@@ -88,6 +88,9 @@ class DynamicArmaProcess(sm.tsa.ArmaProcess):
 		out = []
 
 
+		# TODO: revise this with self.ar_coefs instead of self.ar & self.ma_coefs...
+		# Or not
+
 		while True:
 
 			rnd = scale * distrvs()
@@ -177,3 +180,23 @@ class DynamicArmaProcess(sm.tsa.ArmaProcess):
 
 
 		return out
+
+
+	@classmethod
+	def from_order(cls, order):
+
+		ar = np.array([0] * order[0])
+		ma = np.array([0] * order[1])
+
+		return cls.from_coeffs(ar, ma)
+
+
+	@staticmethod
+	def convert_exog_to_ar_ma_list(exog, samplesets):
+		"""
+	
+		
+
+		"""
+
+		return 
