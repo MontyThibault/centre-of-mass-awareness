@@ -1,3 +1,9 @@
+/*
+/*/
+!/forcePlates/MayaIntegration
+!/Cartwheel/cartwheel-3d
+
+
 Cartwheel/cartwheel-3d/binaries/*
 Cartwheel/cartwheel-3d/controlShots/*
 Cartwheel/cartwheel-3d/screenShots/*
@@ -15,8 +21,3 @@ __pycache__
 *.pyc
 *.log
 *.tlog
-
-/*
-/*/
-!/forcePlates/MayaIntegration
-!/Cartwheel/cartwheel-3d
