@@ -16,5 +16,7 @@ __pycache__
 *.log
 *.tlog
 
-related
-Wall
+/*
+/*/
+!/forcePlates/MayaIntegration
+!/Cartwheel/cartwheel-3d
