@@ -10,6 +10,9 @@
 /Cartwheel/*/
 !/Cartwheel/cartwheel-3d
 
+!LICENSE.txt
+!README.txt
+
 *.gitignore
 
 
