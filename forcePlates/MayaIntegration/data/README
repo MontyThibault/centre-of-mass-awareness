@@ -1,1 +1,0 @@
-The data files in this directory are pickled Python representations of a series of samples. They are fitted into a ARMA model via the plot/main.py script and parameters are saved into the data/ArmaModels directory.

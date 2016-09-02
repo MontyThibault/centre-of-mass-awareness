@@ -5,3 +5,5 @@ The Python application interfaces with the software .dll's through the ctypes mo
 
 ### Maya plugin
 The plugin is the MayaPlugin.py script that can be found in the MayaIntegration folder. This script spawns a Python thread that runs inside of Maya and updates the sensors at 60Hz. Automated reloading is done by binding the MayaReload.py script to a shelf button within Maya.
+
+Note: this plugin is depreciated and replaced with a pair of standalone Python programs.
