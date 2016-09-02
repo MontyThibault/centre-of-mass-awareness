@@ -29,7 +29,7 @@ class SampleSet(object):
 	"""
 
 
-	model_order = (5, 5)
+	model_order = (3, 3)
 	
 
 	def __init__(self, filename):
@@ -78,9 +78,14 @@ class SampleSet(object):
 
 	def show_plot(self):
 
-		xy = map(lambda s: (s[0][0], s[0][1]), self.samples)
+		x = map(lambda s: s[0][0], self.samples)
+		y = map(lambda s: s[0][1], self.samples)
+		xy = zip(x, y) 
 
-		plt.plot(xy)
+		indicies = [float(i) / self.FPS for i in range(len(x))]
+
+
+		plt.plot(indicies, x)
 		plt.show()
 
 
@@ -137,6 +142,22 @@ class SampleSet(object):
 		plt.show()
 
 
+		# Power plot
+
+		x_fft = np.fft.fft(x)
+		x_fft = abs(x_fft)
+		x_fft = x_fft ** 0.5
+
+		forecast_fft = np.fft.fft(forecast)
+		forecast_fft = abs(forecast_fft)
+		forecast_fft = forecast_fft ** 0.5
+
+		plt.plot(zip(x_fft[:len(x)/5], forecast_fft[:len(x)/5]))
+		plt.show()
+
+		
+
+
 
 	@staticmethod
 	def generate_training_set(samplesets):
@@ -161,3 +182,32 @@ class SampleSet(object):
 
 
 		return mega_samples, mega_exog
+
+
+	@staticmethod
+	def convert_exog_to_ar_ma_list(samplesets, exog):
+
+		ar = []
+		ma = []
+
+		for e in exog:
+
+			i = 0
+
+			while samplesets[i].stance_width > e:
+
+				if i == len(samplesets) - 1:
+					break
+
+				i += 1
+
+
+
+			lower = samplesets[i]
+			upper = samplesets[i + 1]
+
+
+			ar.append(lower.fit.ar)
+			ma.append(lower.fit.ma)
+
+		return ar, ma

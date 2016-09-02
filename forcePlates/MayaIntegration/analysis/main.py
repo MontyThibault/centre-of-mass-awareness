@@ -20,6 +20,7 @@ from process import colored_line
 
 import textwrap
 
+import numpy as np
 import matplotlib.pyplot as plt
 
 
@@ -64,25 +65,54 @@ def main():
 	s40.trim(190, 3330)
 
 
-	samplesets = [s0]
+	samplesets = [s0, s5, s15, s30, s40]
 
 	for sampleset in samplesets:
 
 		sampleset.normalize()
-		sampleset.fit_arma()
+		# sampleset.fit_arma()
 
 
 
-	dap = DynamicArmaProcess.from_order(SampleSet.model_order)
+	# dap = DynamicArmaProcess.from_order(SampleSet.model_order)
+	# dap = DynamicArmaProcess.from_estimation(samplesets[0].fit)
 
-	samples, exog = SampleSet.generate_training_set(samplesets)
-	ar, ma = SampleSet.convert_exog_to_ar_ma_list(samplesets, exog)
-
-
-	samplesets[0].recreate()
+	
+	# ar, ma = SampleSet.convert_exog_to_ar_ma_list(samplesets, exog)
 
 
-	# samples, exog = SampleSet.generate_training_set([s0, s40])
+	######################
+
+	# samples, exog = SampleSet.generate_training_set(samplesets)
+
+	# x = map(lambda s: s[0][0], samples)
+	# y = map(lambda s: s[0][1], samples)
+	# xy = zip(x, y) 
+
+	# indicies = [float(i) / 100.0 for i in range(len(x))]
+
+	# exog = [e * 0.022 for e in exog]
+
+
+	############
+
+	# plt.plot(indicies, zip(x, exog))
+
+	# plt.show()
+
+	s30.fit_arma()
+	s30.recreate()
+
+	########################
+
+
+	# samplesets[0].recreate()
+
+
+	# samples, exog = SampleSet.generate_training_set(samplesets)
+	# s0.samples = samples
+	# s0.show_plot()
+
 
 
 	# Exogenous variables: crappy

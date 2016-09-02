@@ -144,6 +144,9 @@ class WorldSensorConfiguration(object):
 
 		for w in self.world_sensors:
 
+			if w.sensor == self.M5170:
+				continue
+
 			l = w.centre_of_pressure.get()
 			f = w.sensor.total_force
 
