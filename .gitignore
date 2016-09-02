@@ -1,7 +1,16 @@
 /*
 /*/
+!/forcePlates
+/forcePlates/*
+/forcePlates/*/
 !/forcePlates/MayaIntegration
+
+!/Cartwheel
+/Cartwheel/*
+/Cartwheel/*/
 !/Cartwheel/cartwheel-3d
+
+*.gitignore
 
 
 Cartwheel/cartwheel-3d/binaries/*
@@ -21,3 +30,8 @@ __pycache__
 *.pyc
 *.log
 *.tlog
+
+*.coverage
+*.cache
+*.pyc
+*.pyd
